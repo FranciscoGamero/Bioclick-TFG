@@ -1,6 +1,6 @@
 <my-sidebar [isExpanded]="isExpanded" (toggleSidebar)="handleSidebarToggle()" />
 <div class="content mt-5" [ngClass]="{ 'sidebarExpanded': isExpanded }">
-    <h2>Usuarios</h2>
+    <h2>Administradores</h2>
     <div class="mb-5">
         <form method="post" class="h-auto">
             <div class="h-50 w-auto d-flex flex-column mt-5 mb-5">
@@ -44,5 +44,5 @@
         </div>
     </div>
     <ngb-pagination class="justify-content-center" [collectionSize]="usersFound!.elementosEncontrados" [(page)]="page"
-        [boundaryLinks]="true" (pageChange)="getUsers()" />
+        [boundaryLinks]="true" (pageChange)="getAdmins()" />
 </div>
