@@ -157,6 +157,26 @@ public class AdminService {
     public User buscarPorId(UUID id) {
         return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("No se ha encontrado un usuario con id: "+id));
     }
+
+    public Page<Manager> buscarManagers(Pageable pageable, UUID adminId) {
+
+        Page<Manager> paginaResultado = adminRepository.buscarManagers(pageable);
+
+        Admin adminCreador = adminRepository.findById(adminId)
+                .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado al admin"));
+
+        String metodoActual = Thread.currentThread().getStackTrace()[1].getMethodName();
+        adminCreador.setUltimaAccion(metodoActual);
+        adminCreador.setFechaUltimaAccion(LocalDateTime.now());
+        adminRepository.save(adminCreador);
+
+
+        if (!paginaResultado.isEmpty())
+            return paginaResultado;
+        else
+            throw new EntityNotFoundException("No hay usuarios encontrados");
+    }
+
     public Manager buscarManagerPorId(UUID id) {
         return managerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("No se ha encontrado un usuario con id: "+id));
     }
