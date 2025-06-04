@@ -1,0 +1,96 @@
+<div class="sidebar" [ngClass]="{ 'expanded': isExpanded }">
+    <div class="header">
+        <div class="logo">
+            <img class="img-fluid" src="../../../assets/images/BioclickLogo.png" alt="Bioclick Logo" />
+        </div>
+        <div class="toggle" (click)="handleSidebarToggle()">
+            <span class="chevron"></span>
+        </div>
+    </div>
+    <div class="content">
+        <div class="link with-children">
+            <div class="content" (click)="toggleUserDropdown($event)">
+                <div class="icon">
+                    <i class="bi bi-person-fill ml-2 text-success"></i>
+                </div>
+                <div class="title">Usuarios</div>
+                <span class="dropdown-arrow" [ngClass]="{ 'open': isUserOpen }">&#9662;</span>
+            </div>
+            <div class="children" *ngIf="isUserOpen">
+                <div class="link">
+                    <div class="content" [routerLink]="['/configuration']" [queryParams]="{ 'child': '1' }"
+                        [routerLinkActive]="'active'">
+                        <div class="icon">
+                            <i class="bi bi-circle text-black"></i>
+                        </div>
+                        <div class="title">Todos</div>
+                    </div>
+                </div>
+                <div class="link">
+                    <div class="content" [routerLink]="['/configuration']" [queryParams]="{ 'child': '2' }"
+                        [routerLinkActive]="'active'">
+                        <div class="icon">
+                            <i class="bi bi-circle text-success"></i>
+                        </div>
+                        <div class="title">Admin</div>
+                    </div>
+                </div>
+                <div class="link">
+                    <div class="content" [routerLink]="['/configuration']" [queryParams]="{ 'child': '3' }"
+                        [routerLinkActive]="'active'">
+                        <div class="icon">
+                            <i class="bi bi-circle text-warning"></i>
+                        </div>
+                        <div class="title">Manager</div>
+                    </div>
+                </div>
+                <div class="link">
+                    <div class="content" [routerLink]="['/configuration']" [queryParams]="{ 'child': '3' }"
+                        [routerLinkActive]="'active'">
+                        <div class="icon">
+                            <i class="bi bi-circle text-info"></i>
+                        </div>
+                        <div class="title">Solo usuarios</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="link with-children">
+            <div class="content" (click)="toggleProductsDropdown($event)">
+                <div class="icon">
+                    <i class="bi bi-headphones ml-2 text-success"></i>
+                </div>
+                <div class="title">Productos</div>
+                <span class="dropdown-arrow" [ngClass]="{ 'open': isProductsOpen }">&#9662;</span>
+            </div>
+            <div class="children" *ngIf="isProductsOpen">
+                <div class="link">
+                    <div class="content" [routerLink]="['/configuration']" [queryParams]="{ 'child': '1' }"
+                        [routerLinkActive]="'active'">
+                        <div class="icon">
+                            <i class="bi bi-circle text-black"></i>
+                        </div>
+                        <div class="title">Todos</div>
+                    </div>
+                </div>
+                <div class="link">
+                    <div class="content" [routerLink]="['/configuration']" [queryParams]="{ 'child': '2' }"
+                        [routerLinkActive]="'active'">
+                        <div class="icon">
+                            <i class="bi bi-circle text-success"></i>
+                        </div>
+                        <div class="title">Categorías</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="link">
+            <div class="content" [routerLink]="['/home']" [routerLinkActive]="'active'">
+                <div class="icon">
+                    <i class="bi bi-chat-left-fill text-success"></i>
+                </div>
+                <div class="title">Posts</div>
+            </div>
+        </div>
+    </div>
+</div>

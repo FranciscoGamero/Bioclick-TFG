@@ -1,0 +1,66 @@
+.register-background {
+    min-height: 100vh;
+    width: 100vw;
+    overflow: auto;
+}
+
+
+
+.register-background::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transform: scaleX(-1);
+    z-index: 0;
+}
+
+.register-background>* {
+    position: relative;
+    z-index: 1;
+}
+
+.inputRadius {
+    border-radius: 20px;
+}
+
+.btnForm {
+    width: 100%;
+    max-width: 460px;
+    height: 65px;
+    border-radius: 0.5rem;
+    background: linear-gradient(90deg, #1DA684 0%, #BEDC7C 100%);
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 600;
+    border: none;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.10);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+/* Fondos aleatorios */
+.register-background[data-bg="1"]::before {
+    background-image: url('../../../assets/images/fondos/FondoLogin1.jpg');
+}
+
+.register-background[data-bg="2"]::before {
+    background-image: url('../../../assets/images/fondos/FondoLogin2.jpg');
+}
+
+.register-background[data-bg="3"]::before {
+    background-image: url('../../../assets/images/fondos/FondoLogin3.jpg');
+}
+
+.register-background[data-bg="4"]::before {
+    background-image: url('../../../assets/images/fondos/FondoLogin4.jpg');
+
+}
+@media (max-width: 768px) {
+  .w-100.h-auto {
+    display: none !important;
+  }
+}

@@ -1,0 +1,54 @@
+services:
+
+  pg:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=Bioclick
+      - POSTGRES_PASSWORD=12345678
+      - POSTGRES_DB=bioclick
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U Bioclick"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    container_name: bioclick-sql
+    restart: on-failure
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin-spring
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: 1
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: Bioclick-project
+
+    environment:
+      SECRET: ${SECRET}
+      SENDGRID_API_KEY: ${SG_API_KEY}
+      SPRING_DATASOURCE_URL: ${DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${DATASOURCE_NAME}
+      SPRING_DATASOURCE_PASSWORD: ${DATASOURCE_PASSWORD}
+
+    depends_on:
+      pg:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+
+
+volumes:
+  pgdata:
+  pgadmin-data:

@@ -1,0 +1,2469 @@
+{
+	"info": {
+		"_postman_id": "9ea45c39-81e8-4bba-aa97-0d48f87a2b79",
+		"name": "BioClick",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38690008"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Verify Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"070625\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/admin/auth/verify",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"admin",
+								"auth",
+								"verify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Login Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();\r",
+									"pm.collectionVariables.set(\"token_admin\", json.token);\r",
+									"pm.collectionVariables.set(\"tokenRefresco_admin\", json.refreshToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"patriciajones\",\n    \"password\": \"hashedpassword10\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/login",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "postman-cloud:///1eff3640-db5e-4b80-84ad-e7876b3a273e"
+								},
+								{
+									"key": "crear",
+									"type": "file",
+									"src": "postman-cloud:///1eff3647-fd2b-4810-bd45-c5b13d436c8d"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}/admin/create",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"admin",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editarme a mi Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "postman-cloud:///1eff364f-abf1-4280-af7e-4fa0c2a92d04"
+								},
+								{
+									"key": "editar",
+									"type": "file",
+									"src": "postman-cloud:///1eff364d-d52b-4940-8b2b-eec109cbd637"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}/admin/edit/me",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"admin",
+								"edit",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/gamero.rofra24_trian/Downloads/pop-films-dark.png"
+								},
+								{
+									"key": "editar",
+									"type": "file",
+									"src": "/C:/Users/gamero.rofra24_trian/Desktop/Acceso a Datos/BioClick/bioclick/src/main/java/com/salesianostriana/bioclick/util/json/AdminEditaOtroAdmin.json"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}/admin/edit/admin/dd4e888f-374d-4a1d-9b11-df68f68c9876",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"admin",
+								"edit",
+								"admin",
+								"dd4e888f-374d-4a1d-9b11-df68f68c9876"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Todos los usuarios",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/admin/get/users?page=2",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"admin",
+								"get",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/admin/get/d290f1ee-6c54-4b01-90e6-d701748f0851",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"admin",
+								"get",
+								"d290f1ee-6c54-4b01-90e6-d701748f0851"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get me",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/get/me",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"get",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get admins",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/admin/get/admins?page=0",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"admin",
+								"get",
+								"admins"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cambiar rol",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nuevoRol\": \"ROLE_ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/admin/cambiar-rol/{{id_usuario}}",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"admin",
+								"cambiar-rol",
+								"{{id_usuario}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Users Por Nombre",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/get/users-by-name?nombre=j",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"get",
+								"users-by-name"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "j"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Users Por correo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/get/users-by-email?email=j",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"get",
+								"users-by-email"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "j"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar User Entre Fechas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/get/users-between-dates?fechaInicio=2023-01-10&fechaFinal=2023-08-01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"get",
+								"users-between-dates"
+							],
+							"query": [
+								{
+									"key": "fechaInicio",
+									"value": "2023-01-10"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2023-08-01"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar User Por Fecha Anterior",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/get/users-before-dates?fechaFinal=2023-04-01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"get",
+								"users-before-dates"
+							],
+							"query": [
+								{
+									"key": "fechaFinal",
+									"value": "2023-04-01"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar User Por Fecha Posterior",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/get/users-after-dates?fechaInicio=2023-05-01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"get",
+								"users-after-dates"
+							],
+							"query": [
+								{
+									"key": "fechaInicio",
+									"value": "2023-05-01"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/admin/delete/admin/{{id_admin}}",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"admin",
+								"delete",
+								"admin",
+								"{{id_admin}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/user/delete/{{id_usuario}}",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"user",
+								"delete",
+								"{{id_usuario}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Manager",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/admin/delete/manager/{{id_manager}}",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"admin",
+								"delete",
+								"manager",
+								"{{id_manager}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Register User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file\n",
+									"type": "file",
+									"src": "postman-cloud:///1eff3640-db5e-4b80-84ad-e7876b3a273e"
+								},
+								{
+									"key": "register",
+									"type": "file",
+									"src": "postman-cloud:///1eff3640-733a-4900-b9b5-b33bc791b155"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}/register",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editarme a mi",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file\n",
+									"type": "file",
+									"src": "postman-cloud:///1eff363c-1e58-40d0-9bdf-8ef6daf26f97"
+								},
+								{
+									"key": "edit",
+									"type": "file",
+									"src": "postman-cloud:///1eff363c-0c91-4450-82d1-638a1919c456"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}/edit/me",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"edit",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"012096\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/auth/verify",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"auth",
+								"verify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Login user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();\r",
+									"pm.collectionVariables.set(\"token_user\", json.token);\r",
+									"pm.collectionVariables.set(\"tokenRefresco_user\", json.tokenRefresco);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"johndoe\",\n    \"password\": \"hashedpassword1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/login",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get me",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/get/me",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"get",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Productos Por Nombre",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/productos/get/nombre?nombre=Eco",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"productos",
+								"get",
+								"nombre"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "Eco"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Productos Entre Precios",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/productos/get/precio-entre?min=20&max=100",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"productos",
+								"get",
+								"precio-entre"
+							],
+							"query": [
+								{
+									"key": "min",
+									"value": "20"
+								},
+								{
+									"key": "max",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Productos Por Precio Mayor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/productos/get/precio-mayor?min=50",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"productos",
+								"get",
+								"precio-mayor"
+							],
+							"query": [
+								{
+									"key": "min",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Productos Por Precio Menor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/productos/get/precio-menor?max=70",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"productos",
+								"get",
+								"precio-menor"
+							],
+							"query": [
+								{
+									"key": "max",
+									"value": "70"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Producto",
+			"item": [
+				{
+					"name": "Crear Producto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "postman-cloud:///1eff3694-0665-4a60-bdaa-a447ef8d613a"
+								},
+								{
+									"key": "crear",
+									"type": "file",
+									"src": "/C:/Users/sevil/Desktop/2DAM/AD/BioClick/bioclick/src/main/java/com/salesianostriana/bioclick/util/json/CrearProducto.json"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}/product/create",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Producto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/gamero.rofra24_trian/Downloads/path_logo.png"
+								},
+								{
+									"key": "editar",
+									"type": "file",
+									"src": "/C:/Users/gamero.rofra24_trian/Desktop/Acceso a Datos/BioClick/bioclick/src/main/java/com/salesianostriana/bioclick/util/json/EditarProducto.json"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}/product/edit/8e9f0123-4567-8901-ef01-901234567890",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"product",
+								"edit",
+								"8e9f0123-4567-8901-ef01-901234567890"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Productos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/product/get/all",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"product",
+								"get",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar un Producto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/product/get/def45678-9012-3456-ab78-901234567890",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"product",
+								"get",
+								"def45678-9012-3456-ab78-901234567890"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EliminarProducto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/product/delete/def45678-9012-3456-ab78-901234567890",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"product",
+								"delete",
+								"def45678-9012-3456-ab78-901234567890"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Impacto Ambiental",
+			"item": [
+				{
+					"name": "Crear impacto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productoId\": \"def45678-9012-3456-ab78-901234567890\",\r\n    \"reduccionCo2\": 19.7,\r\n    \"ahorroMateriales\": [\r\n        \"Plástico reciclado\",\r\n        \"Aluminio reciclado\",\r\n        \"Fibra de bambú\"\r\n        ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/impact/create",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"impact",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar impacto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productoId\": \"4a5b6c7d-8e9f-1234-abcd-567890123456\",\r\n    \"reduccionCo2\": 19.7,\r\n    \"ahorroMateriales\": [\r\n        \"Plástico reciclado\",\r\n        \"Aluminio reciclado\",\r\n        \"Acero reforzado reciclado\",\r\n        \"Fibra de bambú\"\r\n        ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/impact/edit/11bb4ae5-6813-4117-a61c-699896a375a2",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"impact",
+								"edit",
+								"11bb4ae5-6813-4117-a61c-699896a375a2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Todos los impactos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/impact/get/all",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"impact",
+								"get",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Un impacto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/impact/get/11bb4ae5-6813-4117-a61c-699896a375a2",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"impact",
+								"get",
+								"11bb4ae5-6813-4117-a61c-699896a375a2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categoria",
+			"item": [
+				{
+					"name": "Create Categoria",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombreCategoria\": \"Portátiles Gaming\",\r\n  \"categoriaPadreId\": \"6a7b8c9d-e89b-12d3-a456-426614174005\",\r\n  \"subcategoriaIds\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/category/create",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"category",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Categorias",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/category/get/all",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"category",
+								"get",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver una Categoria",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/category/get/1a2b3c4d-e89b-12d3-a456-426614174000",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"category",
+								"get",
+								"1a2b3c4d-e89b-12d3-a456-426614174000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Categoria",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombreCategoria\": \"Dispositivos Electrónicos\",\r\n    \"subcategoriaIds\": [\r\n        \"4a5b6c7d-e89b-12d3-a456-426614174003\",\r\n        \"5a6b7c8d-e89b-12d3-a456-426614174004\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/category/edit/1a2b3c4d-e89b-12d3-a456-426614174000",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"category",
+								"edit",
+								"1a2b3c4d-e89b-12d3-a456-426614174000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Categoria",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/category/delete/3a4b5c6d-e89b-12d3-a456-426614174002",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"category",
+								"delete",
+								"3a4b5c6d-e89b-12d3-a456-426614174002"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Valoracion",
+			"item": [
+				{
+					"name": "Crear Valoracion Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"puntuacion\": 4.5,\r\n  \"comentario\": \"El producto es excelente, de buena calidad y ecológico.\",\r\n  \"user_id\": \"d290f1ee-6c54-4b01-90e6-d701748f0851\",\r\n  \"producto_id\": \"def45678-9012-3456-ab78-901234567890\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/valoration/create",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"valoration",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Valoraciones Producto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/valoration/get/def45678-9012-3456-ab78-901234567890",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"valoration",
+								"get",
+								"def45678-9012-3456-ab78-901234567890"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Valoraciones Usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/valoration/get/me",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"valoration",
+								"get",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Valoracion Por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/valoration/get-one/81e2dcef-fda6-4f24-bb78-7e62c0b5e1c1",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"valoration",
+								"get-one",
+								"81e2dcef-fda6-4f24-bb78-7e62c0b5e1c1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Valoracion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"puntuacion\": 4.5,\r\n    \"comentario\": \"El producto es excelente, de buena calidad y ecológico.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/valoration/edit/{{id_valoracion}}",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"valoration",
+								"edit",
+								"{{id_valoracion}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Valoracion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/valoration/delete/{{id_valoracion}}",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"valoration",
+								"delete",
+								"{{id_valoracion}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Favoritos",
+			"item": [
+				{
+					"name": "Add Favorito",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/favorite/add/{{id_producto_favorito}}",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"favorite",
+								"add",
+								"{{id_producto_favorito}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Favorito",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/favorite/delete/{{id_producto_favorito}}",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"favorite",
+								"delete",
+								"{{id_producto_favorito}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver favoritos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASEURL}}/favorite/get/me",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"favorite",
+								"get",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Manager",
+			"item": [
+				{
+					"name": "POST Login Manager",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();\r",
+									"pm.collectionVariables.set(\"token_manager\", json.token);\r",
+									"pm.collectionVariables.set(\"tokenRefresco_manager\", json.refreshToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"lucasgreen\",\n    \"password\": \"hashedpassword11\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/login",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CrearManager",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/gamero.rofra24_trian/Downloads/01 ACT 1 WORK VOCABULARY.png"
+								},
+								{
+									"key": "crear",
+									"type": "file",
+									"src": "/C:/Users/gamero.rofra24_trian/Desktop/Acceso a Datos/BioClick/bioclick/src/main/java/com/salesianostriana/bioclick/util/json/CrearManager.json"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}/manager/create",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"manager",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Un manager",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{BASEURL}}/admin/get/manager/{{id_manager}}",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"admin",
+								"get",
+								"manager",
+								"{{id_manager}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Todos Los Manager",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_manager}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{BASEURL}}/manager/get/all",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"manager",
+								"get",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin Edita Manager",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "postman-cloud:///1eff38a8-0001-4460-8fba-4fa4c8cacc4b"
+								},
+								{
+									"key": "editar",
+									"type": "file",
+									"src": "postman-cloud:///1eff37a7-93a7-4a90-8e5e-5739ba9492d0"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}/admin/edit/manager/{{id_manager}}",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"admin",
+								"edit",
+								"manager",
+								"{{id_manager}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Manager Se Edita",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_manager}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "postman-cloud:///1eff363c-1e58-40d0-9bdf-8ef6daf26f97"
+								},
+								{
+									"key": "editar",
+									"type": "file",
+									"src": "postman-cloud:///1eff37ba-9a7d-4410-80bc-7ea03890ee3f"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASEURL}}/manager/edit/me",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"manager",
+								"edit",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "admin",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASEURL",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "token_user",
+			"value": ""
+		},
+		{
+			"key": "tokenRefresco_user",
+			"value": ""
+		},
+		{
+			"key": "token_admin",
+			"value": ""
+		},
+		{
+			"key": "refreshToken_admin",
+			"value": ""
+		},
+		{
+			"key": "tokenRefresco_admin",
+			"value": ""
+		},
+		{
+			"key": "token_manager",
+			"value": ""
+		},
+		{
+			"key": "tokenRefresco_manager",
+			"value": ""
+		},
+		{
+			"key": "id_producto",
+			"value": "8e9f0123-4567-8901-ef01-901234567890",
+			"type": "string"
+		},
+		{
+			"key": "id_impacto",
+			"value": "11bb4ae5-6813-4117-a61c-699896a375a2",
+			"type": "string"
+		},
+		{
+			"key": "id_categoria",
+			"value": "1a2b3c4d-e89b-12d3-a456-426614174000",
+			"type": "string"
+		},
+		{
+			"key": "id_valoracion",
+			"value": "81e2dcef-fda6-4f24-bb78-7e62c0b5e1c1",
+			"type": "string"
+		},
+		{
+			"key": "id_producto_favorito",
+			"value": "def45678-9012-3456-ab78-901234567890",
+			"type": "string"
+		},
+		{
+			"key": "id_manager",
+			"value": "789e4567-e89b-12d3-a456-426614174001",
+			"type": "string"
+		},
+		{
+			"key": "id_usuario",
+			"value": "21da98e6-938b-442e-bb45-785dee7c5678",
+			"type": "string"
+		},
+		{
+			"key": "id_admin",
+			"value": "dd4e888f-374d-4a1d-9b11-df68f68c9876",
+			"type": "string"
+		}
+	]
+}
