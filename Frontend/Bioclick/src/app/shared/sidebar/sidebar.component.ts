@@ -24,4 +24,9 @@ export class SidebarComponent {
     event.preventDefault();
     this.isProductsOpen = !this.isProductsOpen;
   }
+
+  isAdmin(): boolean {
+    const role = localStorage.getItem("role");
+    return role === "ROLE_ADMIN";
+  }
 }
