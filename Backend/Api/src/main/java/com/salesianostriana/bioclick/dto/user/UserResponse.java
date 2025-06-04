@@ -12,10 +12,11 @@ public record UserResponse(
         String token,
         @JsonInclude(JsonInclude.Include.NON_NULL)
         String refreshToken,
-        Boolean enabled) {
+        Boolean enabled,
+        String role) {
 
     public static UserResponse of (User user, String token, String refreshToken) {
         return new UserResponse(user.getId(), UserDto.of(user), token, refreshToken, user.getEnabled());
     }
-
+-
 }

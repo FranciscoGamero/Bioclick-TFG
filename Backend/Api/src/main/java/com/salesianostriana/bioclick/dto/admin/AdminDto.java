@@ -3,8 +3,10 @@ package com.salesianostriana.bioclick.dto.admin;
 import com.salesianostriana.bioclick.model.Admin;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public record AdminDto(
+        UUID id,
         String username,
         String correo,
         String fotoPerfilUrl,
@@ -14,6 +16,7 @@ public record AdminDto(
 
     public static AdminDto of(Admin admin, String urlImagen) {
         return new AdminDto(
+                admin.getId(),
                 admin.getUsername(),
                 admin.getCorreo(),
                 urlImagen,
@@ -22,6 +25,7 @@ public record AdminDto(
     }
     public static AdminDto of(Admin admin) {
         return new AdminDto(
+                admin.getId(),
                 admin.getUsername(),
                 admin.getCorreo(),
                 admin.getFotoPerfil(),
