@@ -338,6 +338,68 @@ public class AdminController {
                 .map(AdminDto::of));
     }
 
+    @Operation(summary = "Obtiene todos los managers")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se han encontrado managers",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AdminDto.class),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            {
+                                                "content": [
+                                                    {
+                                                        "username": "patriciajones",
+                                                        "correo": "patricia.jones@gmail.com",
+                                                        "fotoPerfil": "patriciajones.jpg",
+                                                        "ultimaAccion": "Borrado de usuario",
+                                                        "fechaUltimaAccion": "2025-02-22T16:38:12.7639036"
+                                                    },
+                                                    {
+                                                        "username": "jamesmoore",
+                                                        "correo": "james.moore@yahoo.com",
+                                                        "fotoPerfil": "jamesmoore.png",
+                                                        "ultimaAccion": "Borrado de usuario",
+                                                        "fechaUltimaAccion": "2025-02-22T16:38:12.7639036"
+                                                    }
+                                                ],
+                                                "pageable": {
+                                                    "pageNumber": 0,
+                                                    "pageSize": 4,
+                                                    "sort": {
+                                                        "empty": true,
+                                                        "sorted": false,
+                                                        "unsorted": true
+                                                    },
+                                                    "offset": 0,
+                                                    "paged": true,
+                                                    "unpaged": false
+                                                },
+                                                "last": true,
+                                                "totalPages": 1,
+                                                "totalElements": 2,
+                                                "first": true,
+                                                "size": 4,
+                                                "number": 0,
+                                                "sort": {
+                                                    "empty": true,
+                                                    "sorted": false,
+                                                    "unsorted": true
+                                                },
+                                                "numberOfElements": 2,
+                                                "empty": false
+                                            }
+                                """
+                            )}
+                    )}),
+    })
+    @GetMapping("/get/managers")
+    public PaginacionDto<ManagerDto> listarManagers(@PageableDefault(page=0, size=4) Pageable pageable, @AuthenticationPrincipal Admin admin) {
+
+        return PaginacionDto.of(adminService.buscarManagers(pageable, admin.getId())
+                .map(manager -> ManagerDto.of(manager, getImageUrl(manager.getFotoPerfil()))));
+    }
+
     @Operation(summary = "Obtiene un manager por su Id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
