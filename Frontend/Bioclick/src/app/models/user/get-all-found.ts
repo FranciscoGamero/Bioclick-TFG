@@ -1,4 +1,5 @@
-export interface AllUsersResponse {
+
+export interface AllFoundResponse {
   numPagina: number
   tamanioPagina: number
   elementosEncontrados: number

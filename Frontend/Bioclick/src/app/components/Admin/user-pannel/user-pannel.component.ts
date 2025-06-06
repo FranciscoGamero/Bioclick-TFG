@@ -9,7 +9,7 @@ import { AllUsersResponse } from '../../../models/user/get-all-users-interface';
   styleUrls: ['./user-pannel.component.scss']
 })
 export class UserPannelComponent implements OnInit {
-  isExpanded: boolean = false;
+  isExpanded: boolean = true;
   name: string = '';
   usersFound: AllUsersResponse | undefined = undefined;
   page: number = 1;
@@ -22,7 +22,7 @@ export class UserPannelComponent implements OnInit {
 limpiarUrlFoto(url: string | undefined | null): string {
   const prefix = "http://localhost:8080/download/";
   if (!url) {
-    return ''; // o una imagen por defecto si prefieres
+    return '';
   }
   if (url.startsWith(prefix)) {
     return url.substring(prefix.length);
