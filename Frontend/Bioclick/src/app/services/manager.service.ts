@@ -12,7 +12,7 @@ export class ManagerService {
   constructor(private http: HttpClient) { }
 
   getAllManagers(page: number): Observable<AllManagersResponse> {
-    const url = `${environment.apiBaseUrl}/admin/get/users`;
+    const url = `${environment.apiBaseUrl}/admin/get/managers`;
     const header = {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('token')}`
