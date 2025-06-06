@@ -16,8 +16,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminPannelComponent } from './components/Admin/admin-pannel/admin-pannel.component';
-import { ManagerPannelComponent } from './components/Admin/manager-pannel/manager-pannel.component';
+import { EditManagerDialogComponent, ManagerPannelComponent } from './components/Admin/manager-pannel/manager-pannel.component';
 import { AllPannelComponent } from './components/Admin/all-pannel/all-pannel.component';
+import {MatDialogModule} from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +29,7 @@ import { AllPannelComponent } from './components/Admin/all-pannel/all-pannel.com
     AdminPannelComponent,
     ManagerPannelComponent,
     AllPannelComponent,
+    EditManagerDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,8 @@ import { AllPannelComponent } from './components/Admin/all-pannel/all-pannel.com
     FormsModule,
     MatInputModule,
     MatCardModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    MatDialogModule,
   ],
   providers: [provideHttpClient(), provideAnimationsAsync()],
   bootstrap: [AppComponent]
