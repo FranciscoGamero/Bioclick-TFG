@@ -1,6 +1,6 @@
 <my-sidebar [isExpanded]="isExpanded" (toggleSidebar)="handleSidebarToggle()" />
 <div class="content mt-5" [ngClass]="{ 'sidebarExpanded': isExpanded }">
-    <h2>Administradores</h2>
+    <h2>Todos</h2>
     <div class="mb-5">
         <form method="post" class="h-auto">
             <div class="h-50 w-auto d-flex flex-column mt-5 mb-5">
@@ -12,21 +12,20 @@
                 </div>
             </div>
         </form>
-        <button class="btn btnForm mt-5" type="submit">Agregar Nuevo</button>
 
     </div>
     <div class="row bg-white pannel align-content-between mt-5 pt-5 mb-2">
-        <div *ngFor="let user of adminsFound?.contenido" class="col-3 heightCol mb-4">
-            <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card"
-                (click)="onCardClick(user.id)">
+        <div *ngFor="let found of allFound?.contenido" class="col-3 heightCol mb-4">
+            <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card {{ found.role }}"
+                (click)="onCardClick(found.id)">
                 <div class="d-flex">
                     <mat-card-header>
                         <div mat-card-avatar>
-                            <img mat-card-image class="imgSize" [src]="limpiarUrlFoto(user.fotoPerfilUrl)">
+                            <img mat-card-image class="imgSize" [src]="limpiarUrlFoto(found.fotoPerfilUrl)">
                         </div>
                     </mat-card-header>
                     <div class="d-flex flex-column justify-content-between w-100">
-                        <p class="m-0 text-center text-white fw-semibold">{{ user.username }}</p>
+                        <p class="m-0 text-center text-white fw-semibold">{{ found.username }}</p>
                         <div class="d-flex w-100 justify-content-between">
                             <i class="bi bi-toggle2-on ps-3 mt-3 text-white"></i>
                             <div ngbDropdown class="d-inline-block text-end me-3">
@@ -45,6 +44,6 @@
             </mat-card>
         </div>
     </div>
-    <ngb-pagination class="justify-content-center" [collectionSize]="adminsFound!.elementosEncontrados" [(page)]="page"
-        [boundaryLinks]="true" (pageChange)="getAdmins()" />
+    <ngb-pagination class="justify-content-center" [collectionSize]="allFound!.elementosEncontrados" [(page)]="page"
+        [boundaryLinks]="true" (pageChange)="foundAll()" />
 </div>
