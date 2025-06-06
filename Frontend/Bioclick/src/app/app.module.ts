@@ -16,6 +16,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminPannelComponent } from './components/Admin/admin-pannel/admin-pannel.component';
+import { ManagerPannelComponent } from './components/Admin/manager-pannel/manager-pannel.component';
+import { AllPannelComponent } from './components/Admin/all-pannel/all-pannel.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +26,8 @@ import { AdminPannelComponent } from './components/Admin/admin-pannel/admin-pann
     SidebarComponent,
     UserPannelComponent,
     AdminPannelComponent,
+    ManagerPannelComponent,
+    AllPannelComponent,
   ],
   imports: [
     BrowserModule,

@@ -18,7 +18,7 @@
             </div>
             <div class="children" *ngIf="isUserOpen">
                 <div class="link" *ngIf="isAdmin">
-                    <div class="content" [routerLink]="['/configuration']" [queryParams]="{ 'child': '1' }"
+                    <div class="content" [routerLink]="['/all-list']" [queryParams]="{ 'child': '1' }"
                         [routerLinkActive]="'active'">
                         <div class="icon">
                             <i class="bi bi-circle text-black"></i>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="link">
-                    <div class="content" [routerLink]="['/configuration']" [queryParams]="{ 'child': '3' }"
+                    <div class="content" [routerLink]="['/manager-list']" [queryParams]="{ 'child': '3' }"
                         [routerLinkActive]="'active'">
                         <div class="icon">
                             <i class="bi bi-circle text-warning"></i>

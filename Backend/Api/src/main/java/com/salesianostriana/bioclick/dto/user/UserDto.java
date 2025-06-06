@@ -12,15 +12,16 @@ public record UserDto(
         String correo,
         String fotoPerfilUrl,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd:HH-mm-ss")
-        LocalDateTime fechaRegistro
-) {
+        LocalDateTime fechaRegistro,
+        String role) {
     public static UserDto of(User user, String fotoPerfil){
         return new UserDto(
                 user.getId(),
                 user.getUsername(),
                 user.getCorreo(),
                 fotoPerfil,
-                user.getFechaRegistro());
+                user.getFechaRegistro(),
+                user.getRole());
     }
     public static UserDto of(User user){
         return new UserDto(
@@ -28,6 +29,7 @@ public record UserDto(
                 user.getUsername(),
                 user.getCorreo(),
                 user.getFotoPerfil(),
-                user.getFechaRegistro());
+                user.getFechaRegistro(),
+                user.getRole());
     }
 }

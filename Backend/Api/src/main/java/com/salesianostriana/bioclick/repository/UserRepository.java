@@ -1,5 +1,6 @@
 package com.salesianostriana.bioclick.repository;
 
+import com.salesianostriana.bioclick.model.ImpactoAmbiental;
 import com.salesianostriana.bioclick.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,11 @@ public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificat
 
     Optional<User> findFirstByVerificationCode(String verificationCode);
 
+    @Query("""
+            select u from User u
+            where u.role = 'ROLE_USUARIO'
+            """)
+    Page<User> buscarSoloUser(Pageable pageable);
 
     boolean existsByUsername(String s);
 

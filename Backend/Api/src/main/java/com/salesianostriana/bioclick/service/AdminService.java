@@ -107,7 +107,26 @@ public class AdminService {
         }).orElseThrow(() -> new EntityNotFoundException("No se pudo editar al admin con id: " + editAdminDto));
     }
 
+    public Page<User> buscarTodo(Pageable pageable, UUID adminId, boolean borrado) {
 
+        Admin adminCreador = adminRepository.findById(adminId)
+                .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado al admin"));
+
+        String metodoActual = Thread.currentThread().getStackTrace()[1].getMethodName();
+        adminCreador.setUltimaAccion(metodoActual);
+        adminCreador.setFechaUltimaAccion(LocalDateTime.now());
+        adminRepository.save(adminCreador);
+
+        Session session = entityManager.unwrap(Session.class);
+        Filter filter = session.enableFilter("userBorradoFiltro");
+        filter.setParameter("isBorrado", borrado);
+        Page<User> paginaResultado = userRepository.findAll(pageable);
+        session.disableFilter("userBorradoFiltro");
+        if (!paginaResultado.isEmpty())
+            return paginaResultado;
+        else
+            throw new EntityNotFoundException("No hay usuarios encontrados");
+    }
 
 
     public Page<User> buscarUsuarios(Pageable pageable, UUID adminId, boolean borrado) {
@@ -123,7 +142,7 @@ public class AdminService {
         Session session = entityManager.unwrap(Session.class);
         Filter filter = session.enableFilter("userBorradoFiltro");
         filter.setParameter("isBorrado", borrado);
-        Page<User> paginaResultado = userRepository.findAll(pageable);
+        Page<User> paginaResultado = userRepository.buscarSoloUser(pageable);
         session.disableFilter("userBorradoFiltro");
         if (!paginaResultado.isEmpty())
             return paginaResultado;

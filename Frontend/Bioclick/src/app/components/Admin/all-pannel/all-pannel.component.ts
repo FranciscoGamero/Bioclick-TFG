@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AllFoundResponse } from '../../../models/user/get-all-found';
 import { AdminService } from '../../../services/admins.service';
-import { AllAdminsResponse } from '../../../models/user/get-all-admins-interface';
 
 @Component({
-  selector: 'app-admin-pannel',
-  templateUrl: './admin-pannel.component.html',
-  styleUrl: './admin-pannel.component.scss'
+  selector: 'app-all-pannel',
+  templateUrl: './all-pannel.component.html',
+  styleUrl: './all-pannel.component.scss'
 })
-export class AdminPannelComponent {
+export class AllPannelComponent implements OnInit {
   isExpanded: boolean = true;
   name: string = '';
-  adminsFound: AllAdminsResponse | undefined = undefined;
+  allFound: AllFoundResponse | undefined = undefined;
   page: number = 1;
   ngOnInit(): void {
-    this.getAdmins();
+    this.foundAll();
   }
   constructor(private adminService: AdminService) { }
 
@@ -27,12 +27,10 @@ export class AdminPannelComponent {
   }
   return url;
 }
-  getAdmins() {
-    this.adminService.getAllAdmins(this.page-1).subscribe({
+  foundAll() {
+    this.adminService.getAll(this.page-1).subscribe({
       next: (response) => {
-        this.adminsFound = response;
-        console.log(JSON.stringify(this.adminsFound?.contenido[0]));
-
+        this.allFound = response;
       },
       error: (error) => {
         console.error('Error fetching users:', error);
