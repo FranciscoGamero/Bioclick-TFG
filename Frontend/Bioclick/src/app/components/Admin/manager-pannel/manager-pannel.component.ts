@@ -31,14 +31,10 @@ export class ManagerPannelComponent {
 
 limpiarUrlFoto(url: string | undefined | null): string {
   if (!url) return '';
-  // Si la URL contiene randomuser.me, elimina el prefijo del backend si lo tiene
   if (url.includes('randomuser.me')) {
-    // Elimina el prefijo si existe
     return url.replace('http://localhost:8080/download/', '');
   }
-  // Si es una URL absoluta (http o https), devuélvela tal cual
   if (url.startsWith('http')) return url;
-  // Si es un nombre de archivo, añade el dominio del backend
   return `http://localhost:8080/download/${url}`;
 }
   getManagers() {

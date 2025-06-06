@@ -11,7 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { RegisterFormComponent } from './components/RegisterForm/RegisterForm.component';
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { UserPannelComponent } from './components/Admin/user-pannel/user-pannel.component';
+import { EditUserDialogComponent, UserPannelComponent } from './components/Admin/user-pannel/user-pannel.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
@@ -30,6 +30,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     ManagerPannelComponent,
     AllPannelComponent,
     EditManagerDialogComponent,
+    EditUserDialogComponent
   ],
   imports: [
     BrowserModule,

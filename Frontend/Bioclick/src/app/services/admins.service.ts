@@ -32,12 +32,7 @@ export class AdminService {
       .set('page', page)
     return this.http.get<AllFoundResponse>(url, { headers: header, params });
   }
-  async updateManager(
-    managerId: string,
-    username: string,
-    correo: string,
-    password: string,
-    file: File | null,
+  async updateManager(managerId: string, username: string, correo: string, password: string, file: File | null,
     fotoPerfilUrl: string
   ): Promise<Observable<any>> {
     const url = `${environment.apiBaseUrl}/admin/edit/manager/${managerId}`;
