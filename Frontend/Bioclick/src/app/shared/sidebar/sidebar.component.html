@@ -17,8 +17,8 @@
                 <span class="dropdown-arrow" [ngClass]="{ 'open': isUserOpen }">&#9662;</span>
             </div>
             <div class="children" *ngIf="isUserOpen">
-                <div class="link">
-                    <div class="content" [routerLink]="['/configuration']" [queryParams]="{ 'child': '1' }"
+                <div class="link" *ngIf="isAdmin">
+                    <div class="content" [routerLink]="['/all-list']" [queryParams]="{ 'child': '1' }"
                         [routerLinkActive]="'active'">
                         <div class="icon">
                             <i class="bi bi-circle text-black"></i>
@@ -26,8 +26,8 @@
                         <div class="title">Todos</div>
                     </div>
                 </div>
-                <div class="link">
-                    <div class="content" [routerLink]="['/configuration']" [queryParams]="{ 'child': '2' }"
+                <div class="link" *ngIf="isAdmin">
+                    <div class="content" [routerLink]="['/admin-list']" [queryParams]="{ 'child': '2' }"
                         [routerLinkActive]="'active'">
                         <div class="icon">
                             <i class="bi bi-circle text-success"></i>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="link">
-                    <div class="content" [routerLink]="['/configuration']" [queryParams]="{ 'child': '3' }"
+                    <div class="content" [routerLink]="['/manager-list']" [queryParams]="{ 'child': '3' }"
                         [routerLinkActive]="'active'">
                         <div class="icon">
                             <i class="bi bi-circle text-warning"></i>
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="link">
-                    <div class="content" [routerLink]="['/configuration']" [queryParams]="{ 'child': '3' }"
+                    <div class="content" [routerLink]="['/user-list']" [queryParams]="{ 'child': '3' }"
                         [routerLinkActive]="'active'">
                         <div class="icon">
                             <i class="bi bi-circle text-info"></i>

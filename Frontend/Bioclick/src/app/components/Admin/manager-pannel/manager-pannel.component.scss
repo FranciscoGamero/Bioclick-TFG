@@ -26,12 +26,27 @@
   height: 100px;
 }
 .clickable-card {
-  background-color: #59cea0;
+  background-color: #C0DD1C;
   transition: box-shadow 0.2s, transform 0.2s;
   cursor: pointer;
 }
 .clickable-card:hover {
-  box-shadow: 0 8px 24px rgba(89, 206, 160, 0.18), 0 1.5px 6px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 24px rgba(114, 191, 68, 0.18), 0 1.5px 6px rgba(0,0,0,0.08);
   transform: scale(1.03);
   z-index: 2;
+}
+.btnForm {
+    width: 15%;
+    max-width: 460px;
+    height: 65px;
+    border-radius: 1rem;
+    color: #fff;
+    background-color: #C0DD1C;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.10);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    display: block;
 }
