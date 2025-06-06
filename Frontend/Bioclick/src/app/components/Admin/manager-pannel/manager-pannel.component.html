@@ -14,7 +14,7 @@
         </form>
         <button class="btn btnForm mt-5" type="submit">Agregar Nuevo</button>
     </div>
-    <div class="row bg-white pannel align-content-between mt-5 pt-5 mb-2">
+    <div class="row bg-white pannel align-content-between mt-5 pt-5">
         <div *ngFor="let user of managersFound?.contenido" class="col-3 heightCol mb-4">
             <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card"
                 (click)="onCardClick(user.id)">
@@ -34,7 +34,9 @@
                                     Ver opciones
                                 </button>
                                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                    <button ngbDropdownItem>Editar</button>
+                                    <button ngbDropdownItem
+                                        (click)="openEditDialog({ id: user.id, username: user.username, correo: user.correo, fotoPerfilUrl: limpiarUrlFoto(user.fotoPerfilUrl), password: user.password })">
+                                        >Editar</button>
                                     <button ngbDropdownItem>Eliminar</button>
                                 </div>
                             </div>
@@ -44,6 +46,6 @@
             </mat-card>
         </div>
     </div>
-    <ngb-pagination class="justify-content-center" [collectionSize]="managersFound!.elementosEncontrados" [(page)]="page"
-        [boundaryLinks]="true" (pageChange)="getManagers()" />
+    <ngb-pagination class="justify-content-center" [collectionSize]="managersFound!.elementosEncontrados"
+        [(page)]="page" [boundaryLinks]="true" (pageChange)="getManagers()" />
 </div>

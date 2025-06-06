@@ -7,9 +7,11 @@ export interface AllManagersResponse {
 }
 
 export interface Contenido {
-  id: string
-  username: string
-  correo: string
-  fotoPerfilUrl: string
-  fechaRegistro: string
+  id: string;
+  username: string;
+  correo: string;
+  password: string;
+  fotoPerfilUrl: string;
+  ultimaAccion: string;
+  fechaUltimaAccion: string;
 }
