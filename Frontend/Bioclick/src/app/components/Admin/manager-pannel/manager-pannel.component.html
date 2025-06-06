@@ -1,6 +1,6 @@
 <my-sidebar [isExpanded]="isExpanded" (toggleSidebar)="handleSidebarToggle()" />
 <div class="content mt-5" [ngClass]="{ 'sidebarExpanded': isExpanded }">
-    <h2>Usuarios</h2>
+    <h2>Managers</h2>
     <div class="mb-5">
         <form method="post" class="h-auto">
             <div class="h-50 w-auto d-flex flex-column mt-5 mb-5">
@@ -12,9 +12,10 @@
                 </div>
             </div>
         </form>
+        <button class="btn btnForm mt-5" type="submit">Agregar Nuevo</button>
     </div>
-    <div class="row bg-white pannel align-content-between mt-5 pt-5">
-        <div *ngFor="let user of usersFound?.contenido" class="col-3 heightCol mb-4">
+    <div class="row bg-white pannel align-content-between mt-5 pt-5 mb-2">
+        <div *ngFor="let user of managersFound?.contenido" class="col-3 heightCol mb-4">
             <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card"
                 (click)="onCardClick(user.id)">
                 <div class="d-flex">
@@ -43,6 +44,6 @@
             </mat-card>
         </div>
     </div>
-    <ngb-pagination class="justify-content-center" [collectionSize]="usersFound!.elementosEncontrados" [(page)]="page"
-        [boundaryLinks]="true" (pageChange)="getUsers()" />
+    <ngb-pagination class="justify-content-center" [collectionSize]="managersFound!.elementosEncontrados" [(page)]="page"
+        [boundaryLinks]="true" (pageChange)="getManagers()" />
 </div>

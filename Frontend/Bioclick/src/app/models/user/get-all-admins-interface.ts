@@ -1,10 +1,9 @@
-export interface AllUsersResponse {
+export interface AllAdminsResponse {
   numPagina: number
   tamanioPagina: number
   elementosEncontrados: number
   paginasTotales: number
   contenido: Contenido[]
-  role: String
 }
 
 export interface Contenido {
@@ -13,6 +12,4 @@ export interface Contenido {
   correo: string
   fotoPerfilUrl: string
   fechaRegistro: string
-  role: String
-
 }
