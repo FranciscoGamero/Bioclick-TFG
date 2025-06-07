@@ -25,16 +25,11 @@ import java.util.Objects;
 @Table(name="admin_entity")
 @SuperBuilder
 @AllArgsConstructor
-@SQLDelete(sql = "UPDATE admin_entity SET borrado = true WHERE id=?")
-@FilterDef(name = "adminBorradoFiltro", parameters = @ParamDef(name = "isBorrado", type = Boolean.class))
-@Filter(name = "adminBorradoFiltro", condition = "borrado = :isBorrado")
 public class Admin extends User{
 
 
     private String ultimaAccion;
     private LocalDateTime fechaUltimaAccion;
-
-    private boolean borrado = false;
 
     @OneToMany(mappedBy = "creadoPor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Producto> productosCreados;
