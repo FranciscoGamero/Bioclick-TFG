@@ -37,7 +37,8 @@
                                         <button ngbDropdownItem
                                             (click)="openEditDialog({ id: user.id, username: user.username, correo: user.correo, fotoPerfilUrl: limpiarUrlFoto(user.fotoPerfilUrl), password: user.password })">
                                             Editar</button>
-                                        <button ngbDropdownItem>
+                                        <button ngbDropdownItem
+                                            (click)="openDeleteDialog({ id: user.id }); $event.stopPropagation()">
                                             Eliminar
                                         </button>
                                     </div>

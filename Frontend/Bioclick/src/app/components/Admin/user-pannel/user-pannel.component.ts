@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dial
 import { AllUsersResponse } from '../../../models/user/get-all-users-interface';
 import { UserService } from '../../../services/user.service';
 import { EditManagerDialogComponent } from '../manager-pannel/manager-pannel.component';
+import { AdminService } from '../../../services/admins.service';
 
 export interface EditUserData {
   id: string;
@@ -10,6 +11,9 @@ export interface EditUserData {
   correo: string;
   password: string;
   fotoPerfilUrl?: string;
+}
+export interface DeleteUserData {
+  id: string;
 }
 
 @Component({
@@ -27,25 +31,23 @@ export class UserPannelComponent implements OnInit {
     this.getUsers();
   }
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private adminService: AdminService) { }
 
-limpiarUrlFoto(url: string | undefined | null): string {
-  if (!url) return '';
+  limpiarUrlFoto(url: string | undefined | null): string {
+    if (!url) return '';
 
-  if (url.includes('randomuser.me')) {
-    return url.replace('http://localhost:8080/download/', '');
+    if (url.includes('randomuser.me')) {
+      return url.replace('http://localhost:8080/download/', '');
+    }
+
+    if (url.startsWith('http')) return url;
+
+    return `http://localhost:8080/download/${url}`;
   }
-
-  if (url.startsWith('http')) return url;
-
-  return `http://localhost:8080/download/${url}`;
-}
   getUsers() {
     this.userService.getAllUsers(this.page - 1).subscribe({
       next: (response) => {
         this.usersFound = response;
-        console.log(JSON.stringify(this.usersFound?.contenido[0]));
-
       },
       error: (error) => {
         console.error('Error fetching users:', error);
@@ -86,6 +88,27 @@ limpiarUrlFoto(url: string | undefined | null): string {
             }
           });
         })
+      }
+    });
+  }
+  openDeleteDialog(user: { id: string; }): void {
+    const dialogRef = this.dialog.open(DeleteUserDialogComponent, {
+      width: '800px',
+      data: { id: user.id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.userService.deleteUser(
+          result.id
+        ).subscribe({
+          next: () => {
+            this.getUsers();
+          },
+          error: (error: Error) => {
+            console.error(error);
+          }
+        });
       }
     });
   }
@@ -140,5 +163,37 @@ export class EditUserDialogComponent {
     if (event && event.target.files.length > 0) {
       this.selectedFile = event.target.files[0];
     }
+  }
+}
+@Component({
+  selector: 'app-delete-user-dialog',
+  template: `
+    <h2 mat-dialog-title>Eliminar Usuario</h2>
+    <mat-dialog-content>
+      <form class="w-100 d-flex flex-column align-items-center justify-content-center">
+        <p>¿Estás seguro de que deseas eliminar este usuario?</p>
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+      <button class="btn btn-danger mx-auto" (click)="onCancel()">Cancelar</button>
+      <button class="btn btn-success mx-auto" (click)="onSave()">Eliminar</button>
+    </mat-dialog-actions>
+  `
+})
+
+export class DeleteUserDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<DeleteUserDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DeleteUserData
+  ) { }
+
+  onCancel(): void {
+    this.dialogRef.close();
+  }
+
+  onSave(): void {
+    this.dialogRef.close({
+      ...this.data,
+    });
   }
 }
