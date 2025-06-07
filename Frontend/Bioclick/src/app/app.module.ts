@@ -19,6 +19,7 @@ import { AdminPannelComponent } from './components/Admin/admin-pannel/admin-pann
 import { DeleteManagerDialogComponent, EditManagerDialogComponent, ManagerPannelComponent } from './components/Admin/manager-pannel/manager-pannel.component';
 import { AllPannelComponent } from './components/Admin/all-pannel/all-pannel.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import { ProductPannelComponent } from './components/Common/product-pannel/product-pannel.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +34,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     EditUserDialogComponent,
     DeleteManagerDialogComponent,
     DeleteUserDialogComponent,
+    ProductPannelComponent,
   ],
   imports: [
     BrowserModule,
