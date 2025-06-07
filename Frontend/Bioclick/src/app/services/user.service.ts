@@ -30,20 +30,7 @@ export class UserService {
     const editData = { username, correo, password };
 
     let fileToSend = file;
-
-    // Si no hay archivo nuevo, intenta descargar la imagen actual
-    if (!fileToSend && fotoPerfilUrl) {
-      try {
-        const response = await fetch(fotoPerfilUrl);
-        if (!response.ok) throw new Error('No se pudo descargar la imagen');
-        const blob = await response.blob();
-        fileToSend = new File([blob], 'profile.jpg', { type: blob.type });
-      } catch (e) {
-        alert('No se puede mantener la imagen actual porque está alojada en un servidor externo. Por favor, selecciona una nueva foto de perfil.');
-        throw e; // Detén el proceso, el usuario debe subir una imagen
-      }
-    }
-
+    
     formData.append('file', fileToSend!);
 
     formData.append('edit', new Blob([JSON.stringify(editData)], { type: 'application/json' }));
@@ -53,5 +40,14 @@ export class UserService {
     };
 
     return this.http.put(url, formData, { headers: header });
+  }
+  deleteUser(userId: string): Observable<any> {
+    const url = `${environment.apiBaseUrl}/user/delete/${userId}`;
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+    console.log(url, header)
+    return this.http.delete(url, { headers: header });
   }
 }
