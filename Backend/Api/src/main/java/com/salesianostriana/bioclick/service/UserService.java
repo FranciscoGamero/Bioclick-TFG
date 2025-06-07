@@ -3,10 +3,7 @@ package com.salesianostriana.bioclick.service;
 import com.salesianostriana.bioclick.dto.user.CreateUserRequest;
 import com.salesianostriana.bioclick.dto.VerificationCodeRequest.VerificationCodeRequest;
 import com.salesianostriana.bioclick.dto.user.EditUserDto;
-import com.salesianostriana.bioclick.model.Categoria;
-import com.salesianostriana.bioclick.model.FileMetadata;
-import com.salesianostriana.bioclick.model.Producto;
-import com.salesianostriana.bioclick.model.User;
+import com.salesianostriana.bioclick.model.*;
 import com.salesianostriana.bioclick.repository.CategoriaRepository;
 import com.salesianostriana.bioclick.repository.ProductoRepository;
 import com.salesianostriana.bioclick.repository.UserRepository;
@@ -177,4 +174,5 @@ public class UserService {
     public void eliminarUsuarioPorId(UUID id) {
         userRepository.deleteById(id);
     }
+
 }
