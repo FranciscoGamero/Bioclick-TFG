@@ -84,7 +84,13 @@ public class ManagerService {
 
     public Manager editaManager(UUID adminId, UUID managerId, EditManagerDto editManagerDto, MultipartFile file) {
 
-        FileMetadata fileMetadata = storageService.store(file);
+        FileMetadata fileMetadata;
+
+        if (!file.isEmpty()) {
+            fileMetadata = storageService.store(file);
+        } else {
+            fileMetadata = null;
+        }
 
         Admin adminCreador = adminRepository.findById(adminId)
                 .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado al admin"));
@@ -95,14 +101,17 @@ public class ManagerService {
         adminRepository.save(adminCreador);
 
         return managerRepository.findById(managerId).map(old -> {
-
             old.setUsername(editManagerDto.username());
             old.setCorreo(editManagerDto.correo());
-            old.setFotoPerfil(fileMetadata.getFilename());
-            System.out.println(old.getId());
+
+            if (fileMetadata != null) {
+                old.setFotoPerfil(fileMetadata.getFilename());
+            }
+
             return managerRepository.save(old);
         }).orElseThrow(() -> new EntityNotFoundException("No se pudo editar al manager con id: " + editManagerDto));
     }
+
 
     public Manager managerEditarse(EditManagerDto editManagerDto, Manager manager, MultipartFile file) {
 
@@ -118,12 +127,10 @@ public class ManagerService {
 
     public Page<Manager> buscarTodos(UUID id, Pageable pageable, boolean borrado) {
 
-        User u = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("No se ha encontrado al usuario"));
+        User u = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado al usuario"));
 
-        if(u.getClass().equals(Admin.class)){
-            Admin adminCreador = adminRepository.findById(u.getId())
-                    .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado al admin"));
-
+        if (u instanceof Admin adminCreador) {
             String metodoActual = Thread.currentThread().getStackTrace()[1].getMethodName();
             adminCreador.setUltimaAccion(metodoActual);
             adminCreador.setFechaUltimaAccion(LocalDateTime.now());
@@ -131,11 +138,14 @@ public class ManagerService {
         }
 
         Session session = entityManager.unwrap(Session.class);
-        Filter filter = session.enableFilter("managerBorradoFiltro");
+        Filter filter = session.enableFilter("userBorradoFiltro");
         filter.setParameter("isBorrado", borrado);
-        Page<Manager> listaManager = managerRepository.findAll(pageable);
-        session.disableFilter("managerBorradoFiltro");
-        return listaManager;
+
+        try {
+            return managerRepository.findAll(pageable);
+        } finally {
+            session.disableFilter("userBorradoFiltro");
+        }
     }
     public void eliminarManager(UUID managerId, UUID adminId){
 
