@@ -65,4 +65,14 @@ export class AdminService {
 
     return this.http.put(url, formData, { headers: header });
   }
+
+  deleteManager(managerId: string): Observable<any> {
+    const url = `${environment.apiBaseUrl}/admin/delete/manager/${managerId}`;
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+    console.log(url, header)
+    return this.http.delete(url, { headers: header });
+  }
 }

@@ -1,5 +1,5 @@
 <my-sidebar [isExpanded]="isExpanded" (toggleSidebar)="handleSidebarToggle()" />
-<div class="content mt-5" [ngClass]="{ 'sidebarExpanded': isExpanded }">
+<div class="content mt-5" [ngClass]="{ 'sidebarExpanded': isExpanded }" style="min-height: 60vh;">
     <h2>Managers</h2>
     <div class="mb-5">
         <form method="post" class="h-auto">
@@ -15,37 +15,49 @@
         <button class="btn btnForm mt-5" type="submit">Agregar Nuevo</button>
     </div>
     <div class="row bg-white pannel align-content-between mt-5 pt-5">
-        <div *ngFor="let user of managersFound?.contenido" class="col-3 heightCol mb-4">
-            <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card"
-                (click)="onCardClick(user.id)">
-                <div class="d-flex">
-                    <mat-card-header>
-                        <div mat-card-avatar>
-                            <img mat-card-image class="imgSize" [src]="limpiarUrlFoto(user.fotoPerfilUrl)">
-                        </div>
-                    </mat-card-header>
-                    <div class="d-flex flex-column justify-content-between w-100">
-                        <p class="m-0 text-center text-white fw-semibold">{{ user.username }}</p>
-                        <div class="d-flex w-100 justify-content-between">
-                            <i class="bi bi-toggle2-on ps-3 mt-3 text-white"></i>
-                            <div ngbDropdown class="d-inline-block text-end me-3">
-                                <button type="button" class="btn btn-outline-light" id="dropdownBasic1"
-                                    ngbDropdownToggle>
-                                    Ver opciones
-                                </button>
-                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                    <button ngbDropdownItem
-                                        (click)="openEditDialog({ id: user.id, username: user.username, correo: user.correo, fotoPerfilUrl: limpiarUrlFoto(user.fotoPerfilUrl), password: user.password })">
-                                        Editar</button>
-                                    <button ngbDropdownItem>Eliminar</button>
+        <ng-container *ngIf="managersFound?.contenido?.length; else noManagers">
+            <div *ngFor="let user of managersFound?.contenido" class="col-3 heightCol mb-4">
+                <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card"
+                    (click)="onCardClick(user.id)">
+                    <div class="d-flex">
+                        <mat-card-header>
+                            <div mat-card-avatar>
+                                <img mat-card-image class="imgSize" [src]="limpiarUrlFoto(user.fotoPerfilUrl)">
+                            </div>
+                        </mat-card-header>
+                        <div class="d-flex flex-column justify-content-between w-100">
+                            <p class="m-0 text-center text-white fw-semibold">{{ user.username }}</p>
+                            <div class="d-flex w-100 justify-content-between">
+                                <i class="bi bi-toggle2-on ps-3 mt-3 text-white"></i>
+                                <div ngbDropdown class="d-inline-block text-end me-3">
+                                    <button type="button" class="btn btn-outline-light" id="dropdownBasic1"
+                                        ngbDropdownToggle>
+                                        Ver opciones
+                                    </button>
+                                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                        <button ngbDropdownItem
+                                            (click)="openEditDialog({ id: user.id, username: user.username, correo: user.correo, fotoPerfilUrl: limpiarUrlFoto(user.fotoPerfilUrl), password: user.password })">
+                                            Editar</button>
+                                        <button ngbDropdownItem
+                                            (click)="openDeleteDialog({ id: user.id }); $event.stopPropagation()">
+                                            Eliminar
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </mat-card>
-        </div>
+                </mat-card>
+            </div>
+        </ng-container>
+        <ng-template #noManagers>
+            <div class="d-flex justify-content-center align-items-center w-100" style="min-height: 300px;">
+                <span class="text-center text-muted" style="font-size: 1.3rem;">
+                    No hay managers para mostrar.
+                </span>
+            </div>
+        </ng-template>
     </div>
-    <ngb-pagination class="justify-content-center" [collectionSize]="managersFound!.elementosEncontrados"
+    <ngb-pagination class="justify-content-center" [collectionSize]="managersFound?.elementosEncontrados || 0"
         [(page)]="page" [boundaryLinks]="true" (pageChange)="getManagers()" />
 </div>
