@@ -11,6 +11,9 @@ export interface EditManagerData {
   password: string;
   fotoPerfilUrl?: string;
 }
+export interface DeleteManagerData {
+  id: string;
+}
 @Component({
   selector: 'app-manager-pannel',
   templateUrl: './manager-pannel.component.html',
@@ -84,6 +87,27 @@ limpiarUrlFoto(url: string | undefined | null): string {
       }
     });
   }
+    openDeleteDialog(manager: { id: string; }): void {
+    const dialogRef = this.dialog.open(DeleteManagerDialogComponent, {
+      width: '800px',
+      data: { id: manager.id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.adminService.deleteManager(
+          result.id
+        ).subscribe({
+          next: () => {
+            this.getManagers();
+          },
+          error: (error: Error) => {
+            console.error(error);
+          }
+        });
+      }
+    });
+  }
 }
 
 @Component({
@@ -137,5 +161,37 @@ export class EditManagerDialogComponent {
     if (event && event.target.files.length > 0) {
       this.selectedFile = event.target.files[0];
     }
+  }
+}
+@Component({
+  selector: 'app-delete-manager-dialog',
+  template: `
+    <h2 mat-dialog-title>Eliminar Manager</h2>
+    <mat-dialog-content>
+      <form class="w-100 d-flex flex-column align-items-center justify-content-center">
+        <p>¿Estás seguro de que deseas eliminar este manager?</p>
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+      <button class="btn btn-danger mx-auto" (click)="onCancel()">Cancelar</button>
+      <button class="btn btn-success mx-auto" (click)="onSave()">Eliminar</button>
+    </mat-dialog-actions>
+  `
+})
+
+export class DeleteManagerDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<DeleteManagerDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DeleteManagerData
+  ) { }
+
+  onCancel(): void {
+    this.dialogRef.close();
+  }
+
+  onSave(): void {
+    this.dialogRef.close({
+      ...this.data,
+    });
   }
 }
