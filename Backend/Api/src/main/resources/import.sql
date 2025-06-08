@@ -131,6 +131,18 @@ INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('
 INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('6a7b8c9d-e89b-12d3-a456-426614174005', 'Portátiles', '1a2b3c4d-e89b-12d3-a456-426614174000',false);
 INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('7a8b9c0d-e89b-12d3-a456-426614174006', 'Smartwatches', '1a2b3c4d-e89b-12d3-a456-426614174000',false);
 
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('4a5b6c7d-8e9f-1234-abcd-567890123456', '3a4b5c6d-e89b-12d3-a456-426614174002');
+
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('5b6c7d8e-9f01-2345-bcde-678901234567', '2a3b4c5d-e89b-12d3-a456-426614174001');
+
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('7d8e9f01-2345-6789-def0-890123456789', '2a3b4c5d-e89b-12d3-a456-426614174001');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('9f012345-6789-0123-4567-abcd78901234', '4a5b6c7d-e89b-12d3-a456-426614174003');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('bcd12345-6789-0123-ef45-678901234567', '3a4b5c6d-e89b-12d3-a456-426614174002');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('ef901234-5678-9012-ab34-567890123456', '5a6b7c8d-e89b-12d3-a456-426614174004');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('6c7d8e9f-0123-4567-cdef-789012345678', '2a3b4c5d-e89b-12d3-a456-426614174001');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('8e9f0123-4567-8901-ef01-901234567890', '3a4b5c6d-e89b-12d3-a456-426614174002');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('abc01234-5678-90ef-ab12-345678901234', '2a3b4c5d-e89b-12d3-a456-426614174001');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('def45678-9012-3456-ab78-901234567890', '3a4b5c6d-e89b-12d3-a456-426614174002');
 
 INSERT INTO valoracion (puntuacion, comentario, id_generado, usuario_id, producto_id, fecha_valorado) VALUES (4.5, 'Producto de excelente calidad, muy satisfecho con mi compra.','81e2dcef-fda6-4f24-bb78-7e62c0b5e1c1' ,'d290f1ee-6c54-4b01-90e6-d701748f0851', '4a5b6c7d-8e9f-1234-abcd-567890123456', '2025-02-24');
 INSERT INTO valoracion (puntuacion, comentario, id_generado, usuario_id, producto_id, fecha_valorado) VALUES (3.8, 'Buen producto, pero el precio es un poco elevado.','6f20a8c8-61ed-46c6-b8ac-5b4d38c62216' ,'34bfa0b2-417d-48aa-b0f7-58bd4867c507', '5b6c7d8e-9f01-2345-bcde-678901234567', '2025-02-24');

@@ -118,7 +118,7 @@ public class CategoriaController {
                     )}),
     })
     @GetMapping("/get/all")
-    public PaginacionDto<CategoriaDto> listarCategorias(@PageableDefault(page=0, size=4) Pageable pageable) {
+    public PaginacionDto<CategoriaDto> listarCategorias(@PageableDefault(page=0, size=12) Pageable pageable) {
 
         return PaginacionDto.of(categoriaService.buscarCategorias(pageable, false)
                 .map(CategoriaDto::of));

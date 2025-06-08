@@ -16,10 +16,8 @@ import java.util.UUID;
 
 public interface CategoriaRepository extends JpaRepository<Categoria, UUID> {
 
-    @Query("""
-        select c from Categoria c
-        left join fetch c.subcategorias
-        """)
+    @EntityGraph(attributePaths = {"subcategorias", "listaProductos"})
+    @Query("select c from Categoria c")
     Page<Categoria> buscarCategorias(Pageable pageable);
 
     @Query("SELECT c FROM Categoria c LEFT JOIN FETCH c.subcategorias WHERE c.id = :id")
