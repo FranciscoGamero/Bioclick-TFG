@@ -11,16 +11,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { RegisterFormComponent } from './components/RegisterForm/RegisterForm.component';
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { DeleteUserDialogComponent, EditUserDialogComponent, UserPannelComponent } from './components/Admin/user-pannel/user-pannel.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminPannelComponent } from './components/Admin/admin-pannel/admin-pannel.component';
-import { DeleteManagerDialogComponent, EditManagerDialogComponent, ManagerPannelComponent } from './components/Admin/manager-pannel/manager-pannel.component';
 import { AllPannelComponent } from './components/Admin/all-pannel/all-pannel.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ProductPannelComponent } from './components/Common/product-pannel/product-pannel.component';
 import { CategoryPannelComponent } from './components/Common/category-pannel/category-pannel.component';
+import { ManagerPannelComponent } from './components/Admin/manager-pannel/manager-pannel.component';
+import { DeleteManagerDialogComponent, EditManagerDialogComponent } from './components/Dialog/ManagerDialog/manager-dialog';
+import { UserPannelComponent } from './components/Admin/user-pannel/user-pannel.component';
+import { EditUserDialogComponent, DeleteUserDialogComponent } from './components/Dialog/UserDialog/user-dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,8 +33,8 @@ import { CategoryPannelComponent } from './components/Common/category-pannel/cat
     AdminPannelComponent,
     ManagerPannelComponent,
     AllPannelComponent,
-    EditManagerDialogComponent,
     EditUserDialogComponent,
+    EditManagerDialogComponent,
     DeleteManagerDialogComponent,
     DeleteUserDialogComponent,
     ProductPannelComponent,
