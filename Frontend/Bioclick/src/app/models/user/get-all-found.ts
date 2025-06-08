@@ -12,6 +12,7 @@ export interface Contenido {
   id: string
   username: string
   correo: string
+  password: string
   fotoPerfilUrl: string
   fechaRegistro: string
   role: String
