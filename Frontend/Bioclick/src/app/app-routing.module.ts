@@ -7,6 +7,7 @@ import { AdminPannelComponent } from './components/Admin/admin-pannel/admin-pann
 import { ManagerPannelComponent } from './components/Admin/manager-pannel/manager-pannel.component';
 import { AllPannelComponent } from './components/Admin/all-pannel/all-pannel.component';
 import { ProductPannelComponent } from './components/Common/product-pannel/product-pannel.component';
+import { CategoryPannelComponent } from './components/Common/category-pannel/category-pannel.component';
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginformComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'manager-list', component: ManagerPannelComponent},
   {path: 'all-list', component: AllPannelComponent},
   {path: 'product-list', component: ProductPannelComponent},
+  {path: 'category-list', component: CategoryPannelComponent}, 
 ];
 
 @NgModule({
