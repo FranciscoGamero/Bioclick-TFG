@@ -75,7 +75,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authz -> authz
                 .requestMatchers("/register","/auth/verify", "/login", "/auth/refresh/token", "/error", "/download/**",
                         "/h2-console/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                .requestMatchers("/product/get/**", "/valoration/get-one/**", "/comment/add").authenticated()
+                .requestMatchers("/product/get/**", "/valoration/get-one/**", "/comment/**").authenticated()
 
 
                 .requestMatchers(HttpMethod.POST,"/admin/create", "/admin/auth/verify", "/impact/create",

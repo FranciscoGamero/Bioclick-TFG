@@ -1,18 +1,24 @@
 package com.salesianostriana.bioclick.service;
 
 import com.salesianostriana.bioclick.dto.Comentario.CreateComentarioDto;
+import com.salesianostriana.bioclick.dto.ImpactoAmbiental.CreateImpactoDto;
 import com.salesianostriana.bioclick.error.CommentException;
 import com.salesianostriana.bioclick.model.Comentario;
+import com.salesianostriana.bioclick.model.ImpactoAmbiental;
 import com.salesianostriana.bioclick.model.Producto;
 import com.salesianostriana.bioclick.model.User;
 import com.salesianostriana.bioclick.repository.ComentarioRepository;
 import com.salesianostriana.bioclick.repository.ProductoRepository;
 import com.salesianostriana.bioclick.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -37,6 +43,23 @@ public class ComentarioService {
                     .build());
         } else {
             throw new CommentException();
+        }
+    }
+
+    public Comentario editarComentario(String comentarioCambiado, UUID comentarioId, User usuario) {
+
+        Optional<Comentario> comentarioAEditar = comentarioRepository.findById(comentarioId);
+
+        if (usuario.getId() == comentarioAEditar.get().getIdComentario() || Objects.equals(usuario.getRole(), "ROLE_ADMIN")
+                || Objects.equals(usuario.getRole(), "ROLE_MANAGER")) {
+            return comentarioRepository.findById(comentarioId).map(old -> {
+                old.setComentario(comentarioCambiado);
+                return comentarioRepository.save(old);
+            }).orElseThrow(() -> new EntityNotFoundException("No se pudo editar dicho comentario" + comentarioId));
+
+        }
+        else{
+            throw new CommentException("No puedes permisos para editar este comentario");
         }
     }
 }
