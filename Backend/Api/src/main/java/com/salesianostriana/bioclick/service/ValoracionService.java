@@ -48,7 +48,6 @@ public class ValoracionService {
         Valoracion valoracion =  valoracionRepository.save(Valoracion.builder()
                         .valoracionPK(valoracionPK)
                         .puntuacion(createValoracionDto.puntuacion())
-                        .comentario(createValoracionDto.comentario())
                         .fechaValorado(LocalDateTime.now())
                         .usuario(user)
                         .producto(producto)
@@ -74,7 +73,6 @@ public class ValoracionService {
     public Valoracion editarValoracion(EditValoracionDto editValoracionDto, UUID valoracionId) {
         return valoracionRepository.buscarPorIdAutogenerado(valoracionId).map(old -> {
 
-            old.setComentario(editValoracionDto.comentario());
             old.setPuntuacion(editValoracionDto.puntuacion());
             return valoracionRepository.save(old);
         }).orElseThrow(() -> new EntityNotFoundException("No se pudo editar dicha valoracion" + valoracionId));

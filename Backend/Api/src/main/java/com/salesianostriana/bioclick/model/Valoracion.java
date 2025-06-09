@@ -20,8 +20,6 @@ public class Valoracion {
     //Sobre 10
     private Double puntuacion;
 
-    private String comentario;
-
     private LocalDateTime fechaValorado;
 
     @ManyToOne

@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 public record ValoracionDto(
         String nombreUsuario,
         String nombreProducto,
-        String comentario,
         Double puntuacion,
         LocalDateTime fechaValorado) {
 
@@ -15,7 +14,6 @@ public record ValoracionDto(
         return new ValoracionDto(
                 valoracion.getUsuario().getUsername()
                 ,valoracion.getProducto().getNombreProducto()
-                ,valoracion.getComentario()
                 ,valoracion.getPuntuacion()
                 ,valoracion.getFechaValorado());
     }
