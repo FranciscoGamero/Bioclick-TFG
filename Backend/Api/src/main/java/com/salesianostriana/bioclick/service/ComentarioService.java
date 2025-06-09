@@ -62,4 +62,17 @@ public class ComentarioService {
             throw new CommentException("No puedes permisos para editar este comentario");
         }
     }
+
+    public void eliminarComentarioPorId(UUID id, User usuario) {
+
+        Optional<Comentario> comentarioABorrar = comentarioRepository.findById(id);
+
+        if (usuario.getId() == comentarioABorrar.get().getUsuario().getId() || Objects.equals(usuario.getRole(), "ROLE_ADMIN")
+                || Objects.equals(usuario.getRole(), "ROLE_MANAGER")) {
+            comentarioRepository.deleteById(id);
+        }
+        else{
+            throw new CommentException("No puedes permisos para eliminar este comentario");
+        }
+    }
 }

@@ -38,6 +38,16 @@ public class GlobalErrorController
         return result;
 
     }
+    @ExceptionHandler(CommentException.class)
+    public ResponseEntity<ProblemDetail> handleCommentException(CommentException ex) {
+        ProblemDetail problemDetail = ProblemDetail
+                .forStatusAndDetail(HttpStatus.FORBIDDEN, ex.getMessage());
+        problemDetail.setTitle("Error de permiso");
+        problemDetail.setType(URI.create("https://www.salesianos-triana.edu/errors/comment-permission"));
+        problemDetail.setProperty("author", "Luismi");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(problemDetail);
+    }
+
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ProblemDetail handleConstraintViolation(ConstraintViolationException ex) {

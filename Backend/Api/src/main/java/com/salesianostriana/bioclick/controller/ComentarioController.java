@@ -99,4 +99,16 @@ public class ComentarioController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ComentarioDto.of(comentarioService.editarComentario(comentarioDto.comentarioCambiado(), comentarioId, user)));
     }
+    @Operation(summary = "Elimina un comentario por su Id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Comentario eliminado correctamente",
+                    content = @Content),
+
+    })
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> eliminarComentario(@PathVariable UUID id, @AuthenticationPrincipal User user){
+        comentarioService.eliminarComentarioPorId(id, user);
+        return ResponseEntity.noContent().build();
+    }
 }
