@@ -36,6 +36,9 @@ public class Producto {
 
     private boolean borrado = Boolean.FALSE;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "producto", orphanRemoval = true)
+    private Set<Comentario> comentarios = new HashSet<>();
+
     @ManyToOne
     @JoinColumn(name = "id_creador", referencedColumnName = "id")
     private User creadoPor;
