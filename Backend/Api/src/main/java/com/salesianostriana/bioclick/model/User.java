@@ -57,6 +57,10 @@ public class User implements UserDetails {
     private boolean borrado = false;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", orphanRemoval = true)
+    private Set<Comentario> comentarios = new HashSet<>();
+
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", orphanRemoval = true)
     @Builder.Default
     private Set<Valoracion> listaValoraciones = new HashSet<>();
 
