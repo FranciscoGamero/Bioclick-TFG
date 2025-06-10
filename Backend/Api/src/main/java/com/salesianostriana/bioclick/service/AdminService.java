@@ -15,6 +15,7 @@ import com.salesianostriana.bioclick.repository.UserRepository;
 import com.salesianostriana.bioclick.util.SendGridMailSender;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Filter;
 import org.hibernate.Session;
@@ -128,7 +129,7 @@ public class AdminService {
             throw new EntityNotFoundException("No hay usuarios encontrados");
     }
 
-
+    @Transactional
     public Page<User> buscarUsuarios(Pageable pageable, UUID adminId, boolean borrado) {
 
         Admin adminCreador = adminRepository.findById(adminId)

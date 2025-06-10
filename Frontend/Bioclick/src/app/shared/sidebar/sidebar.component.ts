@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
   styleUrls: ["./sidebar.component.scss"]
 })
 export class SidebarComponent {
-  @Input() isExpanded: boolean = false;
+  @Input() isExpanded: boolean = true;
   @Output() toggleSidebar = new EventEmitter<void>();
   isUserOpen: boolean = false;
   isProductsOpen: boolean = false;
@@ -23,5 +23,10 @@ export class SidebarComponent {
   toggleProductsDropdown(event: Event) {
     event.preventDefault();
     this.isProductsOpen = !this.isProductsOpen;
+  }
+
+  isAdmin(): boolean {
+    const role = localStorage.getItem("role");
+    return role === "ROLE_ADMIN";
   }
 }

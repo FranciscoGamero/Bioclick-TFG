@@ -1,7 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UserService } from '../../../services/user.service';
+import { Component, Inject, inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { AllUsersResponse } from '../../../models/user/get-all-users-interface';
-
+import { UserService } from '../../../services/user.service';
+import { AdminService } from '../../../services/admins.service';
+import { EditManagerDialogComponent } from '../../Dialog/ManagerDialog/manager-dialog';
+import { DeleteUserDialogComponent } from '../../Dialog/UserDialog/user-dialog';
 
 @Component({
   selector: 'app-user-pannel',
@@ -9,7 +12,8 @@ import { AllUsersResponse } from '../../../models/user/get-all-users-interface';
   styleUrls: ['./user-pannel.component.scss']
 })
 export class UserPannelComponent implements OnInit {
-  isExpanded: boolean = false;
+  readonly dialog = inject(MatDialog);
+  isExpanded: boolean = true;
   name: string = '';
   usersFound: AllUsersResponse | undefined = undefined;
   page: number = 1;
@@ -17,24 +21,23 @@ export class UserPannelComponent implements OnInit {
     this.getUsers();
   }
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private adminService: AdminService) { }
 
-limpiarUrlFoto(url: string | undefined | null): string {
-  const prefix = "http://localhost:8080/download/";
-  if (!url) {
-    return ''; // o una imagen por defecto si prefieres
+  limpiarUrlFoto(url: string | undefined | null): string {
+    if (!url) return '';
+
+    if (url.includes('randomuser.me')) {
+      return url.replace('http://localhost:8080/download/', '');
+    }
+
+    if (url.startsWith('http')) return url;
+
+    return `http://localhost:8080/download/${url}`;
   }
-  if (url.startsWith(prefix)) {
-    return url.substring(prefix.length);
-  }
-  return url;
-}
   getUsers() {
-    this.userService.getAllUsers(this.page-1).subscribe({
+    this.userService.getAllUsers(this.page - 1).subscribe({
       next: (response) => {
         this.usersFound = response;
-        console.log(JSON.stringify(this.usersFound?.contenido[0]));
-
       },
       error: (error) => {
         console.error('Error fetching users:', error);
@@ -47,5 +50,56 @@ limpiarUrlFoto(url: string | undefined | null): string {
   }
   onCardClick(userId: string) {
     console.log('Card clicked for user ID:', userId);
+  }
+
+  openEditDialog(manager: { id: string; username: string; correo: string; password: string; fotoPerfilUrl: string }): void {
+    const dialogRef = this.dialog.open(EditManagerDialogComponent, {
+      width: '800px',
+      data: { id: manager.id, username: manager.username, correo: manager.correo, password: manager.password, fotoPerfilUrl: manager.fotoPerfilUrl }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Dialog closed with result:', result);
+        this.userService.updateUser(
+          result.id,
+          result.username,
+          result.correo,
+          result.password,
+          result.selectedFile,
+          result.fotoPerfilUrl
+        ).then((observable: any) => {
+          observable.subscribe({
+            next: () => {
+              this.getUsers();
+            },
+            error: (error: Error) => {
+              console.error(error);
+            }
+          });
+        })
+      }
+    });
+  }
+  openDeleteDialog(user: { id: string; }): void {
+    const dialogRef = this.dialog.open(DeleteUserDialogComponent, {
+      width: '800px',
+      data: { id: user.id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.userService.deleteUser(
+          result.id
+        ).subscribe({
+          next: () => {
+            this.getUsers();
+          },
+          error: (error: Error) => {
+            console.error(error);
+          }
+        });
+      }
+    });
   }
 }

@@ -10,6 +10,7 @@ public record UserDto(
         UUID id,
         String username,
         String correo,
+        String password,
         String fotoPerfilUrl,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd:HH-mm-ss")
         LocalDateTime fechaRegistro,
@@ -19,6 +20,7 @@ public record UserDto(
                 user.getId(),
                 user.getUsername(),
                 user.getCorreo(),
+                user.getPassword(),
                 fotoPerfil,
                 user.getFechaRegistro(),
                 user.getRole());
@@ -28,6 +30,7 @@ public record UserDto(
                 user.getId(),
                 user.getUsername(),
                 user.getCorreo(),
+                user.getPassword(),
                 user.getFotoPerfil(),
                 user.getFechaRegistro(),
                 user.getRole());

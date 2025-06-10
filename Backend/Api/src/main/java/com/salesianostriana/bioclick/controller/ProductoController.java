@@ -103,7 +103,7 @@ public class ProductoController {
                     )}),
     })
     @GetMapping("/get/all")
-    public PaginacionDto<ProductoDto> listarProductos(@PageableDefault(page=0, size=4) Pageable pageable) {
+    public PaginacionDto<ProductoDto> listarProductos(@PageableDefault(page=0, size=6) Pageable pageable) {
 
         return PaginacionDto.of(productoService.buscarProductos(pageable, false)
                 .map(ProductoDto::of));

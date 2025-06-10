@@ -1,0 +1,72 @@
+<my-sidebar [isExpanded]="isExpanded" (toggleSidebar)="handleSidebarToggle()" />
+<div class="content mt-5" [ngClass]="{ 'sidebarExpanded': isExpanded }">
+    <h2>Todos</h2>
+    <div class="mb-5">
+        <form method="post" class="h-auto">
+            <div class="h-50 w-auto d-flex flex-column mt-5 mb-5">
+                <div class="position-relative mb-3" style="width: 230px;">
+                    <i class="bi bi-search position-absolute"
+                        style="left: 18px; top: 50%; transform: translateY(-50%); color: #bfc9d8; font-size: 1.2rem;"></i>
+                    <input type="text" class="form-control inputRadius" placeholder="Nombre" [(ngModel)]="name"
+                        id="name" name="name" />
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="row bg-white pannel align-content-between mt-5 pt-5 mb-2">
+        <div *ngFor="let found of allFound?.contenido" class="col-3 heightCol mb-4">
+            <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card {{ found.role }}"
+                (click)="onCardClick(found.id)">
+                <div class="d-flex">
+                    <mat-card-header>
+                        <div mat-card-avatar>
+                            <img mat-card-image class="imgSize" [src]="limpiarUrlFoto(found.fotoPerfilUrl)">
+                        </div>
+                    </mat-card-header>
+                    <div class="d-flex flex-column justify-content-between w-100">
+                        <p class="m-0 text-center text-white fw-semibold">{{ found.username }}</p>
+                        <div class="d-flex w-100 justify-content-between">
+                            <i class="bi bi-toggle2-on ps-3 mt-3 text-white"></i>
+                            <div *ngIf="isUser(found.role)" ngbDropdown class="d-inline-block text-end me-3">
+                                <button type="button" class="btn btn-outline-light" id="dropdownBasic1"
+                                    ngbDropdownToggle>
+                                    Ver opciones
+                                </button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                    <button ngbDropdownItem
+                                        (click)="openUserEditDialog({ id: found.id, username: found.username, correo: found.correo, fotoPerfilUrl: limpiarUrlFoto(found.fotoPerfilUrl), password: found.password })">
+                                        Editar</button>
+                                    <button ngbDropdownItem
+                                        (click)="openUserDeleteDialog({ id: found.id }); $event.stopPropagation()">
+                                        Eliminar
+                                    </button>
+                                </div>
+                            </div>
+                            <div *ngIf="isManager(found.role)" ngbDropdown class="d-inline-block text-end me-3">
+                                <button type="button" class="btn btn-outline-light" id="dropdownBasic1"
+                                    ngbDropdownToggle>
+                                    Ver opciones
+                                </button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                    <button ngbDropdownItem
+                                        (click)="openUserEditDialog({ id: found.id, username: found.username, correo: found.correo, fotoPerfilUrl: limpiarUrlFoto(found.fotoPerfilUrl), password: found.password })">
+                                        Editar</button>
+                                    <button ngbDropdownItem
+                                        (click)="openUserDeleteDialog({ id: found.id }); $event.stopPropagation()">
+                                        Eliminar
+                                    </button>
+                                </div>
+                            </div>
+                            <p *ngIf="isAdmin(found.role)" class="text-end me-5 pe-1 mt-4 text-white">
+                                Administrador
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+    <ngb-pagination class="justify-content-center" [collectionSize]="allFound!.elementosEncontrados" [(page)]="page"
+        [boundaryLinks]="true" (pageChange)="foundAll()" />
+</div>

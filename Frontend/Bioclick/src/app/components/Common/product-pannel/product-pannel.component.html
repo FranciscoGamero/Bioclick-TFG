@@ -1,0 +1,60 @@
+<my-sidebar [isExpanded]="isExpanded" (toggleSidebar)="handleSidebarToggle()" />
+<div class="content mt-5" [ngClass]="{ 'sidebarExpanded': isExpanded }" style="min-height: 60vh;">
+    <h2>Usuarios</h2>
+    <div class="mb-5">
+        <form method="post" class="h-auto">
+            <div class="h-50 w-auto d-flex flex-column mt-5 mb-5">
+                <div class="position-relative mb-3" style="width: 230px;">
+                    <i class="bi bi-search position-absolute"
+                        style="left: 18px; top: 50%; transform: translateY(-50%); color: #bfc9d8; font-size: 1.2rem;"></i>
+                    <input type="text" class="form-control inputRadius" placeholder="Nombre" [(ngModel)]="name"
+                        id="name" name="name" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row bg-white pannel mt-5 pt-5">
+        <ng-container *ngIf="productsFound?.contenido?.length; else noUsers">
+            <div *ngFor="let product of productsFound?.contenido" class="col-4 heightCol mb-4">
+                <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card"
+                    (click)="onCardClick(product.id)">
+                    <div class="d-flex h-100">
+                        <div class="w-75 bg-white rounded rounded-3 mt-4 ms-2 me-2 d-flex align-items-center justify-content-center"
+                            style="height: 180px;">
+                            <img mat-card-image class="img-fluid" [src]="limpiarUrlFoto(product.imagenProducto)">
+                        </div>
+                        <div class="d-flex flex-column justify-content-between w-100">
+                            <p class="m-0 text-center text-white fw-semibold">{{ product.nombreProducto }}</p>
+                            <p class="m-0 text-white fw-semibold text-start">{{ product.descripcion }}</p>
+                            <div class="d-flex w-100 justify-content-end mb-2">
+                                <div ngbDropdown class="d-inline-block text-end me-3">
+                                    <button type="button" class="btn btn-outline-light" id="dropdownBasic1"
+                                        ngbDropdownToggle>
+                                        Ver opciones
+                                    </button>
+                                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                        <button ngbDropdownItem>
+                                            Editar</button>
+                                        <button ngbDropdownItem>
+                                            Eliminar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </ng-container>
+        <ng-template #noUsers>
+            <div class="d-flex justify-content-center align-items-center w-100" style="min-height: 300px;">
+                <span class="text-center text-muted" style="font-size: 1.3rem;">
+                    No hay usuarios para mostrar.
+                </span>
+            </div>
+        </ng-template>
+    </div>
+    <ngb-pagination class="justify-content-center" [collectionSize]="productsFound?.elementosEncontrados || 0"
+        [(page)]="page" [pageSize]="productsFound?.tamanioPagina || 6" [boundaryLinks]="true"
+        (pageChange)="getProducts()" />
+</div>

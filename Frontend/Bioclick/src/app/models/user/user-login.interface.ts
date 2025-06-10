@@ -4,6 +4,7 @@ export interface userLoginResponse {
   token: string
   refreshToken: string
   enabled: boolean
+  role: string
 }
 
 export interface User {
