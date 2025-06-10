@@ -6,6 +6,8 @@ import com.salesianostriana.bioclick.dto.VerificationCodeRequest.VerificationCod
 import com.salesianostriana.bioclick.dto.admin.AdminDto;
 import com.salesianostriana.bioclick.dto.admin.CreateAdminRequest;
 import com.salesianostriana.bioclick.dto.admin.EditAdminDto;
+import com.salesianostriana.bioclick.dto.estadisticas.ProductoConMediaDto;
+import com.salesianostriana.bioclick.dto.estadisticas.UsuarioConMasValoracionesDto;
 import com.salesianostriana.bioclick.dto.manager.EditManagerDto;
 import com.salesianostriana.bioclick.dto.manager.ManagerDto;
 import com.salesianostriana.bioclick.dto.user.EditUserDto;
@@ -981,4 +983,133 @@ public class AdminController {
                 .path(filename)
                 .toUriString();
     }
+    @Operation(summary = "Obtiene todos los productos totales")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Cantidad encontrada",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserDto.class),
+                            examples = {@ExampleObject(
+                                    value = """
+10.0
+                                """
+                            )}
+                    )}),
+    })
+    @GetMapping("/graphics/total-products")
+    public ResponseEntity<Long> obtenerProductosTotales() {
+        return ResponseEntity.ok(adminService.productosTotales());
+    }
+    @Operation(summary = "Obtiene todos el CO2 Ahorrado")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Cantidad encontrada",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserDto.class),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            109.4
+                                """
+                            )}
+                    )}),
+    })
+    @GetMapping("/graphics/total-c02")
+    public ResponseEntity<Double> obtenerCO2Total() {
+        return ResponseEntity.ok(adminService.co2Total());
+    }
+    @Operation(summary = "Obtiene los productos mas valorados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Cantidad encontrada",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserDto.class),
+                            examples = {@ExampleObject(
+                                    value = """
+                                                {
+                                                    "id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+                                                    "username": "johndoe",
+                                                    "correo": "johndoe@gmail.com",
+                                                    "fotoPerfil": "johndoe.jpg",
+                                                    "fechaRegistro": "2023-01-10T09:30:00"
+                                                }
+                                """
+                            )}
+                    )}),
+    })
+    @GetMapping("/graphics/products-more-valorated")
+    public ResponseEntity<PaginacionDto<ProductoConMediaDto>> productosMasValorados() {
+        return ResponseEntity.ok(PaginacionDto.of(adminService.productoConMasMedia()));
+    }
+    @Operation(summary = "Obtiene los productos mas valorados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Cantidad encontrada",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserDto.class),
+                            examples = {@ExampleObject(
+                                    value = """
+                                                {
+                                                    "numPagina": 0,
+                                                    "tamanioPagina": 5,
+                                                    "elementosEncontrados": 9,
+                                                    "paginasTotales": 2,
+                                                    "contenido": [
+                                                        {
+                                                            "id": "21da98e6-938b-442e-bb45-785dee7c5678",
+                                                            "username": "lisawilliams",
+                                                            "role": "ROLE_USUARIO",
+                                                            "valoracionesTotales": 2
+                                                        },
+                                                        {
+                                                            "id": "f32ab84d-bff2-4be0-876c-e012c3b3e789",
+                                                            "username": "emilyjohnson",
+                                                            "role": "ROLE_USUARIO",
+                                                            "valoracionesTotales": 1
+                                                        },
+                                                        {
+                                                            "id": "a02fd104-5d2d-4ff4-9f73-5bf0e2a6c874",
+                                                            "username": "sarawilson",
+                                                            "role": "ROLE_USUARIO",
+                                                            "valoracionesTotales": 1
+                                                        },
+                                                        {
+                                                            "id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+                                                            "username": "user",
+                                                            "role": "ROLE_USUARIO",
+                                                            "valoracionesTotales": 1
+                                                        },
+                                                        {
+                                                            "id": "af03ec23-fc5a-4b99-90de-d2349e80c456",
+                                                            "username": "michaelbrown",
+                                                            "role": "ROLE_USUARIO",
+                                                            "valoracionesTotales": 1
+                                                        }
+                                                    ]
+                                                }
+                                """
+                            )}
+                    )}),
+    })
+    @GetMapping("/graphics/users-with-more-valorations")
+    public ResponseEntity<PaginacionDto<UsuarioConMasValoracionesDto>> usuariosConMasValoraciones() {
+        return ResponseEntity.ok(PaginacionDto.of(adminService.usuarioConMasValoraciones()));
+    }
+    @Operation(summary = "Obtiene los productos mas valorados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Cantidad encontrada",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserDto.class),
+                            examples = {@ExampleObject(
+                                    value = """
+                                80.64516129032258
+                                """
+                            )}
+                    )}),
+    })
+    @GetMapping("/graphics/users-validated")
+    public ResponseEntity<Double> usuariosValidados() {
+        return ResponseEntity.ok(adminService.porcentajeUsuariosVerificados());
+    }
+
 }
