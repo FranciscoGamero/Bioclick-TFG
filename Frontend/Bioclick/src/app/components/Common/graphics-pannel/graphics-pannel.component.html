@@ -1,0 +1,46 @@
+<my-sidebar [isExpanded]="isExpanded" (toggleSidebar)="handleSidebarToggle()" />
+<div class="content mt-5" [ngClass]="{ 'sidebarExpanded': isExpanded }" style="min-height: 60vh;">
+    <h2>Usuarios</h2>
+    <div class="mb-5">
+        <form method="post" class="h-auto">
+            <div class="h-50 w-auto d-flex flex-column mt-5 mb-5">
+                <div class="position-relative mb-3" style="width: 230px;">
+                    <i class="bi bi-search position-absolute"
+                        style="left: 18px; top: 50%; transform: translateY(-50%); color: #bfc9d8; font-size: 1.2rem;"></i>
+                    <input type="text" class="form-control inputRadius" placeholder="Nombre" [(ngModel)]="name"
+                        id="name" name="name" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row pannel bg-white justify-content-between align-items-start g-4 mt-5 pt-5">
+        <div class="col-3 d-flex flex-column align-items-center h-100">
+            <div class="bg-white rounded shadow-sm p-3 d-flex flex-column align-items-center">
+                <canvas id="usuariosVerificados">{{usuariosVerificados}}</canvas>
+                <p class="text-center mt-4 mb-0 fw-semibold" style="color: #3b3b4f;">{{porcentajeUsuariosHabilitados}}% de usuarios verificados</p>
+            </div>
+        </div>
+        <div class="col-3 d-flex flex-column align-items-center">
+            <div class="bg-white rounded shadow-sm p-3 d-flex flex-column align-items-center heightGraph">
+                <p class="fw-semibold text-center mb-2 mt-1">Top 5
+                    Productos Valorados</p>
+                <canvas id="topProductosMejorValorados">{{topProductosMejorValorados}}</canvas>
+            </div>
+        </div>
+        <div class="col-3 d-flex flex-column align-items-center">
+            <div class="bg-white rounded shadow-sm p-3 d-flex flex-column align-items-center heightGraph">
+                <p class="fw-semibold text-center mb-2 mt-1">Top 5 Con Mas Valoraciones</p>
+                <canvas id="topUsuariosConMasValoraciones">{{topUsuariosConMasValoraciones}}</canvas>
+            </div>
+        </div>
+        <div class="col-3 d-flex flex-column align-items-center">
+            <div class="bg-white rounded shadow-sm p-3 d-flex flex-column align-items-center heightGraph">
+                <h5 class="fw-semibold text-dark mb-3 mt-5 text-center">Estadísticas productos</h5>
+                <h2 class="fw-bold text-success display-4 m-0">{{totalProductos}}</h2>
+                <p class="text-center text-dark mb-3" style="font-size: 1.1rem;">Productos Totales</p>
+                <h2 class="fw-bold text-success display-4 m-0">{{totalCo02}}</h2>
+                <p class="text-center text-dark" style="font-size: 1.1rem;">CO2 Ahorrado</p>
+            </div>
+        </div>
+    </div>
+</div>

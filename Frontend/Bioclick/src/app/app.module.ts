@@ -23,6 +23,8 @@ import { ManagerPannelComponent } from './components/Admin/manager-pannel/manage
 import { DeleteManagerDialogComponent, EditManagerDialogComponent } from './components/Dialog/ManagerDialog/manager-dialog';
 import { UserPannelComponent } from './components/Admin/user-pannel/user-pannel.component';
 import { EditUserDialogComponent, DeleteUserDialogComponent } from './components/Dialog/UserDialog/user-dialog';
+import { GraphicsPannelComponent } from './components/Common/graphics-pannel/graphics-pannel.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +41,7 @@ import { EditUserDialogComponent, DeleteUserDialogComponent } from './components
     DeleteUserDialogComponent,
     ProductPannelComponent,
     CategoryPannelComponent,
+    GraphicsPannelComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,7 @@ import { EditUserDialogComponent, DeleteUserDialogComponent } from './components
     MatInputModule,
     MatCardModule,
     NgbDropdownModule,
-    MatDialogModule,
+    MatDialogModule
   ],
   providers: [provideHttpClient(), provideAnimationsAsync()],
   bootstrap: [AppComponent]
