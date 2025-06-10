@@ -8,6 +8,7 @@ import { ManagerPannelComponent } from './components/Admin/manager-pannel/manage
 import { AllPannelComponent } from './components/Admin/all-pannel/all-pannel.component';
 import { ProductPannelComponent } from './components/Common/product-pannel/product-pannel.component';
 import { CategoryPannelComponent } from './components/Common/category-pannel/category-pannel.component';
+import { GraphicsPannelComponent } from './components/Common/graphics-pannel/graphics-pannel.component';
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginformComponent},
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path: 'manager-list', component: ManagerPannelComponent},
   {path: 'all-list', component: AllPannelComponent},
   {path: 'product-list', component: ProductPannelComponent},
-  {path: 'category-list', component: CategoryPannelComponent}, 
+  {path: 'category-list', component: CategoryPannelComponent},
+  {path: 'graphics', component: GraphicsPannelComponent}
 ];
 
 @NgModule({
