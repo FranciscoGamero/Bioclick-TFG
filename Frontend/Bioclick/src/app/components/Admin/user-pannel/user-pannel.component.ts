@@ -3,8 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dial
 import { AllUsersResponse } from '../../../models/user/get-all-users-interface';
 import { UserService } from '../../../services/user.service';
 import { AdminService } from '../../../services/admins.service';
-import { EditManagerDialogComponent } from '../../Dialog/ManagerDialog/manager-dialog';
-import { DeleteUserDialogComponent } from '../../Dialog/UserDialog/user-dialog';
+
+import { DeleteUserDialogComponent, EditUserDialogComponent } from '../../Dialog/UserDialog/user-dialog';
 
 @Component({
   selector: 'app-user-pannel',
@@ -52,10 +52,10 @@ export class UserPannelComponent implements OnInit {
     console.log('Card clicked for user ID:', userId);
   }
 
-  openEditDialog(manager: { id: string; username: string; correo: string; password: string; fotoPerfilUrl: string }): void {
-    const dialogRef = this.dialog.open(EditManagerDialogComponent, {
+  openEditDialog(user: { id: string; username: string; correo: string; password: string; fotoPerfilUrl: string }): void {
+    const dialogRef = this.dialog.open(EditUserDialogComponent, {
       width: '800px',
-      data: { id: manager.id, username: manager.username, correo: manager.correo, password: manager.password, fotoPerfilUrl: manager.fotoPerfilUrl }
+      data: { id: user.id, username: user.username, correo: user.correo, password: user.password, fotoPerfilUrl: user.fotoPerfilUrl }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -66,7 +66,7 @@ export class UserPannelComponent implements OnInit {
           result.username,
           result.correo,
           result.password,
-          result.selectedFile,
+          result.file,
           result.fotoPerfilUrl
         ).then((observable: any) => {
           observable.subscribe({

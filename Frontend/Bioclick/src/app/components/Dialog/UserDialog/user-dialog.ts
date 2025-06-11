@@ -52,12 +52,12 @@ export class EditUserDialogComponent {
     this.dialogRef.close();
   }
 
-  onSave(): void {
-    this.dialogRef.close({
-      ...this.data,
-      selectedFile: this.selectedFile
-    });
-  }
+onSave(): void {
+  this.dialogRef.close({
+    ...this.data,
+    file: this.selectedFile
+  });
+}
   onFileSelected(event: any) {
     if (event && event.target.files.length > 0) {
       this.selectedFile = event.target.files[0];
