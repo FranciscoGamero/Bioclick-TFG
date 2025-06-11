@@ -87,12 +87,27 @@ public class UserService {
 
     public User editarUsuario(User user, EditUserDto editUserDto, MultipartFile file) {
 
-        FileMetadata fileMetadata = storageService.store(file);
+        if (editUserDto.username() != null && !editUserDto.username().isBlank()
+                && !editUserDto.username().equals(user.getUsername())) {
+            user.setUsername(editUserDto.username());
+        }
 
-        user.setUsername(editUserDto.username());
-        user.setCorreo(editUserDto.correo());
-        user.setFotoPerfil(fileMetadata.getFilename());
-        user.setPassword(passwordEncoder.encode(editUserDto.password()));
+        if (editUserDto.correo() != null && !editUserDto.correo().isBlank()
+                && !editUserDto.correo().equals(user.getCorreo())) {
+            user.setCorreo(editUserDto.correo());
+        }
+
+        if (file != null && !file.isEmpty()) {
+            FileMetadata fileMetadata = storageService.store(file);
+            user.setFotoPerfil(fileMetadata.getFilename());
+        }
+
+        if (editUserDto.password() != null && !editUserDto.password().isBlank()) {
+            if (!passwordEncoder.matches(editUserDto.password(), user.getPassword())) {
+                user.setPassword(passwordEncoder.encode(editUserDto.password()));
+            }
+        }
+
         return userRepository.save(user);
     }
     public Page<Producto> buscarProductoPorPrecioEntreMedio(Double min, Double max, Pageable pageable, boolean borrado) {

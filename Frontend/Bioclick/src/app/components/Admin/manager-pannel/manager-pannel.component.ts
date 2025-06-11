@@ -26,7 +26,7 @@ export class ManagerPannelComponent {
 
   limpiarUrlFoto(url: string | undefined | null): string {
     if (!url) return '';
-    if (url.includes('randomuser.me')) {
+    if (url.includes('randomuser.me') || url.includes('localhost:8080/download/')) {
       return url.replace('http://localhost:8080/download/', '');
     }
     if (url.startsWith('http')) return url;
