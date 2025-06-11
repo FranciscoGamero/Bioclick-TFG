@@ -9,10 +9,12 @@ import { AllPannelComponent } from './components/Admin/all-pannel/all-pannel.com
 import { ProductPannelComponent } from './components/Common/product-pannel/product-pannel.component';
 import { CategoryPannelComponent } from './components/Common/category-pannel/category-pannel.component';
 import { GraphicsPannelComponent } from './components/Common/graphics-pannel/graphics-pannel.component';
+import { VerifyAccountComponent } from './components/Common/verify-account/verify-account.component';
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginformComponent},
   {path: 'register', component: RegisterFormComponent},
+  {path: 'verify', component: VerifyAccountComponent},
   {path: 'user-list', component: UserPannelComponent},
   {path: 'admin-list', component: AdminPannelComponent},
   {path: 'manager-list', component: ManagerPannelComponent},
