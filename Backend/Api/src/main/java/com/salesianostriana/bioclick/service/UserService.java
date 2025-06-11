@@ -60,8 +60,7 @@ public class UserService {
         userRepository.save(user);
 
         try {
-            String texto = "Su código para activar la cuenta es el siguiente: "+user.getVerificationCode();
-            mailSender.sendMail(createUserRequest.correo(), "Código de activación de cuenta", texto);
+            mailSender.sendMail(createUserRequest.correo(), "Código de activación de cuenta", user.getVerificationCode());
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Error al enviar el email de activación");
