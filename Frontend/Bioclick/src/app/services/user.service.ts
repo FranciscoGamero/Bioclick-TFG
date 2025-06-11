@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { AllUsersResponse } from '../models/user/get-all-users-interface';
+import { VerifyUser } from '../models/user/verify-user';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +50,15 @@ export class UserService {
     }
     console.log(url, header)
     return this.http.delete(url, { headers: header });
+  }
+  verifyUser(codigo: string): Observable<VerifyUser> {
+    const url = `${environment.apiBaseUrl}/auth/verify`;
+    const header = {
+      'Content-Type': 'application/json',
+    }
+    const body = {
+      code: codigo
+    }
+    return this.http.post<VerifyUser>(url, body, { headers: header });
   }
 }
