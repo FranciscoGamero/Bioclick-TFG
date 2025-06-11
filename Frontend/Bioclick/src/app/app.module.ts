@@ -25,6 +25,7 @@ import { UserPannelComponent } from './components/Admin/user-pannel/user-pannel.
 import { EditUserDialogComponent, DeleteUserDialogComponent } from './components/Dialog/UserDialog/user-dialog';
 import { GraphicsPannelComponent } from './components/Common/graphics-pannel/graphics-pannel.component';
 import { VerifyAccountComponent } from './components/Common/verify-account/verify-account.component';
+import { MyProfileComponent } from './components/Common/my-profile/my-profile.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { VerifyAccountComponent } from './components/Common/verify-account/verif
     CategoryPannelComponent,
     GraphicsPannelComponent,
     VerifyAccountComponent,
+    MyProfileComponent,
   ],
   imports: [
     BrowserModule,
