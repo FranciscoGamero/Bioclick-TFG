@@ -50,3 +50,9 @@
     margin-bottom: 1rem;
     display: block;
 }
+.imgCard:hover .imgSize {
+  box-shadow: 0 0 0 4px #fff, 0 0 0 8px #95ff57;
+  border-radius: 50%;
+  transition: box-shadow 0.2s;
+  filter: brightness(1.1) contrast(1.1);
+}
