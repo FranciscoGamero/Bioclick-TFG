@@ -27,6 +27,10 @@ import { GraphicsPannelComponent } from './components/Common/graphics-pannel/gra
 import { VerifyAccountComponent } from './components/Common/verify-account/verify-account.component';
 import { MyProfileComponent } from './components/Common/my-profile/my-profile.component';
 import { UserDetailComponent } from './components/Admin/user-detail/user-detail.component';
+import { HomeComponent } from './components/User/home/home.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { HeaderComponent } from './shared/header/header.component';
+
 
 @NgModule({
   declarations: [
@@ -48,6 +52,9 @@ import { UserDetailComponent } from './components/Admin/user-detail/user-detail.
     VerifyAccountComponent,
     MyProfileComponent,
     UserDetailComponent,
+    HomeComponent,
+    FooterComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,10 +3,10 @@ export interface AllProductsResponse {
   tamanioPagina: number
   elementosEncontrados: number
   paginasTotales: number
-  contenido: Contenido[]
+  contenido: Producto[]
 }
 
-export interface Contenido {
+export interface Producto {
   id: string
   nombreProducto: string
   descripcion: string

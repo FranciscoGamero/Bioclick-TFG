@@ -12,6 +12,7 @@ import { GraphicsPannelComponent } from './components/Common/graphics-pannel/gra
 import { VerifyAccountComponent } from './components/Common/verify-account/verify-account.component';
 import { MyProfileComponent } from './components/Common/my-profile/my-profile.component';
 import { UserDetailComponent } from './components/Admin/user-detail/user-detail.component';
+import { HomeComponent } from './components/User/home/home.component';
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginformComponent},
@@ -26,7 +27,7 @@ const routes: Routes = [
   {path: 'graphics', component: GraphicsPannelComponent},
   {path: 'my-profile', component: MyProfileComponent},
   {path: 'user-detail/:id', component: UserDetailComponent},
-
+  {path: 'home', component: HomeComponent},
 ];
 
 @NgModule({

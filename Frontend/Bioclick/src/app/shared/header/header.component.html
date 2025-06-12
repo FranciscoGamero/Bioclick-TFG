@@ -1,0 +1,40 @@
+<header class="bioclick-header px-3 py-2">
+  <div class="container-fluid d-flex align-items-center justify-content-between">
+    <!-- Logo y nombre -->
+    <div class="d-flex align-items-center">
+      <img src="../../../assets/images/BioclickLogo.png" alt="BIOCLICK" style="height: 56px;">
+    </div>
+    <!-- Menú centrado -->
+    <div class="d-flex gap-4">
+      <button class="menu-btn">Home</button>
+      <button class="menu-btn">Categorías</button>
+      <button class="menu-btn">Todos</button>
+      <button *ngIf="haveAccess(user!.role)" (click)="toPanels()" class="menu-btn">Menú Admin</button>
+    </div>
+    <!-- Iconos a la derecha -->
+    <div class="d-flex align-items-center gap-3">
+      <i class="bi bi-search fs-5"></i>
+      <div ngbDropdown>
+        <img
+          [src]="limpiarUrlFoto(user?.fotoPerfilUrl)"
+          alt="Avatar"
+          class="rounded-circle"
+          style="width: 40px; height: 40px; object-fit: cover; cursor: pointer;"
+          ngbDropdownToggle
+        >
+        <ul ngbDropdownMenu class="dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" routerLink="/my-profile">
+              <i class="bi bi-person me-2"></i>Ver perfil
+            </a>
+          </li>
+          <li>
+            <button class="dropdown-item" (click)="logout()">
+              <i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
