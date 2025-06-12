@@ -17,10 +17,9 @@
     </div>
     <div class="row bg-white pannel align-content-between mt-5 pt-5 mb-2">
         <div *ngFor="let user of adminsFound?.contenido" class="col-3 heightCol mb-4">
-            <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card"
-                (click)="onCardClick(user.id)">
+            <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card">
                 <div class="d-flex">
-                    <mat-card-header>
+                        <mat-card-header (click)="onCardClick(user.id)" class="imgCard">
                         <div mat-card-avatar>
                             <img mat-card-image class="imgSize" [src]="limpiarUrlFoto(user.fotoPerfilUrl)">
                         </div>

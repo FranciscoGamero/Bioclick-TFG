@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AdminService } from '../../../services/admins.service';
 import { AllAdminsResponse } from '../../../models/user/get-all-admins-interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-pannel',
@@ -15,7 +16,7 @@ export class AdminPannelComponent {
   ngOnInit(): void {
     this.getAdmins();
   }
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService, private router: Router) { }
 
   limpiarUrlFoto(url: string | undefined | null): string {
   const prefix = "http://localhost:8080/download/";
@@ -44,6 +45,6 @@ export class AdminPannelComponent {
     this.isExpanded = !this.isExpanded;
   }
   onCardClick(userId: string) {
-    console.log('Card clicked for user ID:', userId);
+    this.router.navigate(['/user-detail', userId]);
   }
 }

@@ -56,3 +56,9 @@
 .minHeight{
   min-height: 60vh;
 }
+.imgCard:hover .imgSize {
+  box-shadow: 0 0 0 4px #fff, 0 0 0 8px #ddff1b;
+  border-radius: 50%;
+  transition: box-shadow 0.2s;
+  filter: brightness(1.1) contrast(1.1);
+}

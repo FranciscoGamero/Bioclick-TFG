@@ -26,6 +26,7 @@ import { EditUserDialogComponent, DeleteUserDialogComponent } from './components
 import { GraphicsPannelComponent } from './components/Common/graphics-pannel/graphics-pannel.component';
 import { VerifyAccountComponent } from './components/Common/verify-account/verify-account.component';
 import { MyProfileComponent } from './components/Common/my-profile/my-profile.component';
+import { UserDetailComponent } from './components/Admin/user-detail/user-detail.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { MyProfileComponent } from './components/Common/my-profile/my-profile.co
     GraphicsPannelComponent,
     VerifyAccountComponent,
     MyProfileComponent,
+    UserDetailComponent,
   ],
   imports: [
     BrowserModule,

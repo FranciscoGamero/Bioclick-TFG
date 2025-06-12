@@ -5,6 +5,7 @@ import { DeleteManagerDialogComponent, EditManagerDialogComponent } from '../../
 import { DeleteUserDialogComponent } from '../../Dialog/UserDialog/user-dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-pannel',
@@ -21,7 +22,7 @@ export class AllPannelComponent implements OnInit {
     this.foundAll();
   }
 
-  constructor(private adminService: AdminService, private userService: UserService) { }
+  constructor(private adminService: AdminService, private userService: UserService, private router: Router) { }
 
   limpiarUrlFoto(url: string | undefined | null): string {
     if (!url) return '';
@@ -59,7 +60,7 @@ export class AllPannelComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
   onCardClick(userId: string) {
-    console.log('Card clicked for user ID:', userId);
+    this.router.navigate(['/user-detail', userId]);
   }
   openUserEditDialog(manager: { id: string; username: string; correo: string; password: string; fotoPerfilUrl: string }): void {
     const dialogRef = this.dialog.open(EditManagerDialogComponent, {

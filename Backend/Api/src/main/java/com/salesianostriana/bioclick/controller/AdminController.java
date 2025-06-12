@@ -532,7 +532,7 @@ public class AdminController {
                     description = "Datos inválidos para la actualización",
                     content = @Content)
     })
-    @PutMapping("/edit/user/{userId}")
+    @PutMapping("jkljl/edit/user/{userId}")
     public UserDto editarUsuario(@io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Usuario a editar", required = true,
             content = @Content(mediaType = "application/json",
