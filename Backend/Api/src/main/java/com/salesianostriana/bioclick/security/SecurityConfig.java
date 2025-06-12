@@ -81,9 +81,10 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST,"/admin/create", "/admin/auth/verify", "/impact/create",
                         "/category/create", "/manager/create").hasRole("ADMIN")
 
-                .requestMatchers(HttpMethod.PUT, "/admin/edit/**", "/admin/cambiar-rol/", "/product/edit/**",
-                        "/impact/edit/**", "/category/edit/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/admin/edit/*", "/admin/cambiar-rol/", "/product/edit/*",
+                        "/impact/edit/*", "/category/edit/*").hasRole("ADMIN")
 
+                .requestMatchers("impact/product/*", "comment/product/*").authenticated()
                 .requestMatchers(HttpMethod.GET, "/manager/get/**").hasAnyRole("ADMIN", "MANAGER")
                 .requestMatchers(HttpMethod.POST, "/product/create").hasAnyRole("ADMIN", "MANAGER")
                 .requestMatchers(HttpMethod.PUT, "/product/edit/**").hasAnyRole("ADMIN", "MANAGER")

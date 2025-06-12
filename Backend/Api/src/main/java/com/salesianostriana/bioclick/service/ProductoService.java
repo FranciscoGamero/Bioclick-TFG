@@ -27,7 +27,6 @@ public class ProductoService {
     private final ManagerRepository managerRepository;
     private final EntityManager entityManager;
     private final StorageService storageService;
-    private final ImpactoAmbientalRepository impactoAmbientalRepository;
 
 
 
@@ -127,5 +126,11 @@ public class ProductoService {
         productoRepository.borrarValoracionesProducto(id);
         productoRepository.borrarFavoritosProducto(id);
         productoRepository.borrarImpactoAmbientalProducto(id);
+    }
+    public Page<Producto> buscarMasLikeados(Pageable pageable) {
+        return productoRepository.productosMasLikeados(pageable);
+    }
+    public Page<Producto> buscarMejorValorados(Pageable pageable) {
+        return productoRepository.productosMejorValorados(pageable);
     }
 }
