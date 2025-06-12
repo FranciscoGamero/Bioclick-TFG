@@ -9,10 +9,13 @@ import com.salesianostriana.bioclick.repository.ComentarioRepository;
 import com.salesianostriana.bioclick.repository.ProductoRepository;
 import com.salesianostriana.bioclick.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -38,5 +41,8 @@ public class ComentarioService {
         } else {
             throw new CommentException();
         }
+    }
+    public Page<Comentario> listarComentariosPorProductoId(UUID productoId, Pageable pageable) {
+        return comentarioRepository.findByProductoId(productoId, pageable);
     }
 }
