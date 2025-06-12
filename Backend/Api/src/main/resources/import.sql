@@ -165,3 +165,24 @@ INSERT INTO comentario (id_comentario, fecha_comentario, comentario, usuario_id,
 INSERT INTO comentario (id_comentario, fecha_comentario, comentario, usuario_id, producto_id) VALUES ('170fb163-bbaf-456a-b881-1c3377b64869', '2025-02-24', 'Buen producto, pero los materiales podrían ser mejores.', '21da98e6-938b-442e-bb45-785dee7c5678', 'def45678-9012-3456-ab78-901234567890');
 INSERT INTO comentario (id_comentario, fecha_comentario, comentario, usuario_id, producto_id) VALUES ('b522b9d1-f89a-4b85-bf33-f567be9b7999', '2025-02-24', 'El mejor producto que he comprado hasta ahora, excelente.', 'dd4e888f-374d-4a1d-9b11-df68f68c9876', 'def45678-9012-3456-ab78-901234567890');
 INSERT INTO comentario (id_comentario, fecha_comentario, comentario, usuario_id, producto_id) VALUES ('3922bca0-bcc3-4f21-9b2c-5df80e3b7e5b', '2025-02-24', 'Muy buen rendimiento y diseño, volveré a comprar.', '21da98e6-938b-442e-bb45-785dee7c5678', 'def45678-9012-3456-ab78-901234567890');
+
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('d290f1ee-6c54-4b01-90e6-d701748f0851', '4a5b6c7d-8e9f-1234-abcd-567890123456', '2025-06-12T10:00:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('34bfa0b2-417d-48aa-b0f7-58bd4867c507', '5b6c7d8e-9f01-2345-bcde-678901234567', '2025-06-12T10:01:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('02ca9ef5-932b-4df3-a780-abcde2345678', '7d8e9f01-2345-6789-def0-890123456789', '2025-06-12T10:02:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('f32ab84d-bff2-4be0-876c-e012c3b3e789', '9f012345-6789-0123-4567-abcd78901234', '2025-06-12T10:03:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('a02fd104-5d2d-4ff4-9f73-5bf0e2a6c874', 'ef901234-5678-9012-ab34-567890123456', '2025-06-12T10:04:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('867ef2c1-5eb1-41b7-953a-cbbc1c1f9876', '6c7d8e9f-0123-4567-cdef-789012345678', '2025-06-12T10:05:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('21da98e6-938b-442e-bb45-785dee7c5678', 'def45678-9012-3456-ab78-901234567890', '2025-06-12T10:06:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('dd4e888f-374d-4a1d-9b11-df68f68c9876', 'def45678-9012-3456-ab78-901234567890', '2025-06-12T10:07:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('af03ec23-fc5a-4b99-90de-d2349e80c456', 'bcd12345-6789-0123-ef45-678901234567', '2025-06-12T10:08:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('a02fd104-5d2d-4ff4-9f73-5bf0e2a6c874', 'abc01234-5678-90ef-ab12-345678901234', '2025-06-12T10:09:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('d290f1ee-6c54-4b01-90e6-d701748f0851', 'abc01234-5678-90ef-ab12-345678901234', '2025-06-12T11:00:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('34bfa0b2-417d-48aa-b0f7-58bd4867c507', 'abc01234-5678-90ef-ab12-345678901234', '2025-06-12T11:05:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('02ca9ef5-932b-4df3-a780-abcde2345678', 'abc01234-5678-90ef-ab12-345678901234', '2025-06-12T11:10:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('a02fd104-5d2d-4ff4-9f73-5bf0e2a6c874', '4a5b6c7d-8e9f-1234-abcd-567890123456', '2025-06-12T11:15:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('867ef2c1-5eb1-41b7-953a-cbbc1c1f9876', '4a5b6c7d-8e9f-1234-abcd-567890123456', '2025-06-12T11:17:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('21da98e6-938b-442e-bb45-785dee7c5678', 'ef901234-5678-9012-ab34-567890123456', '2025-06-12T11:20:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('dd4e888f-374d-4a1d-9b11-df68f68c9876', 'ef901234-5678-9012-ab34-567890123456', '2025-06-12T11:25:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('af03ec23-fc5a-4b99-90de-d2349e80c456', 'ef901234-5678-9012-ab34-567890123456', '2025-06-12T11:27:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('a02fd104-5d2d-4ff4-9f73-5bf0e2a6c874', 'bcd12345-6789-0123-ef45-678901234567', '2025-06-12T11:29:00');
+INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('d290f1ee-6c54-4b01-90e6-d701748f0851', 'bcd12345-6789-0123-ef45-678901234567', '2025-06-12T11:31:00');

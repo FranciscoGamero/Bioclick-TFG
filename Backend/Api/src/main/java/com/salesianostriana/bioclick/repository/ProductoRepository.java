@@ -38,4 +38,19 @@ public interface ProductoRepository extends JpaRepository<Producto, UUID>, JpaSp
         where i.producto.id = :id
        """)
     void borrarImpactoAmbientalProducto(UUID id);
+
+    @Query("""
+    SELECT f.producto
+    FROM Favorito f
+    GROUP BY f.producto
+    ORDER BY COUNT(f.producto) DESC
+""")
+    Page<Producto> productosMasLikeados(Pageable pageable);
+    @Query("""
+            select v.producto
+            from Valoracion v
+            group by v.producto
+            order by avg(v.puntuacion) desc
+""")
+    Page<Producto> productosMejorValorados(Pageable pageable);
 }

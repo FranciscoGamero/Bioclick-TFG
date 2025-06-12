@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -202,5 +203,53 @@ public class ProductoController {
                 .path("/download/")
                 .path(filename)
                 .toUriString();
+    }
+    @Operation(summary = "Obtiene todos los productos mas agregados a favoritos")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se han encontrado productos",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProductoDto.class),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            {
+                                                "nombreProducto": "Cámara de Seguridad Reciclada",
+                                                "descripcion": "Cámara de seguridad inteligente hecha con materiales reciclados.",
+                                                "imagenProducto": "https://example.com/images/camara-seguridad.jpg",
+                                                "precioProducto": 149.99,
+                                                "estado": "Reacondicionado"
+                                            }
+                                """
+                            )}
+                    )}),
+    })
+    @GetMapping("/get/more-liked")
+    public PaginacionDto<ProductoDto> buscarMasFavoritos(@PageableDefault(page=0, size=6) Pageable pageable) {
+
+        return PaginacionDto.of(productoService.buscarMasLikeados(pageable).map(ProductoDto::of));
+    }
+    @Operation(summary = "Obtiene todos los productos mejores valorados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se han encontrado productos",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProductoDto.class),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            {
+                                                "nombreProducto": "Cámara de Seguridad Reciclada",
+                                                "descripcion": "Cámara de seguridad inteligente hecha con materiales reciclados.",
+                                                "imagenProducto": "https://example.com/images/camara-seguridad.jpg",
+                                                "precioProducto": 149.99,
+                                                "estado": "Reacondicionado"
+                                            }
+                                """
+                            )}
+                    )}),
+    })
+    @GetMapping("/get/more-valorated")
+    public PaginacionDto<ProductoDto> buscarMejoresValorados(@PageableDefault(page=0, size=6) Pageable pageable) {
+
+        return PaginacionDto.of(productoService.buscarMejorValorados(pageable).map(ProductoDto::of));
     }
 }
