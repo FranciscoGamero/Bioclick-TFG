@@ -30,6 +30,7 @@ import { UserDetailComponent } from './components/Admin/user-detail/user-detail.
 import { HomeComponent } from './components/User/home/home.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { HeaderComponent } from './shared/header/header.component';
+import { ProductDetailComponent } from './components/User/product-detail/product-detail.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { HeaderComponent } from './shared/header/header.component';
     HomeComponent,
     FooterComponent,
     HeaderComponent,
+    ProductDetailComponent,
   ],
   imports: [
     BrowserModule,

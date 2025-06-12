@@ -59,4 +59,7 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+  goToProductDetail(productId: string): void {
+    this.router.navigate(['/product-detail', productId]);
+  }
 }
