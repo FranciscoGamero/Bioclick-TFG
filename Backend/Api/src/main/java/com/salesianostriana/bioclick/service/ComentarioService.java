@@ -13,6 +13,8 @@ import com.salesianostriana.bioclick.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -46,6 +48,7 @@ public class ComentarioService {
         }
     }
 
+
     public Comentario editarComentario(String comentarioCambiado, UUID comentarioId, User usuario) {
 
         Optional<Comentario> comentarioAEditar = comentarioRepository.findById(comentarioId);
@@ -75,4 +78,6 @@ public class ComentarioService {
             throw new CommentException("No puedes permisos para eliminar este comentario");
         }
     }
+      public Page<Comentario> listarComentariosPorProductoId(UUID productoId, Pageable pageable) {
+        return comentarioRepository.findByProductoId(productoId, pageable);
 }
