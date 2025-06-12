@@ -75,7 +75,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authz -> authz
                 .requestMatchers("/register","/auth/verify", "/login", "/auth/refresh/token", "/error", "/download/**",
                         "/h2-console/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                .requestMatchers("/product/get/**", "/valoration/get-one/**", "/comment/add").authenticated()
+                .requestMatchers("/product/get/**", "/valoration/get-one/**", "/comment/**").authenticated()
 
 
                 .requestMatchers(HttpMethod.POST,"/admin/create", "/admin/auth/verify", "/impact/create",
@@ -92,6 +92,8 @@ public class SecurityConfig {
 
                 .requestMatchers(HttpMethod.PUT, "/valoration/edit/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/manager/edit/me").hasRole("MANAGER")
+
+                .requestMatchers(HttpMethod.GET, "/admin/graphics/**").hasAnyRole("ADMIN", "MANAGER")
 
                 .requestMatchers(HttpMethod.GET, "/admin/get/**", "/impact/get/**", "/category/get/**").hasRole("ADMIN")
 

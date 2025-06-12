@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RegisterService } from '../../services/register.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-RegisterForm',
@@ -18,7 +19,7 @@ export class RegisterFormComponent implements OnInit {
   isMobile: boolean = false;
 
 
-  constructor(private registerService: RegisterService) { }
+  constructor(private registerService: RegisterService, private router: Router) { }
 
   ngOnInit() {
 
@@ -43,7 +44,7 @@ export class RegisterFormComponent implements OnInit {
       this.registerService.registerUser(this.username, this.email, this.password, this.confirmPassword, this.selectedFile)
         .subscribe({
           next: (response) => {
-            console.log('Registration successful', response);
+            this.router.navigate(['/verify']);
           },
           error: (error) => {
             console.error('Registration failed', error);

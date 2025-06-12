@@ -123,7 +123,7 @@ public class UserController {
                     content = @Content)
     })
     @PostMapping("/auth/verify")
-    public ResponseEntity<?> verify(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+    public ResponseEntity<UserDto> verify(@io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Contacto a verificar", required = true,
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = VerificationCodeRequest.class),
@@ -132,8 +132,8 @@ public class UserController {
                                                             "code": 123456
                                                         }
                             """))) @RequestBody @Valid VerificationCodeRequest verificationTokenRequest) {
-        User user = userService.verifyUser(verificationTokenRequest);
-        return ResponseEntity.ok(user);
+
+        return ResponseEntity.ok(UserDto.of(userService.verifyUser(verificationTokenRequest)));
     }
 
 
@@ -242,12 +242,12 @@ public class UserController {
                     description = "Datos inválidos para la actualización",
                     content = @Content)
     })
-    @PutMapping("/edit/me")
-    public UserDto editarUsuario(@io.swagger.v3.oas.annotations.parameters.RequestBody(
-            description = "Usuario a editar", required = true,
-            content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = UserDto.class),
-                    examples = @ExampleObject(value = """
+@PutMapping("/edit/me")
+public UserDto editarUsuario(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+        description = "Usuario a editar", required = true,
+        content = @Content(mediaType = "application/json",
+                schema = @Schema(implementation = UserDto.class),
+                examples = @ExampleObject(value = """
                                         {
                                             "username": "miguelCampos",
                                             "password": "animo",
@@ -255,13 +255,13 @@ public class UserController {
                                             "correo": "pruebadecuenta731@gmail.com"
                                         }
                             """))) @AuthenticationPrincipal User user,
-                                 @RequestPart("edit") @Valid EditUserDto editUserDto,
-                                 @RequestPart("file")MultipartFile file) {
+                             @RequestPart("edit") @Valid EditUserDto editUserDto,
+                             @RequestPart("file")MultipartFile file) {
 
-        User userEditado = userService.editarUsuario(user, editUserDto, file);
+    User userEditado = userService.editarUsuario(user, editUserDto, file);
 
-        return UserDto.of(userEditado, getImageUrl(userEditado.getFotoPerfil()));
-    }
+    return UserDto.of(userEditado, getImageUrl(userEditado.getFotoPerfil()));
+}
 
     @Operation(summary = "Busca productos cuyo precio esté entre dos valores")
     @ApiResponses(value = {

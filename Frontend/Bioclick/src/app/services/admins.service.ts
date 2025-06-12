@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { AllAdminsResponse } from '../models/user/get-all-admins-interface';
 import { AllFoundResponse } from '../models/user/get-all-found';
+import { ProductsMoreValoratedResponse } from '../models/user/graphics/products-more-valorated.interface';
+import { UsersMoreValorationsResponse } from '../models/user/graphics/users-with-more-valorations.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +43,6 @@ export class AdminService {
 
     let fileToSend = file;
 
-    // Si no hay archivo nuevo, intenta descargar la imagen actual
     if (!fileToSend && fotoPerfilUrl) {
       try {
         const response = await fetch(fotoPerfilUrl);
@@ -50,11 +51,9 @@ export class AdminService {
         fileToSend = new File([blob], 'profile.jpg', { type: blob.type });
       } catch (e) {
         alert('No se puede mantener la imagen actual porque está alojada en un servidor externo. Por favor, selecciona una nueva foto de perfil.');
-        throw e; // Detén el proceso, el usuario debe subir una imagen
+        throw e;
       }
     }
-
-    // Siempre añade el archivo (el backend lo exige)
     formData.append('file', fileToSend!);
 
     formData.append('editar', new Blob([JSON.stringify(editData)], { type: 'application/json' }));
@@ -72,7 +71,47 @@ export class AdminService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('token')}`
     }
-    console.log(url, header)
     return this.http.delete(url, { headers: header });
+  }
+
+  getTotalProducts(): Observable<number> {
+    const url = `${environment.apiBaseUrl}/admin/graphics/total-products`;
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+    return this.http.get<number>(url, { headers: header });
+  }
+  getTotalC02(): Observable<number> {
+    const url = `${environment.apiBaseUrl}/admin/graphics/total-c02`;
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+    return this.http.get<number>(url, { headers: header });
+  }
+  getTotalUsersValidated(): Observable<number> {
+    const url = `${environment.apiBaseUrl}/admin/graphics/users-validated`;
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+    return this.http.get<number>(url, { headers: header });
+  }
+  getProductsMoreValorated(): Observable<ProductsMoreValoratedResponse> {
+    const url = `${environment.apiBaseUrl}/admin/graphics/products-more-valorated`;
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+    return this.http.get<ProductsMoreValoratedResponse>(url, { headers: header });
+  }
+  getUsersWithMoreValorations(): Observable<UsersMoreValorationsResponse> {
+    const url = `${environment.apiBaseUrl}/admin/graphics/users-with-more-valorations`;
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+    return this.http.get<UsersMoreValorationsResponse>(url, { headers: header });
   }
 }

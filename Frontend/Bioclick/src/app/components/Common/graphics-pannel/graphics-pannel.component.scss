@@ -1,0 +1,23 @@
+.content {
+  margin-left: 170px;
+  transition: 0.3s;
+
+  &.sidebarExpanded {
+    margin-left: 390px;
+  }
+}
+
+.inputRadius {
+  border-radius: 20px;
+  padding-left: 4.5em;
+  height: 50px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(39, 174, 96, 0.10);
+}
+.pannel {
+  width: 1418px;
+  height: 624px;
+}
+.heightGraph{
+  min-height: 382px;
+}
