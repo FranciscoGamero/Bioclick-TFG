@@ -1,0 +1,86 @@
+<app-header></app-header>
+<div class="container my-5 product-detail-container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-4">
+                <img [src]="limpiarUrlFoto(product?.imagenProducto)" alt="{{product?.nombreProducto}}"
+                    class="img-fluid product-img-main rounded">
+            </div>
+            <h3 class="fw-bold mb-1">{{product?.nombreProducto}}</h3>
+            <p class="text-muted mb-2">
+                {{product?.descripcion}}
+            </p>
+            <div class="fs-2 fw-bold text-success mb-2">{{product?.precioProducto}}€</div>
+            <div class="mb-3">
+                <span class="fw-semibold">Estado:</span> <span class="text-success">{{product?.estado}}</span>
+            </div>
+            <div class="mb-4">
+                <div class="fw-semibold mb-2">Reviews</div>
+                <div class="d-flex align-items-center mb-2">
+                    <span class="fs-3 fw-bold me-2">4.7</span>
+                    <div>
+                        <span class="text-warning fs-5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        <span class="text-muted ms-2">200 reviews</span>
+                    </div>
+                </div>
+                <!-- Barras de puntuación -->
+                <div class="review-bars mb-3">
+                    <div class="d-flex align-items-center mb-1">
+                        <span class="me-1">5</span>
+                        <div class="progress flex-grow-1 mx-2" style="height: 8px;">
+                            <div class="progress-bar bg-success" style="width: 50%"></div>
+                        </div>
+                        <span class="text-muted small">50%</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-1">
+                        <span class="me-1">4</span>
+                        <div class="progress flex-grow-1 mx-2" style="height: 8px;">
+                            <div class="progress-bar bg-success" style="width: 32%"></div>
+                        </div>
+                        <span class="text-muted small">32%</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-1">
+                        <span class="me-1">3</span>
+                        <div class="progress flex-grow-1 mx-2" style="height: 8px;">
+                            <div class="progress-bar bg-success" style="width: 12%"></div>
+                        </div>
+                        <span class="text-muted small">12%</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-1">
+                        <span class="me-1">2</span>
+                        <div class="progress flex-grow-1 mx-2" style="height: 8px;">
+                            <div class="progress-bar bg-success" style="width: 6%"></div>
+                        </div>
+                        <span class="text-muted small">6%</span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <span class="fw-semibold">Add a Review</span>
+                    <div class="review-stars mt-1">
+                        <span class="star">&#9734;</span>
+                        <span class="star">&#9734;</span>
+                        <span class="star">&#9734;</span>
+                        <span class="star">&#9734;</span>
+                        <span class="star">&#9734;</span>
+                    </div>
+                </div>
+            </div>
+            <div class="reviews-list">
+                <div class="review-item mb-4" *ngFor="let comentarioUsuario of listaComentarios">
+                    <div class="d-flex align-items-center mb-1">
+                        <img [src]="limpiarUrlFoto(comentarioUsuario.fotoPerfil)" alt="{{comentarioUsuario.username}}"
+                            class="rounded-circle me-2 review-avatar">
+                        <div>
+                            <span class="fw-semibold">{{comentarioUsuario.username}}</span>
+                            <span class="text-muted small ms-2">{{formatDate(comentarioUsuario.fechaComentario)}}</span>
+                        </div>
+                    </div>
+                    <div class="review-text">
+                        {{comentarioUsuario.comentario}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

@@ -5,6 +5,7 @@ import { UserService } from '../../../services/user.service';
 import { AdminService } from '../../../services/admins.service';
 
 import { DeleteUserDialogComponent, EditUserDialogComponent } from '../../Dialog/UserDialog/user-dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-pannel',
@@ -21,7 +22,7 @@ export class UserPannelComponent implements OnInit {
     this.getUsers();
   }
 
-  constructor(private userService: UserService, private adminService: AdminService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   limpiarUrlFoto(url: string | undefined | null): string {
     if (!url) return '';
@@ -49,7 +50,7 @@ export class UserPannelComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
   onCardClick(userId: string) {
-    console.log('Card clicked for user ID:', userId);
+    this.router.navigate(['/user-detail', userId]);
   }
 
   openEditDialog(user: { id: string; username: string; correo: string; password: string; fotoPerfilUrl: string }): void {

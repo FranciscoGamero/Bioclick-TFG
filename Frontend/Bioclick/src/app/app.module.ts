@@ -26,6 +26,12 @@ import { EditUserDialogComponent, DeleteUserDialogComponent } from './components
 import { GraphicsPannelComponent } from './components/Common/graphics-pannel/graphics-pannel.component';
 import { VerifyAccountComponent } from './components/Common/verify-account/verify-account.component';
 import { MyProfileComponent } from './components/Common/my-profile/my-profile.component';
+import { UserDetailComponent } from './components/Admin/user-detail/user-detail.component';
+import { HomeComponent } from './components/User/home/home.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { ProductDetailComponent } from './components/User/product-detail/product-detail.component';
+
 
 @NgModule({
   declarations: [
@@ -46,6 +52,11 @@ import { MyProfileComponent } from './components/Common/my-profile/my-profile.co
     GraphicsPannelComponent,
     VerifyAccountComponent,
     MyProfileComponent,
+    UserDetailComponent,
+    HomeComponent,
+    FooterComponent,
+    HeaderComponent,
+    ProductDetailComponent,
   ],
   imports: [
     BrowserModule,

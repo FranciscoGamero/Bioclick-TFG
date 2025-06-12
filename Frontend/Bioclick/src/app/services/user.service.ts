@@ -68,6 +68,14 @@ export class UserService {
     }
     return this.http.get<DetailUser>(url, { headers: header });
   }
+  getUser(userId: string): Observable<DetailUser> {
+    const url = `${environment.apiBaseUrl}/admin/get/${userId}`;
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+    return this.http.get<DetailUser>(url, { headers: header });
+  }
   async editMe(username: string, correo: string, password: string, file: File | null): Promise<Observable<DetailUser>> {
     const url = `${environment.apiBaseUrl}/edit/me`;
     const formData = new FormData();

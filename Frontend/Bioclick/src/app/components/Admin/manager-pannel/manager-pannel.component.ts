@@ -4,6 +4,7 @@ import { AllManagersResponse } from '../../../models/user/get-all-managers-inter
 import { ManagerService } from '../../../services/manager.service';
 import { AdminService } from '../../../services/admins.service';
 import { EditManagerDialogComponent, DeleteManagerDialogComponent } from '../../Dialog/ManagerDialog/manager-dialog';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class ManagerPannelComponent {
   ngOnInit(): void {
     this.getManagers();
   }
-  constructor(private managerService: ManagerService, private adminService: AdminService) { }
+  constructor(private managerService: ManagerService, private adminService: AdminService, private router: Router) { }
 
   limpiarUrlFoto(url: string | undefined | null): string {
     if (!url) return '';
@@ -48,6 +49,8 @@ export class ManagerPannelComponent {
     this.isExpanded = !this.isExpanded;
   }
   onCardClick(userId: string) {
+    this.router.navigate(['/user-detail', userId]);
+
   }
 
   openEditDialog(manager: { id: string; username: string; correo: string; password: string; fotoPerfilUrl: string }): void {
