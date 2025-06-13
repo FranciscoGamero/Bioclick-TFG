@@ -6,7 +6,9 @@ import { DetailUser } from '../../../models/user/detail-user';
 import { EditUserDialogComponent } from '../../Dialog/UserDialog/user-dialog';
 import { FavoriteService } from '../../../services/favorite.service';
 import { Favorito } from '../../../models/user/favorites.interface';
-
+import { Valoration } from '../../../models/user/get-all-valorations';
+import { ValorationsService } from '../../../services/valoration.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
@@ -16,9 +18,13 @@ export class MyProfileComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   user: DetailUser | undefined = undefined;
   showFavorites = false;
+  showValorations = false;
   favorites: Favorito[] = [];
+  valorations: Valoration[] = [];
 
-  constructor(private userService: UserService, private route: Router, private favoriteService: FavoriteService) { }
+  constructor(private userService: UserService, private route: Router,
+    private favoriteService: FavoriteService, private valorationService: ValorationsService,
+    private location: Location) { }
 
   ngOnInit(): void {
     this.userService.getMe().subscribe(user => {
@@ -64,7 +70,6 @@ export class MyProfileComponent implements OnInit {
     });
   }
   toggleFavorites(): void {
-    console.log(this.showFavorites);
     this.showFavorites = !this.showFavorites;
     if (this.showFavorites) {
       this.favoriteService.getFavorites().subscribe({
@@ -76,7 +81,22 @@ export class MyProfileComponent implements OnInit {
       });
     }
   }
+  toggleValorations(): void {
+    this.showValorations = !this.showValorations;
+    if (this.showValorations) {
+      this.valorationService.getMyValorations().subscribe({
+        next: (resp) => this.valorations = resp.contenido,
+        error: (err) => {
+          this.valorations = [];
+          console.error('Error al cargar valoraciones', err);
+        }
+      });
+    }
+  }
   goToProductDetail(productId: string): void {
     this.route.navigate(['/product-detail', productId]);
   }
+  goBack(): void {
+  this.location.back();
+}
 }

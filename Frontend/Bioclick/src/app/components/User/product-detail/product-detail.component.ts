@@ -6,6 +6,9 @@ import { UserService } from '../../../services/user.service';
 import { Favorito } from '../../../models/user/favorites.interface';
 import { FavoriteService } from '../../../services/favorite.service';
 import { ActivatedRoute } from '@angular/router';
+import { ValorationsService } from '../../../services/valoration.service';
+import { Valoration } from '../../../models/user/get-all-valorations';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-product-detail',
@@ -18,16 +21,26 @@ export class ProductDetailComponent implements OnInit {
 
   isFavorite: boolean = false;
   favorites: Favorito[] = [];
-  constructor(private productService: ProductService, private userService: UserService, private favoriteService: FavoriteService, private route: ActivatedRoute) { }
+
+  rating: number = 0;
+  valorations: Valoration[] = [];
+  myValoration: Valoration | null = null;
+  showValorationForm = false;
+  userRating = 0;
+  constructor(private productService: ProductService, private userService: UserService,
+    private favoriteService: FavoriteService, private route: ActivatedRoute,
+    private valorationService: ValorationsService, private location: Location) { }
 
   ngOnInit(): void {
     const productId = this.route.snapshot.paramMap.get('id');
     if (productId) {
       this.getProductDetail(productId);
+      this.loadValorations(productId);
     }
     this.loadFavorites();
-  }
+    this.rating = this.getAverageValoration();
 
+  }
   limpiarUrlFoto(url: string | undefined | null): string {
     if (!url) return '';
 
@@ -90,4 +103,76 @@ export class ProductDetailComponent implements OnInit {
       });
     }
   }
+  getIsValorated() {
+    this.valorationService.getMyValorations().subscribe({
+      next: (resp) => {
+        this.myValoration = resp.contenido.find(val => val.productoId === this.product?.id) || null;
+        if (this.myValoration) {
+          this.userRating = this.myValoration.puntuacion || 0;
+        } else {
+          this.userRating = 0;
+        }
+      }
+    });
+  }
+
+  addValoration(puntuacion: number, user_id: string, producto_id: string) {
+    this.valorationService.addValoration(puntuacion, user_id, producto_id).subscribe({
+      next: () => {
+        this.loadValorations(producto_id);
+      },
+      error: (err) => {
+        console.error('Error al añadir valoración', err);
+      }
+    });
+  }
+  loadValorations(productId: string): void {
+    this.valorationService.getValorationsByProduct(productId).subscribe({
+      next: (resp) => {
+        this.valorations = resp.contenido;
+        this.userService.getMe().subscribe((currentUser) => {
+          this.myValoration = this.valorations.find(
+            v => v.nombreUsuario === currentUser.username
+          ) || null;
+        });
+      }
+    });
+  }
+  deleteValoration(valoracionId: string, producto_id: string): void {
+    this.valorationService.deleteValoration(valoracionId).subscribe({
+      next: () => {
+        this.loadValorations(producto_id);
+      },
+      error: (err: Error) => {
+        console.error('Error al eliminar valoración', err);
+      }
+    });
+  }
+  getAverageValoration(): number {
+    if (!this.valorations.length) return 0;
+    const sum = this.valorations.reduce((acc, val) => acc + (val.puntuacion || 0), 0);
+    return +(sum / this.valorations.length).toFixed(1);
+  }
+  getRatingColorClass(): string {
+    const avg = this.getAverageValoration();
+    if (avg < 1.5) return 'text-danger';
+    if (avg < 3.5) return 'text-warning';
+    return 'text-success';
+  }
+  openValorationForm() {
+    this.showValorationForm = true;
+  }
+  submitValoration(puntuacion: number, producto_id: string) {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      this.addValoration(puntuacion, userId, producto_id);
+    } else {
+      console.error('User ID not found in localStorage');
+    }
+    this.showValorationForm = false;
+  }
+  goBack(): void {
+  this.location.back();
 }
+}
+

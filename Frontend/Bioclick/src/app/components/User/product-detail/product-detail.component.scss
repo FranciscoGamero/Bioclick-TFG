@@ -78,3 +78,42 @@
     color: #222;
   }
 }
+.review-actions {
+  margin-top: 0.5rem;
+
+  .btn-outline-primary {
+    font-weight: 500;
+    border-radius: 20px;
+    padding: 0.25rem 1rem;
+    transition: background 0.15s, color 0.15s;
+    &:hover, &:focus {
+      background: #eaf6fa;
+      color: #0d6efd;
+    }
+  }
+
+  .valoration-form {
+    background: #f8fafb;
+    border-radius: 16px;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 1px 6px rgba(89,206,160,0.06);
+    .ngb-rating {
+      font-size: 1.4rem;
+      margin-right: 0.5rem;
+    }
+    .btn-success {
+      border-radius: 20px;
+      font-weight: 500;
+      padding: 0.25rem 1rem;
+    }
+    .btn-outline-secondary {
+      border-radius: 20px;
+      font-weight: 500;
+      padding: 0.25rem 1rem;
+    }
+  }
+}
+.backButton{
+  margin-left: 275px;
+  width: 100px;
+}
