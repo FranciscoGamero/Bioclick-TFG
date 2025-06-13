@@ -6,10 +6,18 @@
                 <img [src]="limpiarUrlFoto(product?.imagenProducto)" alt="{{product?.nombreProducto}}"
                     class="img-fluid product-img-main rounded">
             </div>
-            <h3 class="fw-bold mb-1">{{product?.nombreProducto}}</h3>
-            <p class="text-muted mb-2">
-                {{product?.descripcion}}
-            </p>
+            <!-- Nombre y precio del producto -->
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <h3 class="fw-bold mb-0">{{ product?.nombreProducto }}</h3>
+                <div class="fs-2 fw-bold text-success">{{ product?.precioProducto }}€</div>
+            </div>
+            <!-- Botón de favorito justo debajo o a la derecha -->
+            <div class="mb-3 text-end">
+                <button class="btn btn-outline-success" (click)="toggleFavorite()">
+                    <i class="bi" [ngClass]="isFavorite ? 'bi-heart-fill text-danger' : 'bi-heart'"></i>
+                    {{ isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos' }}
+                </button>
+            </div>
             <div class="fs-2 fw-bold text-success mb-2">{{product?.precioProducto}}€</div>
             <div class="mb-3">
                 <span class="fw-semibold">Estado:</span> <span class="text-success">{{product?.estado}}</span>

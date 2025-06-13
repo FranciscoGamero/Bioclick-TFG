@@ -1,0 +1,8 @@
+.favorite-item {
+  transition: background 0.15s;
+  border-radius: 8px;
+  &:hover {
+    background: #f3f7fa;
+    box-shadow: 0 2px 8px rgba(89,206,160,0.08);
+  }
+}
