@@ -532,7 +532,7 @@ public class AdminController {
                     description = "Datos inválidos para la actualización",
                     content = @Content)
     })
-    @PutMapping("jkljl/edit/user/{userId}")
+    @PutMapping("/edit/user/{userId}")
     public UserDto editarUsuario(@io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Usuario a editar", required = true,
             content = @Content(mediaType = "application/json",
@@ -1111,5 +1111,4 @@ public class AdminController {
     public ResponseEntity<Double> usuariosValidados() {
         return ResponseEntity.ok(adminService.porcentajeUsuariosVerificados());
     }
-
 }

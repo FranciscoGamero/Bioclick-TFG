@@ -11,32 +11,40 @@
         <div class="card-body text-center">
           <h5 class="card-title">{{ producto.nombreProducto }}</h5>
           <p class="card-text">{{ producto.descripcion }}</p>
+          <button class="btn btn-outline-success btn-sm" [ngClass]="{'active': isFavorite(producto)}"
+            (click)="toggleFavorite(producto)">
+            <i class="bi" [ngClass]="isFavorite(producto) ? 'bi-heart-fill' : 'bi-heart'"></i>
+          </button>
         </div>
       </div>
     </div>
   </div>
-<div class="text-center mt-4" *ngIf="pageValorated < totalPagesValorated">
-  <button class="btn btn-success px-5" (click)="loadMoreValoratedProducts()">VER MÁS</button>
-</div>
+  <div class="text-center mt-4" *ngIf="pageValorated < totalPagesValorated">
+    <button class="btn btn-success px-5" (click)="loadMoreValoratedProducts()">VER MÁS</button>
+  </div>
 </div>
 <div class="container my-5">
   <h2 class="text-center mb-4 fw-bold">MAS GUSTADOS</h2>
   <div class="row g-4 justify-content-center">
     <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngFor="let producto of moreLikedProducts">
       <div class="card product-card shadow-sm">
-        <div class="img-thumbnail mb-3">
+        <div class="img-thumbnail mb-3" (click)="goToProductDetail(producto.id)">
           <img [src]="limpiarUrlFoto(producto.imagenProducto)" class="card-img-top" alt="{{ producto.nombreProducto }}"
             style="height: 200px; object-fit: cover;">
         </div>
         <div class="card-body text-center">
           <h5 class="card-title">{{ producto.nombreProducto }}</h5>
           <p class="card-text">{{ producto.descripcion }}</p>
+          <button class="btn btn-outline-success btn-sm" [ngClass]="{'active': isFavorite(producto)}"
+            (click)="toggleFavorite(producto)">
+            <i class="bi" [ngClass]="isFavorite(producto) ? 'bi-heart-fill' : 'bi-heart'"></i>
+          </button>
         </div>
       </div>
     </div>
   </div>
-<div class="text-center mt-4" *ngIf="pageLiked < totalPagesLiked">
-  <button class="btn btn-success px-5" (click)="loadMoreLikedProducts()">VER MÁS</button>
+  <div class="text-center mt-4" *ngIf="pageLiked < totalPagesLiked">
+    <button class="btn btn-success px-5" (click)="loadMoreLikedProducts()">VER MÁS</button>
   </div>
 </div>
 <app-footer></app-footer>

@@ -29,7 +29,7 @@ const routes: Routes = [
   {path: 'my-profile', component: MyProfileComponent},
   {path: 'user-detail/:id', component: UserDetailComponent},
   {path: 'home', component: HomeComponent},
-  {path: 'product-detail', component: ProductDetailComponent},
+  {path: 'product-detail/:id', component: ProductDetailComponent},
 ];
 
 @NgModule({

@@ -4,17 +4,21 @@ import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
 import { DetailUser } from '../../../models/user/detail-user';
 import { EditUserDialogComponent } from '../../Dialog/UserDialog/user-dialog';
+import { FavoriteService } from '../../../services/favorite.service';
+import { Favorito } from '../../../models/user/favorites.interface';
 
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
-  styleUrl: './my-profile.component.css'
+  styleUrl: './my-profile.component.scss'
 })
 export class MyProfileComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   user: DetailUser | undefined = undefined;
+  showFavorites = false;
+  favorites: Favorito[] = [];
 
-  constructor(private userService: UserService, private route: Router) { }
+  constructor(private userService: UserService, private route: Router, private favoriteService: FavoriteService) { }
 
   ngOnInit(): void {
     this.userService.getMe().subscribe(user => {
@@ -58,5 +62,21 @@ export class MyProfileComponent implements OnInit {
         });
       }
     });
+  }
+  toggleFavorites(): void {
+    console.log(this.showFavorites);
+    this.showFavorites = !this.showFavorites;
+    if (this.showFavorites) {
+      this.favoriteService.getFavorites().subscribe({
+        next: (resp) => this.favorites = resp.contenido,
+        error: (err) => {
+          this.favorites = [];
+          console.error('Error al cargar favoritos', err);
+        }
+      });
+    }
+  }
+  goToProductDetail(productId: string): void {
+    this.route.navigate(['/product-detail', productId]);
   }
 }

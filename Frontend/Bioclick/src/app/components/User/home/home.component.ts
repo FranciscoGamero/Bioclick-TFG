@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HomeService } from '../../../services/home.service';
 import { Producto } from '../../../models/user/get-all-products.interface';
+import { Favorito } from '../../../models/user/favorites.interface';
+import { FavoriteService } from '../../../services/favorite.service';
 
 @Component({
   selector: 'app-home',
@@ -17,11 +19,14 @@ export class HomeComponent implements OnInit {
   totalPagesValorated: number = 1;
   moreValoratedProducts: Producto[] = [];
 
-  constructor(private homeService: HomeService, private router: Router) { }
+  favorites: Favorito[] = [];
+
+  constructor(private homeService: HomeService, private router: Router, private favoriteService: FavoriteService) { }
 
   ngOnInit(): void {
     this.loadMoreLikedProducts();
     this.loadMoreValoratedProducts();
+    this.loadFavorites();
   }
   limpiarUrlFoto(url: string | undefined | null): string {
     if (!url) return '';
@@ -62,4 +67,35 @@ export class HomeComponent implements OnInit {
   goToProductDetail(productId: string): void {
     this.router.navigate(['/product-detail', productId]);
   }
+  loadFavorites(): void {
+    this.favoriteService.getFavorites().subscribe({
+      next: (resp) => this.favorites = resp.contenido,
+      error: () => this.favorites = []
+    });
+  }
+
+  isFavorite(producto: Producto): boolean {
+    return this.favorites.some(fav => fav.nombreProducto === producto.nombreProducto);
+  }
+
+toggleFavorite(producto: Producto): void {
+  if (this.isFavorite(producto)) {
+    this.favoriteService.removeFromFavorites(producto.id).subscribe({
+      next: () => {
+        this.favorites = this.favorites.filter(fav => fav.nombreProducto !== producto.nombreProducto);
+      }
+    });
+  } else {
+    this.favoriteService.addToFavorite(producto.id).subscribe({
+      next: () => {
+        this.favorites = [
+          ...this.favorites,
+          { nombreProducto: producto.nombreProducto, idProducto: producto.id, 
+            nombreUsuario: this.favorites.at(0)!.nombreUsuario, idUsuario: this.favorites.at(0)!.idUsuario,
+            fechaFavorito: new Date().toISOString() }
+        ];
+      }
+    });
+  }
+}
 }
