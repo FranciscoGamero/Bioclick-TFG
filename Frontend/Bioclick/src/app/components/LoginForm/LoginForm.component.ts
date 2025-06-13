@@ -18,6 +18,7 @@ export class LoginformComponent {
     this.loginService.loginUser(this.username, this.password).subscribe({
       next: (response) => {
         localStorage.setItem('token', response.token);
+        localStorage.setItem('userId', response.id);
         localStorage.setItem('role', response.role);
         if (response.role === 'ROLE_ADMIN') {
           this.router.navigate(['/admin-list']);
