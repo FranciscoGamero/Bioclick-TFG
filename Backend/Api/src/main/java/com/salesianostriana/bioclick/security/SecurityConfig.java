@@ -75,7 +75,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authz -> authz
                 .requestMatchers("/register","/auth/verify", "/login", "/auth/refresh/token", "/error", "/download/**",
                         "/h2-console/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                .requestMatchers("/product/get/**", "/valoration/get-one/**", "/comment/**").authenticated()
+                .requestMatchers("/product/get/**", "/valoration/get-one/**", "/comment/**", "/favorite/**").authenticated()
 
 
                 .requestMatchers(HttpMethod.POST,"/admin/create", "/admin/auth/verify", "/impact/create",
@@ -99,13 +99,12 @@ public class SecurityConfig {
 
                 .requestMatchers("/edit/me", "/get/me", "/productos/get/**").hasAnyRole("ADMIN","USUARIO", "MANAGER")
 
-                .requestMatchers(HttpMethod.POST, "/favorite/add/**").hasAnyRole("ADMIN","USUARIO")
+                .requestMatchers(HttpMethod.POST, "/favorite/add/**").authenticated()
 
                 .requestMatchers(HttpMethod.DELETE, "/user/delete/**", "/product/delete/**", "/category/delete/**",
                         "/admin/delete/admin/**", "/admin/delete/manager/**").hasRole("ADMIN")
 
-                .requestMatchers(HttpMethod.DELETE, "/valoration/delete/**", "/favorite/delete/**").hasRole("USUARIO")
-                .anyRequest().authenticated());
+                .requestMatchers(HttpMethod.DELETE, "/valoration/delete/**", "/favorite/delete/**").authenticated());
 
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

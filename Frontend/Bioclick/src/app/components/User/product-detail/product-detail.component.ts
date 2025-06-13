@@ -3,6 +3,9 @@ import { ProductService } from '../../../services/product.service';
 import { Producto } from '../../../models/user/get-all-products.interface';
 import { Comentario } from '../../../models/user/get-all-comments';
 import { UserService } from '../../../services/user.service';
+import { Favorito } from '../../../models/user/favorites.interface';
+import { FavoriteService } from '../../../services/favorite.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-product-detail',
@@ -12,10 +15,17 @@ import { UserService } from '../../../services/user.service';
 export class ProductDetailComponent implements OnInit {
   product: Producto | undefined;
   listaComentarios: Comentario[] = [];
-  constructor(private productService: ProductService, private userService: UserService) { }
+
+  isFavorite: boolean = false;
+  favorites: Favorito[] = [];
+  constructor(private productService: ProductService, private userService: UserService, private favoriteService: FavoriteService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getProductDetail();
+    const productId = this.route.snapshot.paramMap.get('id');
+    if (productId) {
+      this.getProductDetail(productId);
+    }
+    this.loadFavorites();
   }
 
   limpiarUrlFoto(url: string | undefined | null): string {
@@ -29,8 +39,8 @@ export class ProductDetailComponent implements OnInit {
 
     return `http://localhost:8080/download/${url}`;
   }
-  getProductDetail() {
-    this.productService.getProductDetail('def45678-9012-3456-ab78-901234567890').subscribe({
+  getProductDetail(productId: string): void {
+    this.productService.getProductDetail(productId).subscribe({
       next: (response) => {
         this.product = response;
       },
@@ -38,7 +48,7 @@ export class ProductDetailComponent implements OnInit {
         console.error('Error fetching product detail:', error);
       }
     });
-    this.productService.getAllComments('def45678-9012-3456-ab78-901234567890', 0).subscribe({
+    this.productService.getAllComments(productId, 0).subscribe({
       next: (response) => {
         this.listaComentarios = response.contenido;
       },
@@ -50,5 +60,34 @@ export class ProductDetailComponent implements OnInit {
   formatDate(dateString: string) {
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('es-ES', options);
+  }
+  loadFavorites() {
+    this.favoriteService.getFavorites().subscribe({
+      next: (resp) => {
+        this.favorites = resp.contenido;
+        if (this.product) {
+          this.isFavorite = this.favorites.some(fav => fav.idProducto === this.product?.id);
+        }
+      },
+      error: () => this.favorites = []
+    });
+  }
+  toggleFavorite(): void {
+    if (!this.product) return;
+    if (this.isFavorite) {
+      this.favoriteService.removeFromFavorites(this.product.id).subscribe({
+        next: () => {
+          this.isFavorite = false;
+          this.loadFavorites();
+        }
+      });
+    } else {
+      this.favoriteService.addToFavorite(this.product.id).subscribe({
+        next: () => {
+          this.isFavorite = true;
+          this.loadFavorites();
+        }
+      });
+    }
   }
 }

@@ -81,3 +81,4 @@ public class ComentarioService {
       public Page<Comentario> listarComentariosPorProductoId(UUID productoId, Pageable pageable) {
         return comentarioRepository.findByProductoId(productoId, pageable);
 }
+}
