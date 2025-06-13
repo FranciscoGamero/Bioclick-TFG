@@ -1,6 +1,9 @@
 <div class="container py-5">
     <div class="row justify-content-center">
         <section class="col-md-8 col-lg-7">
+            <button class="btn btn-outline-secondary mb-3" (click)="goBack()">
+                <i class="bi bi-arrow-left"></i> Volver
+            </button>
             <div class="card shadow rounded-4 border-0">
                 <div class="card-body p-4">
                     <div class="d-flex flex-column flex-md-row align-items-center mb-4">
@@ -24,30 +27,51 @@
                         </div>
                     </div>
                     <div class="row g-4 mb-3">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <label class="form-label mb-1 fw-semibold">Correo Electrónico</label>
                             <div class="form-control-plaintext ps-0 fs-5">{{user?.correo}}</div>
                         </div>
                     </div>
                 </div>
-                <div class="mt-3">
-                    <button class="btn" (click)="toggleFavorites()">
-                        <h5 class="mb-3"><i class="bi bi-heart-fill text-danger me-2"></i>Mis Favoritos</h5>
-                    </button>
-                    <ul *ngIf="showFavorites" class="list-group list-group-flush">
-                        <li *ngFor="let fav of favorites"
-                            class="list-group-item d-flex align-items-center favorite-item" style="cursor:pointer;">
-                            <i class="bi bi-star-fill text-warning me-2"></i>
-                            <span class="fw-semibold flex-grow-1">{{ fav.nombreProducto }}</span>
-                            <span class="text-muted small ms-2">
-                                <i class="bi bi-calendar-event me-1"></i>{{ fav.fechaFavorito | date:'mediumDate' }}
-                            </span>
-                            <i class="bi bi-chevron-right ms-2 text-secondary"></i>
-                        </li>
-                    </ul>
-                    <ng-template #noFavs>
-                        <span class="text-muted">No tienes favoritos.</span>
-                    </ng-template>
+                <div class="d-flex">
+                    <div class="mt-3 w-50">
+                        <button class="btn" (click)="toggleFavorites()">
+                            <h5 class="mb-3"><i class="bi bi-heart-fill text-danger me-2"></i>Mis Favoritos</h5>
+                        </button>
+                        <ul *ngIf="showFavorites" class="list-group list-group-flush">
+                            <li *ngFor="let fav of favorites" (click)="goToProductDetail(fav.idProducto)"
+                                class="list-group-item d-flex align-items-center favorite-item" style="cursor:pointer;">
+                                <i class="bi bi-heart text-danger me-2"></i>
+                                <span class="fw-semibold flex-grow-1">{{ fav.nombreProducto }}</span>
+                                <span class="text-muted small ms-2">
+                                    <i class="bi bi-calendar-event me-1"></i>{{ fav.fechaFavorito | date:'mediumDate' }}
+                                </span>
+                                <i class="bi bi-chevron-right ms-2 text-secondary"></i>
+                            </li>
+                        </ul>
+                        <ng-template #noFavs>
+                            <span class="text-muted">No tienes favoritos.</span>
+                        </ng-template>
+                    </div>
+                    <div class="mt-3 w-50">
+                        <button class="btn" (click)="toggleValorations()">
+                            <h5 class="mb-3"><i class="bi bi-star-fill text-warning me-2"></i>Mis Valoraciones</h5>
+                        </button>
+                        <ul *ngIf="showValorations" class="list-group list-group-flush">
+                            <li *ngFor="let val of valorations" (click)="goToProductDetail(val.productoId)"
+                                class="list-group-item d-flex align-items-center favorite-item" style="cursor:pointer;">
+                                <i class="bi bi-star text-warning me-2"></i>
+                                <span class="fw-semibold flex-grow-1">{{ val.nombreProducto }}</span>
+                                <span class="text-muted small ms-2">
+                                    <i class="bi bi-calendar-event me-1"></i>{{ val.fechaValorado | date:'mediumDate' }}
+                                </span>
+                                <i class="bi bi-chevron-right ms-2 text-secondary"></i>
+                            </li>
+                        </ul>
+                        <ng-template #noFavs>
+                            <span class="text-muted">No tienes valoraciones.</span>
+                        </ng-template>
+                    </div>
                 </div>
             </div>
         </section>
