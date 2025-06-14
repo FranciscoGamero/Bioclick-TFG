@@ -31,6 +31,7 @@ export class ProductDetailComponent implements OnInit {
   newComment: string = '';
   currentUserId: string | null = null;
   currentUserRole: string | null = null;
+  showEditError = false;
   editingCommentId: string | null = null;
   editedComment: string = '';
   constructor(private productService: ProductService, private userService: UserService,
@@ -210,14 +211,17 @@ export class ProductDetailComponent implements OnInit {
   saveEditComment(commentId: string) {
     this.userService.editComment(commentId, this.editedComment).subscribe({
       next: (updated) => {
+
+        this.showEditError = false;
+
         const idx = this.listaComentarios.findIndex(c => c.id === commentId);
         if (idx !== -1) {
           this.listaComentarios[idx].comentario = updated.comentario;
         }
         this.cancelEditComment();
       },
-      error: (err) => {
-        console.error('Error editando comentario', err);
+      error: () => {
+        this.showEditError = true;
       }
     });
   }

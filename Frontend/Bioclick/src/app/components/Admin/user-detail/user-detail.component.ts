@@ -14,6 +14,8 @@ export class UserDetailComponent {
   readonly dialog = inject(MatDialog);
   user: DetailUser | undefined = undefined;
 
+  errorEditUser: boolean = false;
+
   constructor(private userService: UserService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
@@ -57,10 +59,11 @@ export class UserDetailComponent {
         ).then((observable: any) => {
           observable.subscribe({
             next: () => {
+              this.errorEditUser = false;
               this.router.navigate(['/user-detail', user.id]);
             },
             error: (error: Error) => {
-              console.error(error);
+              this.errorEditUser = true;
             }
           });
         });

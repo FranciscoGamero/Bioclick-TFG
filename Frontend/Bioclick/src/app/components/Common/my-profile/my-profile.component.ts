@@ -21,7 +21,7 @@ export class MyProfileComponent implements OnInit {
   showValorations = false;
   favorites: Favorito[] = [];
   valorations: Valoration[] = [];
-
+  errorEditUser: boolean = false;
   constructor(private userService: UserService, private route: Router,
     private favoriteService: FavoriteService, private valorationService: ValorationsService,
     private location: Location) { }
@@ -59,10 +59,11 @@ export class MyProfileComponent implements OnInit {
         ).then((observable: any) => {
           observable.subscribe({
             next: () => {
+              this.errorEditUser = false;
               this.route.navigate(['/my-profile']);
             },
             error: (error: Error) => {
-              console.error(error);
+              this.errorEditUser = true;
             }
           });
         });
