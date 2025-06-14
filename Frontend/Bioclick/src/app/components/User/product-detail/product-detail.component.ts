@@ -27,6 +27,13 @@ export class ProductDetailComponent implements OnInit {
   myValoration: Valoration | null = null;
   showValorationForm = false;
   userRating = 0;
+
+  newComment: string = '';
+  currentUserId: string | null = null;
+  currentUserRole: string | null = null;
+  showEditError = false;
+  editingCommentId: string | null = null;
+  editedComment: string = '';
   constructor(private productService: ProductService, private userService: UserService,
     private favoriteService: FavoriteService, private route: ActivatedRoute,
     private valorationService: ValorationsService, private location: Location) { }
@@ -39,7 +46,8 @@ export class ProductDetailComponent implements OnInit {
     }
     this.loadFavorites();
     this.rating = this.getAverageValoration();
-
+    this.currentUserId = localStorage.getItem('userId');
+    this.currentUserRole = localStorage.getItem('role');
   }
   limpiarUrlFoto(url: string | undefined | null): string {
     if (!url) return '';
@@ -172,7 +180,65 @@ export class ProductDetailComponent implements OnInit {
     this.showValorationForm = false;
   }
   goBack(): void {
-  this.location.back();
-}
+    this.location.back();
+  }
+  addComment(comment: string): void {
+    if (!this.product) return;
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      this.userService.addComment(userId, comment, this.product.id).subscribe({
+        next: (resp: Comentario) => {
+          this.listaComentarios.push(resp);
+        },
+        error: (err: Error) => {
+          console.error('Error adding comment:', err);
+        }
+      });
+    } else {
+      console.error('User ID not found in localStorage');
+    }
+  }
+  startEditComment(comment: Comentario) {
+    this.editingCommentId = comment.id;
+    this.editedComment = comment.comentario;
+  }
+
+  cancelEditComment() {
+    this.editingCommentId = null;
+    this.editedComment = '';
+  }
+
+  saveEditComment(commentId: string) {
+    this.userService.editComment(commentId, this.editedComment).subscribe({
+      next: (updated) => {
+        this.showEditError = false;
+        const idx = this.listaComentarios.findIndex(c => c.id === commentId);
+        if (idx !== -1) {
+          this.listaComentarios[idx].comentario = updated.comentario;
+        }
+        this.cancelEditComment();
+      },
+      error: () => {
+        this.showEditError = true;
+      }
+    });
+  }
+  deleteComment(commentId: string) {
+    this.userService.deleteComment(commentId).subscribe({
+      next: () => {
+        this.listaComentarios = this.listaComentarios.filter(c => c.id !== commentId);
+      },
+      error: (err: Error) => {
+        console.error('Error deleting comment:', err);
+      }
+    });
+  }
+  canDeleteComment(comentario: Comentario): boolean {
+    return (
+      comentario.usuarioId === this.currentUserId ||
+      this.currentUserRole === 'ROLE_ADMIN' ||
+      this.currentUserRole === 'ROLE_MANAGER'
+    );
+  }
 }
 
