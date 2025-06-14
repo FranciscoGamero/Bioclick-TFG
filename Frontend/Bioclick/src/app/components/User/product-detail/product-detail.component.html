@@ -61,22 +61,55 @@
                     </div>
                 </div>
                 <div class="reviews-list">
-                    <div class="review-item mb-4" *ngFor="let comentarioUsuario of listaComentarios">
-                        <div class="d-flex align-items-center mb-1">
-                            <img [src]="limpiarUrlFoto(comentarioUsuario.fotoPerfil)"
-                                alt="{{comentarioUsuario.username}}" class="rounded-circle me-2 review-avatar">
-                            <div>
-                                <span class="fw-semibold">{{comentarioUsuario.username}}</span>
-                                <span
-                                    class="text-muted small ms-2">{{formatDate(comentarioUsuario.fechaComentario)}}</span>
-                            </div>
+                    <div class="add-comment-box mb-4 p-3 rounded shadow-sm bg-light">
+                        <label for="newComment" class="form-label fw-semibold mb-2">
+                            <i class="bi bi-chat-left-text me-1"></i> Añadir un comentario
+                        </label>
+                        <div class="d-flex align-items-center gap-2">
+                            <input id="newComment" type="text" class="form-control" [(ngModel)]="newComment"
+                                placeholder="Escribe tu comentario..." maxlength="250" />
+                            <button class="btn btn-success" [disabled]="!newComment || newComment.trim().length === 0"
+                                (click)="addComment(newComment); newComment='';">
+                                <i class="bi bi-send"></i>
+                            </button>
                         </div>
-                        <div class="review-text">
-                            {{comentarioUsuario.comentario}}
+                        <div class="review-item mb-4" *ngFor="let comentarioUsuario of listaComentarios">
+                            <div class="d-flex align-items-center mb-1">
+                                <img [src]="limpiarUrlFoto(comentarioUsuario.fotoPerfil)"
+                                    alt="{{comentarioUsuario.username}}" class="rounded-circle me-2 review-avatar">
+                                <div>
+                                    <span class="fw-semibold">{{comentarioUsuario.username}}</span>
+                                    <span
+                                        class="text-muted small ms-2">{{formatDate(comentarioUsuario.fechaComentario)}}</span>
+                                </div>
+                                <button *ngIf="comentarioUsuario.usuarioId === currentUserId"
+                                    class="btn btn-sm btn-link ms-2" (click)="startEditComment(comentarioUsuario)">
+                                    <i class="bi bi-pencil"></i> Editar
+                                </button>
+                                <button *ngIf="canDeleteComment(comentarioUsuario)"
+                                    class="btn btn-sm btn-link text-danger ms-1"
+                                    (click)="deleteComment(comentarioUsuario.id)">
+                                    <i class="bi bi-trash"></i> Borrar
+                                </button>
+                            </div>
+                            <div *ngIf="editingCommentId === comentarioUsuario.id; else showComment">
+                                <input type="text" class="form-control d-inline w-auto" [(ngModel)]="editedComment"
+                                    maxlength="250" />
+                                <button class="btn btn-success btn-sm ms-2"
+                                    (click)="saveEditComment(comentarioUsuario.id)">
+                                    <i class="bi bi-check"></i>
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm ms-1" (click)="cancelEditComment()">
+                                    <i class="bi bi-x"></i>
+                                </button>
+                            </div>
+                            <ng-template #showComment>
+                                <div class="review-text">{{ comentarioUsuario.comentario }}</div>
+                            </ng-template>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <app-footer></app-footer>
+        <app-footer></app-footer>
