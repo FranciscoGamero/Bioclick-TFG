@@ -211,7 +211,9 @@ export class ProductDetailComponent implements OnInit {
   saveEditComment(commentId: string) {
     this.userService.editComment(commentId, this.editedComment).subscribe({
       next: (updated) => {
+
         this.showEditError = false;
+
         const idx = this.listaComentarios.findIndex(c => c.id === commentId);
         if (idx !== -1) {
           this.listaComentarios[idx].comentario = updated.comentario;
