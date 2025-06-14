@@ -1,0 +1,26 @@
+<app-header></app-header>
+
+<div class="container my-5">
+  <div class="row g-4 justify-content-center">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngFor="let producto of allProducts">
+      <div class="card product-card shadow-sm">
+        <div class="img-thumbnail mb-3" (click)="goToProductDetail(producto.id)">
+          <img [src]="limpiarUrlFoto(producto.imagenProducto)" class="card-img-top" alt="{{ producto.nombreProducto }}"
+            style="height: 200px; object-fit: cover;">
+        </div>
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ producto.nombreProducto }}</h5>
+          <p class="card-text">{{ producto.descripcion }}</p>
+          <button class="btn btn-outline-success btn-sm" [ngClass]="{'active': isFavorite(producto)}"
+            (click)="toggleFavorite(producto)">
+            <i class="bi" [ngClass]="isFavorite(producto) ? 'bi-heart-fill' : 'bi-heart'"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center mt-4" *ngIf="page < totalPages">
+    <button class="btn btn-success px-5" (click)="loadAllProducts()">VER MÁS</button>
+  </div>
+</div>
+<app-footer></app-footer>
