@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DetailUser } from '../../../models/user/detail-user';
+import { DetailUser } from '../../../models/user/detail-user.interface';
 import { UserService } from '../../../services/user.service';
 import { EditUserDialogComponent } from '../../Dialog/UserDialog/user-dialog';
 
