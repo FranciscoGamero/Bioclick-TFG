@@ -6,9 +6,8 @@
     </div>
     <!-- Menú centrado -->
     <div class="d-flex gap-4">
-      <button class="menu-btn">Home</button>
-      <button class="menu-btn">Categorías</button>
-      <button class="menu-btn">Todos</button>
+      <button class="menu-btn" [routerLink]="['/home']">Home</button>
+      <button class="menu-btn" [routerLink]="['/all-products']">Todos</button>
       <button *ngIf="haveAccess(user!.role)" (click)="toPanels()" class="menu-btn">Menú Admin</button>
     </div>
     <!-- Iconos a la derecha -->
