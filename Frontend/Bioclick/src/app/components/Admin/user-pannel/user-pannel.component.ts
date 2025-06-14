@@ -18,6 +18,8 @@ export class UserPannelComponent implements OnInit {
   name: string = '';
   usersFound: AllUsersResponse | undefined = undefined;
   page: number = 1;
+
+  errorEditUser: boolean = false;
   ngOnInit(): void {
     this.getUsers();
   }
@@ -72,10 +74,11 @@ export class UserPannelComponent implements OnInit {
         ).then((observable: any) => {
           observable.subscribe({
             next: () => {
+              this.errorEditUser = false;
               this.getUsers();
             },
             error: (error: Error) => {
-              console.error(error);
+              this.errorEditUser = true;
             }
           });
         })

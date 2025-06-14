@@ -20,6 +20,8 @@ export class ManagerPannelComponent {
   managersFound: AllManagersResponse | undefined = undefined;
   page: number = 1;
 
+  errorEditManager: boolean = false;
+
   ngOnInit(): void {
     this.getManagers();
   }
@@ -72,10 +74,11 @@ export class ManagerPannelComponent {
         ).then((observable: any) => {
           observable.subscribe({
             next: () => {
+              this.errorEditManager = false;
               this.getManagers();
             },
             error: (error: Error) => {
-              console.error(error.name);
+              this.errorEditManager = true;
             }
           });
         })
@@ -95,9 +98,6 @@ export class ManagerPannelComponent {
         ).subscribe({
           next: () => {
             this.getManagers();
-          },
-          error: (error: Error) => {
-            console.error(error);
           }
         });
       }

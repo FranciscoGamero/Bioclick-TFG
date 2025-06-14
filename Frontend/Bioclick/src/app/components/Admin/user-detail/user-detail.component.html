@@ -7,6 +7,14 @@
                 </button>
             </div>
             <div class="card shadow rounded-4 border-0">
+                <div class="w-100 d-flex justify-content-center mt-2">
+                    <div *ngIf="errorEditUser"
+                        class=" text-center align-items-center alert alert-danger alert-dismissible fade show w-50"
+                        role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        Ha habido un problema al editar el usuario.
+                    </div>
+                </div>
                 <div class="card-body p-4">
                     <div class="d-flex flex-column flex-md-row align-items-center mb-4">
                         <img [src]="limpiarUrlFoto(user!.fotoPerfilUrl)" alt="Avatar del usuario"

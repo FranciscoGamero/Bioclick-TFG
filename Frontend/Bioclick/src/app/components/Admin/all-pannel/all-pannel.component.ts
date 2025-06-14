@@ -18,6 +18,8 @@ export class AllPannelComponent implements OnInit {
   name: string = '';
   allFound: AllFoundResponse | undefined = undefined;
   page: number = 1;
+  errorEditManager: boolean = false;
+  errorEditUser: boolean = false;
   ngOnInit(): void {
     this.foundAll();
   }
@@ -82,9 +84,10 @@ export class AllPannelComponent implements OnInit {
           observable.subscribe({
             next: () => {
               this.foundAll();
+              this.errorEditUser = false;
             },
-            error: (error: Error) => {
-              console.error(error);
+            error: () => {
+              this.errorEditUser = true;
             }
           });
         })
@@ -105,9 +108,6 @@ export class AllPannelComponent implements OnInit {
           next: () => {
             this.foundAll();
           },
-          error: (error: Error) => {
-            console.error(error);
-          }
         });
       }
     });
@@ -132,9 +132,10 @@ export class AllPannelComponent implements OnInit {
             observable.subscribe({
               next: () => {
                 this.foundAll();
+                this.errorEditManager = false;
               },
-              error: (error: Error) => {
-                console.error(error.name);
+              error: () => {
+                this.errorEditManager = true;
               }
             });
           })
@@ -155,9 +156,6 @@ export class AllPannelComponent implements OnInit {
             next: () => {
               this.foundAll();
             },
-            error: (error: Error) => {
-              console.error(error);
-            }
           });
         }
       });
