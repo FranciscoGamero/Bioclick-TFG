@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { AllUsersResponse } from '../models/user/get-all-users-interface';
-import { DetailUser } from '../models/user/detail-user';
+import { DetailUser } from '../models/user/detail-user.interface';
+import { Comentario } from '../models/user/get-all-comments';
 
 @Injectable({
   providedIn: 'root'
@@ -94,5 +95,38 @@ export class UserService {
     };
 
     return this.http.put<DetailUser>(url, formData, { headers: header });
+  }
+
+  addComment(userId: string, comment: string, productoId: string): Observable<Comentario> {
+    const url = `${environment.apiBaseUrl}/comment/add`;
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+    const body = {
+      comentario: comment,
+      userId: userId,
+      productoId: productoId
+    }
+    return this.http.post<Comentario>(url, body, { headers: header });
+  }
+  editComment(commentId: string, comment: string): Observable<Comentario> {
+    const url = `${environment.apiBaseUrl}/comment/edit/${commentId}`;
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+    const body = {
+      comentarioCambiado: comment
+    }
+    return this.http.put<Comentario>(url, body, { headers: header });
+  }
+  deleteComment(commentId: string): Observable<any> {
+    const url = `${environment.apiBaseUrl}/comment/delete/${commentId}`;
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+    return this.http.delete(url, { headers: header });
   }
 }

@@ -31,6 +31,7 @@ import { HomeComponent } from './components/User/home/home.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { ProductDetailComponent } from './components/User/product-detail/product-detail.component';
+import { AllProductsComponent } from './components/User/all-products/all-products.component';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { ProductDetailComponent } from './components/User/product-detail/product
     FooterComponent,
     HeaderComponent,
     ProductDetailComponent,
+    AllProductsComponent,
   ],
   imports: [
     BrowserModule,

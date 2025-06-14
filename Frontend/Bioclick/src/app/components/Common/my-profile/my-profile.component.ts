@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
-import { DetailUser } from '../../../models/user/detail-user';
+import { DetailUser } from '../../../models/user/detail-user.interface';
 import { EditUserDialogComponent } from '../../Dialog/UserDialog/user-dialog';
 import { FavoriteService } from '../../../services/favorite.service';
 import { Favorito } from '../../../models/user/favorites.interface';

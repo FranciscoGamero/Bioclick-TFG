@@ -14,6 +14,7 @@ import { MyProfileComponent } from './components/Common/my-profile/my-profile.co
 import { UserDetailComponent } from './components/Admin/user-detail/user-detail.component';
 import { HomeComponent } from './components/User/home/home.component';
 import { ProductDetailComponent } from './components/User/product-detail/product-detail.component';
+import { AllProductsComponent } from './components/User/all-products/all-products.component';
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginformComponent},
@@ -30,6 +31,7 @@ const routes: Routes = [
   {path: 'user-detail/:id', component: UserDetailComponent},
   {path: 'home', component: HomeComponent},
   {path: 'product-detail/:id', component: ProductDetailComponent},
+  {path: 'all-products', component: AllProductsComponent},
 ];
 
 @NgModule({

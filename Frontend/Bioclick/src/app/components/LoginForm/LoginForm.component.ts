@@ -20,11 +20,7 @@ export class LoginformComponent {
         localStorage.setItem('token', response.token);
         localStorage.setItem('userId', response.id);
         localStorage.setItem('role', response.role);
-        if (response.role === 'ROLE_ADMIN') {
-          this.router.navigate(['/admin-list']);
-        } else if (response.role === 'ROLE_MANAGER') {
-          this.router.navigate(['/products-list']);
-        }
+        this.router.navigate(['/home']);
       },
       error: (error) => {
         console.error('Error en el login', error);

@@ -1,0 +1,82 @@
+import { Component, OnInit } from '@angular/core';
+import { Favorito } from '../../../models/user/favorites.interface';
+import { AllProductsResponse, Producto } from '../../../models/user/get-all-products.interface';
+import { FavoriteService } from '../../../services/favorite.service';
+import { ProductService } from '../../../services/product.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-all-products',
+  templateUrl: './all-products.component.html',
+  styleUrl: './all-products.component.scss'
+})
+export class AllProductsComponent implements OnInit {
+  page: number = 0;
+  totalPages: number = 1;
+  allProducts: Producto[] = [];
+  favorites: Favorito[] = [];
+
+  constructor(private productService: ProductService, private favoriteService: FavoriteService, private router: Router) { }
+  ngOnInit(): void {
+    this.loadAllProducts();
+    this.loadFavorites();
+  }
+  limpiarUrlFoto(url: string | undefined | null): string {
+    if (!url) return '';
+
+    if (url.includes('assets/')) {
+      return url.replace('http://localhost:8080/download/', '');
+    }
+
+    if (url.startsWith('http')) return url;
+
+    return `http://localhost:8080/download/${url}`;
+  }
+  loadAllProducts(): void {
+    this.productService.getAllProducts(this.page).subscribe({
+      next: (response) => {
+        this.allProducts = [...this.allProducts, ...response.contenido];
+        this.totalPages = response.paginasTotales;
+        this.page++;
+      },
+      error: (error: Error) => {
+        console.error('Error fetching all products:', error);
+      }
+    });
+  }
+  loadFavorites(): void {
+    this.favoriteService.getFavorites().subscribe({
+      next: (resp) => this.favorites = resp.contenido,
+      error: () => this.favorites = []
+    });
+  }
+
+  isFavorite(producto: Producto): boolean {
+    return this.favorites.some(fav => fav.nombreProducto === producto.nombreProducto);
+  }
+  toggleFavorite(producto: Producto): void {
+    if (this.isFavorite(producto)) {
+      this.favoriteService.removeFromFavorites(producto.id).subscribe({
+        next: () => {
+          this.favorites = this.favorites.filter(fav => fav.nombreProducto !== producto.nombreProducto);
+        }
+      });
+    } else {
+      this.favoriteService.addToFavorite(producto.id).subscribe({
+        next: () => {
+          this.favorites = [
+            ...this.favorites,
+            {
+              nombreProducto: producto.nombreProducto, idProducto: producto.id,
+              nombreUsuario: this.favorites.at(0)!.nombreUsuario, idUsuario: this.favorites.at(0)!.idUsuario,
+              fechaFavorito: new Date().toISOString()
+            }
+          ];
+        }
+      });
+    }
+  }
+  goToProductDetail(productId: string): void {
+    this.router.navigate(['/product-detail', productId]);
+  }
+}
