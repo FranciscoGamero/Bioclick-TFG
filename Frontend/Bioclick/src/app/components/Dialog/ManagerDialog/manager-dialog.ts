@@ -1,20 +1,80 @@
 import { Inject, Component } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
-export interface EditManagerData {
-    id: string;
-    username: string;
-    correo: string;
-    password: string;
-    fotoPerfilUrl?: string;
+export interface ManagerDialogData {
+  id?: string;
+  username: string;
+  correo: string;
+  password: string;
+  verifyPassword?: string;
+  fotoPerfilUrl?: string;
 }
-export interface DeleteManagerData {
-    id: string;
+@Component({
+  selector: 'app-create-manager-dialog',
+  template: `
+    <h2 mat-dialog-title>Crear Manager</h2>
+    <mat-dialog-content>
+      <form class="w-100 d-flex flex-column align-items-center justify-content-center">
+        <div class="mb-3" style="width: 350px;">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" id="username" name="username"
+            placeholder="Ingresa tu username" [(ngModel)]="data.username">
+        </div>
+        <div class="mb-3" style="width: 350px;">
+          <label for="email" class="form-label">Correo</label>
+          <input type="email" class="form-control" id="email" name="email"
+            placeholder="Ingresa tu email" [(ngModel)]="data.correo">
+        </div>
+        <div class="mb-3" style="width: 350px;">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password"
+              placeholder="Ingresa tu contraseña" [(ngModel)]="data.password">
+        </div>
+        <div class="mb-3" style="width: 350px;">
+            <label for="verifyPassword" class="form-label">Verificar tu contraseña</label>
+            <input type="password" class="form-control" id="verifyPassword" name="verifyPassword"
+              placeholder="Ingresa tu contraseña" [(ngModel)]="data.verifyPassword">
+        </div>
+        <div class="mb-3" style="width: 350px;">
+          <label for="formFile" class="form-label">Foto de Perfil</label>
+          <input class="form-control" type="file" id="formFile" (change)="onFileSelected($event)">
+        </div>
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+      <button class="btn btn-danger mx-auto" (click)="onCancel()">Cancelar</button>
+      <button class="btn btn-success mx-auto" (click)="onSave()">Guardar</button>
+    </mat-dialog-actions>
+    `
+})
+export class CreateManagerDialogComponent {
+  selectedFile: File | null = null;
+
+  constructor(
+    public dialogRef: MatDialogRef<CreateManagerDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: ManagerDialogData
+  ) { }
+
+  onCancel(): void {
+    this.dialogRef.close();
+  }
+
+  onSave(): void {
+    this.dialogRef.close({
+      ...this.data,
+      selectedFile: this.selectedFile
+    });
+  }
+  onFileSelected(event: any) {
+    if (event && event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
+    }
+  }
 }
 
 @Component({
-    selector: 'app-edit-manager-dialog',
-    template: `
+  selector: 'app-edit-manager-dialog',
+  template: `
     <h2 mat-dialog-title>Editar Manager</h2>
     <mat-dialog-content>
       <form class="w-100 d-flex flex-column align-items-center justify-content-center">
@@ -41,33 +101,33 @@ export interface DeleteManagerData {
     `
 })
 export class EditManagerDialogComponent {
-    selectedFile: File | null = null;
+  selectedFile: File | null = null;
 
-    constructor(
-        public dialogRef: MatDialogRef<EditManagerDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: EditManagerData
-    ) { }
+  constructor(
+    public dialogRef: MatDialogRef<EditManagerDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: ManagerDialogData
+  ) { }
 
-    onCancel(): void {
-        this.dialogRef.close();
-    }
+  onCancel(): void {
+    this.dialogRef.close();
+  }
 
-    onSave(): void {
-        this.dialogRef.close({
-            ...this.data,
-            selectedFile: this.selectedFile
-        });
+  onSave(): void {
+    this.dialogRef.close({
+      ...this.data,
+      selectedFile: this.selectedFile
+    });
+  }
+  onFileSelected(event: any) {
+    if (event && event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
     }
-    onFileSelected(event: any) {
-        if (event && event.target.files.length > 0) {
-            this.selectedFile = event.target.files[0];
-        }
-    }
+  }
 }
 
 @Component({
-    selector: 'app-delete-manager-dialog',
-    template: `
+  selector: 'app-delete-manager-dialog',
+  template: `
     <h2 mat-dialog-title>Eliminar Manager</h2>
     <mat-dialog-content>
       <form class="w-100 d-flex flex-column align-items-center justify-content-center">
@@ -81,18 +141,18 @@ export class EditManagerDialogComponent {
   `
 })
 export class DeleteManagerDialogComponent {
-    constructor(
-        public dialogRef: MatDialogRef<DeleteManagerDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: DeleteManagerData
-    ) { }
+  constructor(
+    public dialogRef: MatDialogRef<DeleteManagerDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: ManagerDialogData
+  ) { }
 
-    onCancel(): void {
-        this.dialogRef.close();
-    }
+  onCancel(): void {
+    this.dialogRef.close();
+  }
 
-    onSave(): void {
-        this.dialogRef.close({
-            ...this.data,
-        });
-    }
+  onSave(): void {
+    this.dialogRef.close({
+      ...this.data,
+    });
+  }
 }

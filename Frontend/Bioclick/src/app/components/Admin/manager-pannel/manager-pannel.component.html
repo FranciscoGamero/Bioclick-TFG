@@ -16,7 +16,7 @@
                 </div>
             </div>
         </form>
-        <button class="btn btnForm mt-5" type="submit">Agregar Nuevo</button>
+        <button class="btn btnForm mt-5" (click)="openCreateDialog()">Agregar Manager</button>
     </div>
     <div class="row bg-white pannel align-content-between mt-5 pt-5">
         <ng-container *ngIf="managersFound?.contenido?.length; else noManagers">

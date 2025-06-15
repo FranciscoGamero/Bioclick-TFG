@@ -12,8 +12,7 @@
                 </div>
             </div>
         </form>
-        <button class="btn btnForm mt-5" type="submit">Agregar Nuevo</button>
-
+        <button class="btn btnForm mt-5" (click)="openCreateDialog()">Agregar Admin</button>
     </div>
     <div class="row bg-white pannel align-content-between mt-5 pt-5 mb-2">
         <div *ngFor="let user of adminsFound?.contenido" class="col-3 heightCol mb-4">
@@ -28,15 +27,6 @@
                         <p class="m-0 text-center text-white fw-semibold">{{ user.username }}</p>
                         <div class="d-flex w-100 justify-content-between">
                             <i class="bi bi-toggle2-on ps-3 mt-3 text-white"></i>
-                            <div ngbDropdown class="d-inline-block text-end me-3">
-                                <button type="button" class="btn btn-outline-light" id="dropdownBasic1"
-                                    ngbDropdownToggle>
-                                    Ver opciones
-                                </button>
-                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                    <button ngbDropdownItem>Editar</button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
