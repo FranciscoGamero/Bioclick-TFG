@@ -104,4 +104,12 @@ public class Producto {
         this.categorias.remove(categoria);
         categoria.getListaProductos().remove(this);
     }
+    public void addImpactoAmbiental(ImpactoAmbiental impactoAmbiental) {
+        this.impactoAmbiental = impactoAmbiental;
+        impactoAmbiental.setProducto(this);
+    }
+    public void removeImpactoAmbiental(ImpactoAmbiental impactoAmbiental) {
+        this.impactoAmbiental = null;
+        impactoAmbiental.setProducto(null);
+    }
 }

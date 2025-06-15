@@ -256,7 +256,7 @@ public UserDto editarUsuario(@io.swagger.v3.oas.annotations.parameters.RequestBo
                                         }
                             """))) @AuthenticationPrincipal User user,
                              @RequestPart("edit") @Valid EditUserDto editUserDto,
-                             @RequestPart("file")MultipartFile file) {
+                             @RequestPart(value = "file", required = false)MultipartFile file) {
 
     User userEditado = userService.editarUsuario(user, editUserDto, file);
 

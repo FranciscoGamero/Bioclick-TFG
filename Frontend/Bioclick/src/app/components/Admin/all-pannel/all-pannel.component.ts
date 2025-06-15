@@ -79,7 +79,6 @@ export class AllPannelComponent implements OnInit {
           result.correo,
           result.password,
           result.selectedFile,
-          result.fotoPerfilUrl
         ).then((observable: any) => {
           observable.subscribe({
             next: () => {

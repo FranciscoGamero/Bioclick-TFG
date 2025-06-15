@@ -55,7 +55,6 @@ export class UserDetailComponent {
           result.correo,
           this.user!.password,
           result.file,
-          this.user!.fotoPerfilUrl
         ).then((observable: any) => {
           observable.subscribe({
             next: () => {

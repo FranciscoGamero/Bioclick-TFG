@@ -33,6 +33,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 
@@ -155,7 +156,6 @@ public class AdminService {
 
     public User editarUsuario(EditUserDto editUserDto, UUID id, UUID adminId, MultipartFile file) {
 
-        FileMetadata fileMetadata = storageService.store(file);
 
         Admin adminCreador = adminRepository.findById(adminId)
                 .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado al admin"));
@@ -167,11 +167,16 @@ public class AdminService {
 
         return userRepository.findById(id).map(old -> {
 
-            old.setUsername(editUserDto.username());
-            old.setCorreo(editUserDto.correo());
-            old.setFotoPerfil(fileMetadata.getFilename());
-            System.out.println(old.getId());
-
+            if(!Objects.equals(old.getUsername(), editUserDto.username())) {
+                old.setUsername(editUserDto.username());
+            }
+            if(!Objects.equals(editUserDto.correo(), old.getCorreo())) {
+                old.setCorreo(editUserDto.correo());
+            }
+            if (file != null && !file.isEmpty()) {
+                FileMetadata fileMetadata = storageService.store(file);
+                old.setFotoPerfil(fileMetadata.getFilename());
+            }
             return userRepository.save(old);
         }).orElseThrow(() -> new EntityNotFoundException("No se pudo editar dicho usuario" + id));
     }

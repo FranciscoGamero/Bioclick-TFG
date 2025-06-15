@@ -29,11 +29,10 @@ export class ManagerPannelComponent {
 
   limpiarUrlFoto(url: string | undefined | null): string {
     if (!url) return '';
-    if (url.includes('randomuser.me') || url.includes('localhost:8080/download/')) {
+    if (url.includes('randomuser.me')) {
       return url.replace('http://localhost:8080/download/', '');
     }
-    if (url.startsWith('http')) return url;
-    return `http://localhost:8080/download/${url}`;
+    return url;
   }
   getManagers() {
     this.managerService.getAllManagers(this.page - 1).subscribe({

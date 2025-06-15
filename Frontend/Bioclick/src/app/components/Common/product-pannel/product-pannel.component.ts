@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { ProductService } from '../../../services/product.service';
 import { AllProductsResponse } from '../../../models/user/get-all-products.interface';
+import { CreateProductoDialogComponent, DeleteProductoDialogComponent, EditProductoDialogComponent } from '../../Dialog/CommonDialog/product-dialog';
 
 @Component({
   selector: 'app-product-pannel',
@@ -15,6 +16,9 @@ export class ProductPannelComponent {
   name: string = '';
   productsFound: AllProductsResponse | undefined = undefined;
   page: number = 1;
+
+  errorCreateProducto: boolean = false;
+  errorEditProduct: boolean = false;
   ngOnInit(): void {
     this.getProducts();
   }
@@ -49,5 +53,88 @@ export class ProductPannelComponent {
   onCardClick(userId: string) {
     console.log('Card clicked for user ID:', userId);
   }
+  openCreateDialog(): void {
+    const dialogRef = this.dialog.open(CreateProductoDialogComponent, {
+      width: '800px',
+      data: {
+        nombreProducto: '',
+        descripcion: '',
+        precioProducto: 0,
+        fabricante: '',
+        estado: '',
+        idCategoria: ''
+      }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog closed with result:', result);
+      if (result && result.selectedFile) {
+        this.productService.createProduct(
+          result.nombreProducto,
+          result.descripcion,
+          result.precioProducto,
+          result.fabricante,
+          result.estado,
+          result.idCategoria,
+          result.selectedFile
+        ).subscribe({
+          next: () => {
+            this.errorCreateProducto = false;
+            this.getProducts();
+          },
+          error: (error: Error) => {
+            console.log(error)
+            this.errorCreateProducto = true;
+          }
+        });
+      }
+    });
+  }
+  openEditDialog(product: { id: string; nombreProducto: string; descripcion: string; precioProducto: number; estado: string; fotoPerfilUrl: string }): void {
+    const dialogRef = this.dialog.open(EditProductoDialogComponent, {
+      width: '800px',
+      data: { id: product.id, nombreProducto: product.nombreProducto, descripcion: product.descripcion, precioProducto: product.precioProducto, estado: product.estado, fotoPerfilUrl: product.fotoPerfilUrl }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Dialog closed with result:', result);
+        this.productService.editProduct(
+          result.id,
+          result.nombreProducto,
+          result.descripcion,
+          result.precioProducto,
+          result.estado,
+          result.selectedFile,
+        ).subscribe({
+          next: () => {
+            this.errorEditProduct = false;
+            this.getProducts();
+          },
+          error: (error) => {
+            console.error('Error editing product:', error);
+            this.errorEditProduct = true;
+          }
+        });
+      }
+    });
+  }
+  openDeleteDialog(product: { id: string; }): void {
+    const dialogRef = this.dialog.open(DeleteProductoDialogComponent, {
+      width: '800px',
+      data: { id: product.id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.productService.deleteProduct(
+          result.id
+        ).subscribe({
+          next: () => {
+            this.getProducts();
+          }
+        });
+      }
+    });
+  }
 }

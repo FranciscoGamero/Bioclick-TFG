@@ -12,9 +12,10 @@
                 </div>
             </div>
         </form>
+        <button class="btn btnForm mt-5" (click)="openCreateDialog()">Agregar Categoria</button>
     </div>
     <div class="row bg-white pannel mt-5 pt-5">
-        <ng-container *ngIf="categoriesFound?.contenido?.length; else noUsers">
+        <ng-container *ngIf="categoriesFound?.contenido?.length; else noCategories">
             <div *ngFor="let category of categoriesFound?.contenido" class="col-3 heightCol mb-4">
                 <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card"
                   [ngClass]="{ 'categoria-sin-padre': category.nombreCategoriaPadre === 'None' }"
@@ -31,9 +32,11 @@
                                         Ver opciones
                                     </button>
                                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                        <button ngbDropdownItem>
+                                        <button ngbDropdownItem
+                                            (click)="openEditDialog(category)">
                                             Editar</button>
-                                        <button ngbDropdownItem>
+                                        <button ngbDropdownItem
+                                            (click)="openDeleteDialog({ idCategoria: category.id }); $event.stopPropagation()">
                                             Eliminar
                                         </button>
                                     </div>
@@ -44,10 +47,10 @@
                 </mat-card>
             </div>
         </ng-container>
-        <ng-template #noUsers>
+        <ng-template #noCategories>
             <div class="d-flex justify-content-center align-items-center w-100" style="min-height: 300px;">
                 <span class="text-center text-muted" style="font-size: 1.3rem;">
-                    No hay usuarios para mostrar.
+                    No hay categorias para mostrar.
                 </span>
             </div>
         </ng-template>

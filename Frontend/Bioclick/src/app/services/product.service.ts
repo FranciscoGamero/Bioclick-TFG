@@ -41,4 +41,59 @@ export class ProductService {
       .set('page', page)
     return this.http.get<AllCommentsResponse>(url, { headers: header, params });
   }
+  createProduct(nombreProducto: string, descripcion: string, precioProducto: number,
+    fabricante: string, estado: string, nombreCategoria: string, file: File
+  ): Observable<any> {
+    const url = `${environment.apiBaseUrl}/product/create`;
+    const formData = new FormData();
+    const crearData = {
+      nombreProducto,
+      descripcion,
+      precioProducto,
+      fabricante,
+      estado,
+      idCategoria: nombreCategoria // <-- usa idCategoria, no nombreCategoria
+    };
+
+    formData.append('file', file);
+    formData.append('crear', new Blob([JSON.stringify(crearData)], { type: 'application/json' }));
+
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    };
+
+    return this.http.post<Producto>(url, formData, { headers });
+  }
+  editProduct(productId: string, nombreProducto: string, descripcion: string,
+    precioProducto: number, estado: string, file: File | null
+  ): Observable<Producto> {
+    const url = `${environment.apiBaseUrl}/product/edit/${productId}`;
+    const formData = new FormData();
+    const editData = {
+      nombreProducto,
+      descripcion,
+      precioProducto,
+      estado,
+      fotoPerfilUrl: file ? file.name : null
+    };
+    console.log('Editing product with data:', editData);
+    if (file) {
+      formData.append('file', file);
+    }
+    formData.append('editar', new Blob([JSON.stringify(editData)], { type: 'application/json' }));
+
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    };
+
+    return this.http.put<Producto>(url, formData, { headers });
+  }
+  deleteProduct(productId: string): Observable<any> {
+    const url = `${environment.apiBaseUrl}/product/delete/${productId}`;
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+    return this.http.delete(url, { headers: header });
+  }
 }
