@@ -20,7 +20,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { ProductPannelComponent } from './components/Common/product-pannel/product-pannel.component';
 import { CategoryPannelComponent } from './components/Common/category-pannel/category-pannel.component';
 import { ManagerPannelComponent } from './components/Admin/manager-pannel/manager-pannel.component';
-import { DeleteManagerDialogComponent, EditManagerDialogComponent } from './components/Dialog/ManagerDialog/manager-dialog';
+import { CreateManagerDialogComponent, DeleteManagerDialogComponent, EditManagerDialogComponent } from './components/Dialog/ManagerDialog/manager-dialog';
 import { UserPannelComponent } from './components/Admin/user-pannel/user-pannel.component';
 import { EditUserDialogComponent, DeleteUserDialogComponent } from './components/Dialog/UserDialog/user-dialog';
 import { GraphicsPannelComponent } from './components/Common/graphics-pannel/graphics-pannel.component';
@@ -47,6 +47,7 @@ import { CreateCategoriaDialogComponent, DeleteCategoriaDialogComponent, EditCat
     ManagerPannelComponent,
     AllPannelComponent,
     EditUserDialogComponent,
+    CreateManagerDialogComponent,
     EditManagerDialogComponent,
     DeleteManagerDialogComponent,
     DeleteUserDialogComponent,

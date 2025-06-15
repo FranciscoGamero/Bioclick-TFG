@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { AllManagersResponse } from '../../../models/user/get-all-managers-interface';
 import { ManagerService } from '../../../services/manager.service';
 import { AdminService } from '../../../services/admins.service';
-import { EditManagerDialogComponent, DeleteManagerDialogComponent } from '../../Dialog/ManagerDialog/manager-dialog';
+import { EditManagerDialogComponent, DeleteManagerDialogComponent, CreateManagerDialogComponent } from '../../Dialog/ManagerDialog/manager-dialog';
 import { Router } from '@angular/router';
 
 
@@ -21,7 +21,7 @@ export class ManagerPannelComponent {
   page: number = 1;
 
   errorEditManager: boolean = false;
-
+  errorCreateManager: boolean = false;
   ngOnInit(): void {
     this.getManagers();
   }
@@ -53,7 +53,43 @@ export class ManagerPannelComponent {
     this.router.navigate(['/user-detail', userId]);
 
   }
+openCreateDialog(): void {
 
+    const dialogRef = this.dialog.open(CreateManagerDialogComponent, {
+      width: '800px',
+      data: {
+        username: '',
+        correo: '',
+        password: '',
+        verifyPassword: '',
+        fotoPerfilUrl: ''
+      }
+    });
+    console.log(dialogRef.componentInstance.data);
+
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog closed with result:', result);
+      if (result && result.selectedFile) {
+        this.adminService.createManager(
+          result.username,
+          result.correo,
+          result.password,
+          result.verifyPassword,
+          result.selectedFile
+        ).subscribe({
+          next: () => {
+            this.errorCreateManager = false;
+            this.getManagers();
+          },
+          error: (error: Error) => {
+            console.log(error)
+            this.errorCreateManager = true;
+          }
+        });
+      }
+    });
+  }
   openEditDialog(manager: { id: string; username: string; correo: string; password: string; fotoPerfilUrl: string }): void {
     const dialogRef = this.dialog.open(EditManagerDialogComponent, {
       width: '800px',
