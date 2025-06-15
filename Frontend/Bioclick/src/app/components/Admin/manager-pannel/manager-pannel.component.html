@@ -1,5 +1,9 @@
 <my-sidebar [isExpanded]="isExpanded" (toggleSidebar)="handleSidebarToggle()" />
 <div class="content mt-5" [ngClass]="{ 'sidebarExpanded': isExpanded }" style="min-height: 60vh;">
+    <div *ngIf="errorEditManager" class="alert alert-danger alert-dismissible fade show w-50" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        Ha habido un problema al editar el manager.
+    </div>
     <h2>Managers</h2>
     <div class="mb-5">
         <form method="post" class="h-auto">

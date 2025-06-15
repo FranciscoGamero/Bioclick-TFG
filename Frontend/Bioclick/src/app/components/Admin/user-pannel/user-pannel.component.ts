@@ -18,6 +18,8 @@ export class UserPannelComponent implements OnInit {
   name: string = '';
   usersFound: AllUsersResponse | undefined = undefined;
   page: number = 1;
+
+  errorEditUser: boolean = false;
   ngOnInit(): void {
     this.getUsers();
   }
@@ -26,14 +28,10 @@ export class UserPannelComponent implements OnInit {
 
   limpiarUrlFoto(url: string | undefined | null): string {
     if (!url) return '';
-
     if (url.includes('randomuser.me')) {
       return url.replace('http://localhost:8080/download/', '');
     }
-
-    if (url.startsWith('http')) return url;
-
-    return `http://localhost:8080/download/${url}`;
+    return url;
   }
   getUsers() {
     this.userService.getAllUsers(this.page - 1).subscribe({
@@ -68,14 +66,14 @@ export class UserPannelComponent implements OnInit {
           result.correo,
           result.password,
           result.file,
-          result.fotoPerfilUrl
         ).then((observable: any) => {
           observable.subscribe({
             next: () => {
+              this.errorEditUser = false;
               this.getUsers();
             },
             error: (error: Error) => {
-              console.error(error);
+              this.errorEditUser = true;
             }
           });
         })

@@ -9,6 +9,7 @@ export interface AllProductsResponse {
 export interface Producto {
   id: string
   nombreProducto: string
+  fabricante: string
   descripcion: string
   imagenProducto: string
   precioProducto: number

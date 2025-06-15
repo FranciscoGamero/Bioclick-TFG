@@ -1,5 +1,10 @@
 <app-header></app-header>
 <div class="container my-5 product-detail-container">
+    <div *ngIf="showEditError"
+        class=" text-center align-items-center alert alert-danger alert-dismissible fade show w-50" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        Ha habido un problema al editar el comentario.
+    </div>
     <button class="btn btn-outline-secondary mb-3 backButton" (click)="goBack()">
         <i class="bi bi-arrow-left"></i> Volver
     </button>

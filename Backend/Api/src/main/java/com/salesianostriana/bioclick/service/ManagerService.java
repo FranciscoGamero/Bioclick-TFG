@@ -26,6 +26,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.nio.channels.FileChannel;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 
@@ -101,8 +102,14 @@ public class ManagerService {
         adminRepository.save(adminCreador);
 
         return managerRepository.findById(managerId).map(old -> {
-            old.setUsername(editManagerDto.username());
-            old.setCorreo(editManagerDto.correo());
+            if(!Objects.equals(old.getUsername(), editManagerDto.username())){
+                old.setUsername(editManagerDto.username());
+
+            }
+            if(!Objects.equals(old.getCorreo(), editManagerDto.correo())){
+                old.setCorreo(editManagerDto.correo());
+
+            }
 
             if (fileMetadata != null) {
                 old.setFotoPerfil(fileMetadata.getFilename());
@@ -120,7 +127,6 @@ public class ManagerService {
         manager.setUsername(editManagerDto.username());
         manager.setCorreo(editManagerDto.correo());
         manager.setFotoPerfil(fileMetadata.getFilename());
-        manager.setPassword(passwordEncoder.encode(editManagerDto.password()));
 
         return managerRepository.save(manager);
     }

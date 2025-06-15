@@ -32,6 +32,8 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { ProductDetailComponent } from './components/User/product-detail/product-detail.component';
 import { AllProductsComponent } from './components/User/all-products/all-products.component';
+import { EditProductoDialogComponent, DeleteProductoDialogComponent, CreateProductoDialogComponent } from './components/Dialog/CommonDialog/product-dialog';
+import { CreateCategoriaDialogComponent, DeleteCategoriaDialogComponent, EditCategoriaDialogComponent } from './components/Dialog/CommonDialog/category-dialog';
 
 
 @NgModule({
@@ -59,6 +61,12 @@ import { AllProductsComponent } from './components/User/all-products/all-product
     HeaderComponent,
     ProductDetailComponent,
     AllProductsComponent,
+    CreateProductoDialogComponent,
+    EditProductoDialogComponent,
+    DeleteProductoDialogComponent,
+    CreateCategoriaDialogComponent,
+    EditCategoriaDialogComponent,
+    DeleteCategoriaDialogComponent
   ],
   imports: [
     BrowserModule,
