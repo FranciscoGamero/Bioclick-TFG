@@ -24,17 +24,14 @@ export class UserService {
     return this.http.get<AllUsersResponse>(url, { headers: header, params });
   }
 
-  async updateUser(userId: string, username: string, correo: string, password: string, file: File | null,
-    fotoPerfilUrl: string
-  ): Promise<Observable<any>> {
+  async updateUser(userId: string, username: string, correo: string, password: string, file: File | null): Promise<Observable<any>> {
     const url = `${environment.apiBaseUrl}/admin/edit/user/${userId}`;
     const formData = new FormData();
     const editData = { username, correo, password };
 
-    let fileToSend = file;
-
-    formData.append('file', fileToSend!);
-
+    if (file instanceof File) {
+      formData.append('file', file, file.name);
+    }
     formData.append('edit', new Blob([JSON.stringify(editData)], { type: 'application/json' }));
 
     const header = {

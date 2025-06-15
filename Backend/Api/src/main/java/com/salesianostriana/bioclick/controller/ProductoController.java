@@ -3,6 +3,7 @@ package com.salesianostriana.bioclick.controller;
 
 import com.salesianostriana.bioclick.dto.PaginacionDto;
 import com.salesianostriana.bioclick.dto.producto.CreateProductoDto;
+import com.salesianostriana.bioclick.dto.producto.EditProductoDto;
 import com.salesianostriana.bioclick.dto.producto.ProductoDto;
 import com.salesianostriana.bioclick.model.Producto;
 import com.salesianostriana.bioclick.model.User;
@@ -176,8 +177,8 @@ public class ProductoController {
                                                           "estado": "Reacondicionado"
                                                         }
                             """))) @PathVariable UUID productId,
-                                    @RequestPart("editar") @Valid CreateProductoDto editProductDto,
-                                    @RequestPart("file") MultipartFile file,
+                                    @RequestPart("editar") @Valid EditProductoDto editProductDto,
+                                    @RequestPart(value = "file", required = false) MultipartFile file,
                                     @AuthenticationPrincipal User user) {
 
         Producto p = productoService.editarProducto(editProductDto, productId, file, user.getId());

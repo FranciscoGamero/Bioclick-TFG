@@ -25,4 +25,5 @@ public interface CategoriaRepository extends JpaRepository<Categoria, UUID> {
     where :id in (select c.id from p.categorias c)
 """)
     void eliminarProductosPorCategoria(UUID id);
+
 }

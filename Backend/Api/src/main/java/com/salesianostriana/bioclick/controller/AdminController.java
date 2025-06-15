@@ -546,7 +546,7 @@ public class AdminController {
                                         }
                             """))) @PathVariable UUID userId,
                                  @RequestPart("edit") @Valid EditUserDto editUserDto,
-                                 @RequestPart("file") MultipartFile file,
+                                 @RequestPart(value = "file", required = false) MultipartFile file,
                                  @AuthenticationPrincipal Admin admin){
 
         User userEditado = adminService.editarUsuario(editUserDto, userId, admin.getId(), file);
