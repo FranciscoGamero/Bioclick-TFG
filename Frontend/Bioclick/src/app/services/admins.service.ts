@@ -34,6 +34,34 @@ export class AdminService {
       .set('page', page)
     return this.http.get<AllFoundResponse>(url, { headers: header, params });
   }
+  createManager(username: string, correo: string, password: string, verifyPassword: string, file: File): Observable<any> {
+    const url = `${environment.apiBaseUrl}/manager/create`;
+    const formData = new FormData();
+    const crearData = { username, correo, password, verifyPassword };
+
+    formData.append('file', file);
+    formData.append('crear', new Blob([JSON.stringify(crearData)], { type: 'application/json' }));
+
+    const header = {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    };
+
+    return this.http.post(url, formData, { headers: header });
+  }
+  createAdmin(username: string, correo: string, password: string, verifyPassword: string, file: File): Observable<any> {
+    const url = `${environment.apiBaseUrl}/admin/create`;
+    const formData = new FormData();
+    const crearData = { username, correo, password, verifyPassword };
+
+    formData.append('file', file);
+    formData.append('crear', new Blob([JSON.stringify(crearData)], { type: 'application/json' }));
+
+    const header = {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    };
+
+    return this.http.post(url, formData, { headers: header });
+  }
   async updateManager(managerId: string, username: string, correo: string, password: string, file: File | null,
     fotoPerfilUrl: string
   ): Promise<Observable<any>> {
