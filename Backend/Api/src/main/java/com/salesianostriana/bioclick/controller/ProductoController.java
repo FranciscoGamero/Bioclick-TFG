@@ -3,6 +3,7 @@ package com.salesianostriana.bioclick.controller;
 
 import com.salesianostriana.bioclick.dto.PaginacionDto;
 import com.salesianostriana.bioclick.dto.producto.CreateProductoDto;
+import com.salesianostriana.bioclick.dto.producto.EditProductoDto;
 import com.salesianostriana.bioclick.dto.producto.ProductoDto;
 import com.salesianostriana.bioclick.model.Producto;
 import com.salesianostriana.bioclick.model.User;
@@ -16,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -175,8 +177,8 @@ public class ProductoController {
                                                           "estado": "Reacondicionado"
                                                         }
                             """))) @PathVariable UUID productId,
-                                    @RequestPart("editar") @Valid CreateProductoDto editProductDto,
-                                    @RequestPart("file") MultipartFile file,
+                                    @RequestPart("editar") @Valid EditProductoDto editProductDto,
+                                    @RequestPart(value = "file", required = false) MultipartFile file,
                                     @AuthenticationPrincipal User user) {
 
         Producto p = productoService.editarProducto(editProductDto, productId, file, user.getId());
@@ -202,5 +204,84 @@ public class ProductoController {
                 .path("/download/")
                 .path(filename)
                 .toUriString();
+    }
+    @Operation(summary = "Obtiene todos los productos mas agregados a favoritos")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se han encontrado productos",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProductoDto.class),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            {
+                                                "nombreProducto": "Cámara de Seguridad Reciclada",
+                                                "descripcion": "Cámara de seguridad inteligente hecha con materiales reciclados.",
+                                                "imagenProducto": "https://example.com/images/camara-seguridad.jpg",
+                                                "precioProducto": 149.99,
+                                                "estado": "Reacondicionado"
+                                            }
+                                """
+                            )}
+                    )}),
+    })
+    @GetMapping("/get/more-liked")
+    public PaginacionDto<ProductoDto> buscarMasFavoritos(@PageableDefault(page=0, size=6) Pageable pageable) {
+
+        return PaginacionDto.of(productoService.buscarMasLikeados(pageable).map(ProductoDto::of));
+    }
+    @Operation(summary = "Obtiene todos los productos mejores valorados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se han encontrado productos",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProductoDto.class),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            {
+                                                "nombreProducto": "Cámara de Seguridad Reciclada",
+                                                "descripcion": "Cámara de seguridad inteligente hecha con materiales reciclados.",
+                                                "imagenProducto": "https://example.com/images/camara-seguridad.jpg",
+                                                "precioProducto": 149.99,
+                                                "estado": "Reacondicionado"
+                                            }
+                                """
+                            )}
+                    )}),
+    })
+    @GetMapping("/get/more-valorated")
+    public PaginacionDto<ProductoDto> buscarMejoresValorados(@PageableDefault(page=0, size=6) Pageable pageable) {
+
+        return PaginacionDto.of(productoService.buscarMejorValorados(pageable).map(ProductoDto::of));
+    }
+    @Operation(summary = "Obtiene todos los productos filtrados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se han encontrado productos",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProductoDto.class),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            {
+                                                "nombreProducto": "Cámara de Seguridad Reciclada",
+                                                "descripcion": "Cámara de seguridad inteligente hecha con materiales reciclados.",
+                                                "imagenProducto": "https://example.com/images/camara-seguridad.jpg",
+                                                "precioProducto": 149.99,
+                                                "estado": "Reacondicionado"
+                                            }
+                                """
+                            )}
+                    )}),
+    })
+    @GetMapping("/get-by-filter")
+    public PaginacionDto<ProductoDto> filtrarProductos(
+            @PageableDefault(page=0, size=6) Pageable pageable,
+            @RequestParam(required = false) String nombreCategoria,
+            @RequestParam(required = false) Double precioMin,
+            @RequestParam(required = false) Double precioMax
+    ) {
+        return PaginacionDto.of(
+                productoService.filtrarProductos(nombreCategoria, precioMin, precioMax, pageable)
+                        .map(ProductoDto::of)
+        );
     }
 }

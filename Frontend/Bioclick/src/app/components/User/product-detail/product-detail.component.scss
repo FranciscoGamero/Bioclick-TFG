@@ -1,0 +1,119 @@
+.product-detail-container {
+  .product-img-main {
+    max-width: 420px;
+    max-height: 260px;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+  .review-bars .progress {
+    background: #e9ecef;
+    border-radius: 8px;
+  }
+  .review-bars .progress-bar {
+    border-radius: 8px;
+  }
+  .review-stars .star {
+    font-size: 1.5rem;
+    color: #59cea0;
+    cursor: pointer;
+    margin-right: 2px;
+    transition: color 0.15s;
+  }
+  .review-avatar {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+  }
+  .review-item {
+    background: #fafbfc;
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  }
+  .review-text {
+    margin-left: 44px;
+    margin-top: 0.2rem;
+    font-size: 1rem;
+    color: #222;
+  }
+}
+.product-detail-container {
+  .product-img-main {
+    max-width: 420px;
+    max-height: 260px;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+  .review-bars .progress {
+    background: #e9ecef;
+    border-radius: 8px;
+  }
+  .review-bars .progress-bar {
+    border-radius: 8px;
+  }
+  .review-stars .star {
+    font-size: 1.5rem;
+    color: #59cea0;
+    cursor: pointer;
+    margin-right: 2px;
+    transition: color 0.15s;
+  }
+  .review-avatar {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+  }
+  .review-item {
+    background: #fafbfc;
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  }
+  .review-text {
+    margin-left: 44px;
+    margin-top: 0.2rem;
+    font-size: 1rem;
+    color: #222;
+  }
+}
+.review-actions {
+  margin-top: 0.5rem;
+
+  .btn-outline-primary {
+    font-weight: 500;
+    border-radius: 20px;
+    padding: 0.25rem 1rem;
+    transition: background 0.15s, color 0.15s;
+    &:hover, &:focus {
+      background: #eaf6fa;
+      color: #0d6efd;
+    }
+  }
+
+  .valoration-form {
+    background: #f8fafb;
+    border-radius: 16px;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 1px 6px rgba(89,206,160,0.06);
+    .ngb-rating {
+      font-size: 1.4rem;
+      margin-right: 0.5rem;
+    }
+    .btn-success {
+      border-radius: 20px;
+      font-weight: 500;
+      padding: 0.25rem 1rem;
+    }
+    .btn-outline-secondary {
+      border-radius: 20px;
+      font-weight: 500;
+      padding: 0.25rem 1rem;
+    }
+  }
+}
+.backButton{
+  margin-left: 275px;
+  width: 100px;
+}

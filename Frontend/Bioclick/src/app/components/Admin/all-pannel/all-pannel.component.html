@@ -1,25 +1,37 @@
 <my-sidebar [isExpanded]="isExpanded" (toggleSidebar)="handleSidebarToggle()" />
 <div class="content mt-5" [ngClass]="{ 'sidebarExpanded': isExpanded }">
+    <div class="">
+        <div *ngIf="errorEditUser"
+            class=" text-center align-items-center alert alert-danger alert-dismissible fade show w-50" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            Ha habido un problema al editar el usuario.
+        </div>
+        <div *ngIf="errorEditManager" class="alert alert-danger alert-dismissible fade show w-50" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            Ha habido un problema al editar el manager.
+        </div>
+    </div>
     <h2>Todos</h2>
     <div class="mb-5">
-        <form method="post" class="h-auto">
-            <div class="h-50 w-auto d-flex flex-column mt-5 mb-5">
-                <div class="position-relative mb-3" style="width: 230px;">
+        <form (ngSubmit)="buscarPorNombre()" class="h-auto">
+            <div class="d-flex align-items-center" style="max-width: 350px;">
+                <div class="position-relative flex-grow-1 me-2">
                     <i class="bi bi-search position-absolute"
                         style="left: 18px; top: 50%; transform: translateY(-50%); color: #bfc9d8; font-size: 1.2rem;"></i>
-                    <input type="text" class="form-control inputRadius" placeholder="Nombre" [(ngModel)]="name"
-                        id="name" name="name" />
+                    <input type="text" class="form-control ps-5" placeholder="Username" [(ngModel)]="nombreUsuario"
+                        id="nombreUsuario" name="nombreUsuario" />
                 </div>
+                <button class="btn btn-success" type="submit">Buscar</button>
+                <button *ngIf="showBuscados" class="btn btn-secondary ms-3" type="button"
+                    (click)="loadPannel()">Volver</button>
             </div>
         </form>
-
     </div>
     <div class="row bg-white pannel align-content-between mt-5 pt-5 mb-2">
         <div *ngFor="let found of allFound?.contenido" class="col-3 heightCol mb-4">
-            <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card {{ found.role }}"
-                (click)="onCardClick(found.id)">
+            <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card {{ found.role }}">
                 <div class="d-flex">
-                    <mat-card-header>
+                    <mat-card-header (click)="onCardClick(found.id)" class="imgCard">
                         <div mat-card-avatar>
                             <img mat-card-image class="imgSize" [src]="limpiarUrlFoto(found.fotoPerfilUrl)">
                         </div>
@@ -68,5 +80,5 @@
         </div>
     </div>
     <ngb-pagination class="justify-content-center" [collectionSize]="allFound!.elementosEncontrados" [(page)]="page"
-        [boundaryLinks]="true" (pageChange)="foundAll()" />
+        [pageSize]="12" [boundaryLinks]="true" (pageChange)="foundAll()" />
 </div>

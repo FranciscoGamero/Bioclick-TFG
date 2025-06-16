@@ -1,6 +1,7 @@
 package com.salesianostriana.bioclick.service;
 
 import com.salesianostriana.bioclick.dto.producto.CreateProductoDto;
+import com.salesianostriana.bioclick.dto.producto.EditProductoDto;
 import com.salesianostriana.bioclick.model.*;
 import com.salesianostriana.bioclick.repository.*;
 import jakarta.persistence.EntityManager;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,7 +29,7 @@ public class ProductoService {
     private final ManagerRepository managerRepository;
     private final EntityManager entityManager;
     private final StorageService storageService;
-    private final ImpactoAmbientalRepository impactoAmbientalRepository;
+    private final CategoriaRepository categoriaRepository;
 
 
 
@@ -38,6 +40,8 @@ public class ProductoService {
 
 
         User creador = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Creador no encontrado"));
+        Categoria categoria = categoriaRepository.findById(UUID.fromString(createProductoDto.idCategoria())).orElseThrow
+                (() -> new EntityNotFoundException("No se ha encontrado un producto con id: "+createProductoDto.idCategoria()));
 
         Producto producto = Producto.builder()
                 .nombreProducto(createProductoDto.nombreProducto())
@@ -56,8 +60,7 @@ public class ProductoService {
             producto.addCreador(managerCreador);
             managerRepository.save(managerCreador);
         }
-
-        productoRepository.save(producto);
+        producto.addCategoria(categoria);
 
         return producto;
     }
@@ -84,7 +87,7 @@ public class ProductoService {
     }
 
 
-    public Producto editarProducto(CreateProductoDto editProductDto, UUID productId, MultipartFile file, UUID creadorId) {
+    public Producto editarProducto(EditProductoDto editProductDto, UUID productId, MultipartFile file, UUID creadorId) {
 
         String metodoActual = Thread.currentThread().getStackTrace()[1].getMethodName();
         User creador = userRepository.findById(creadorId).orElseThrow(() -> new EntityNotFoundException("Creador no encontrado"));
@@ -106,16 +109,15 @@ public class ProductoService {
             managerRepository.save(managerCreador);
         }
 
-
-        FileMetadata fileMetadata = storageService.store(file);
-
-
         return productoRepository.findById(productId).map(old -> {
 
             old.setNombreProducto(editProductDto.nombreProducto());
             old.setDescripcion(editProductDto.descripcion());
             old.setPrecioProducto(editProductDto.precioProducto());
-            old.setImagenProducto(fileMetadata.getFilename());
+            if (file != null && !file.isEmpty()) {
+                FileMetadata fileMetadata = storageService.store(file);
+                old.setImagenProducto(fileMetadata.getFilename());
+            }
             old.setEstado(editProductDto.estado());
             return productoRepository.save(old);
         }).orElseThrow(() -> new EntityNotFoundException("No se pudo editar dicho producto" + productId));
@@ -127,5 +129,38 @@ public class ProductoService {
         productoRepository.borrarValoracionesProducto(id);
         productoRepository.borrarFavoritosProducto(id);
         productoRepository.borrarImpactoAmbientalProducto(id);
+    }
+    public Page<Producto> buscarMasLikeados(Pageable pageable) {
+        return productoRepository.productosMasLikeados(pageable);
+    }
+    public Page<Producto> buscarMejorValorados(Pageable pageable) {
+        return productoRepository.productosMejorValorados(pageable);
+    }
+    public Page<Producto> filtrarProductos(
+            String nombreCategoria,
+            Double precioMin,
+            Double precioMax,
+            Pageable pageable
+    ) {
+        Session session = entityManager.unwrap(Session.class);
+        Filter filter = session.enableFilter("productoBorradoFiltro");
+        filter.setParameter("isBorrado", false);
+
+        Specification<Producto> spec = Specification.where(null);
+
+        if (nombreCategoria != null && !nombreCategoria.isEmpty()) {
+            spec = spec.and((root, query, cb) ->
+                    cb.equal(root.join("categorias").get("nombreCategoria"), nombreCategoria));
+        }
+        if (precioMin != null) {
+            spec = spec.and(Producto.precioMayorQue(precioMin));
+        }
+        if (precioMax != null) {
+            spec = spec.and(Producto.precioMenorQue(precioMax));
+        }
+
+        Page<Producto> resultado = productoRepository.findAll(spec, pageable);
+        session.disableFilter("productoBorradoFiltro");
+        return resultado;
     }
 }

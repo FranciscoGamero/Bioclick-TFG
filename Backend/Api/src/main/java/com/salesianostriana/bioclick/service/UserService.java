@@ -60,8 +60,7 @@ public class UserService {
         userRepository.save(user);
 
         try {
-            String texto = "Su código para activar la cuenta es el siguiente: "+user.getVerificationCode();
-            mailSender.sendMail(createUserRequest.correo(), "Código de activación de cuenta", texto);
+            mailSender.sendMail(createUserRequest.correo(), "Código de activación de cuenta", user.getVerificationCode());
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Error al enviar el email de activación");
@@ -88,12 +87,27 @@ public class UserService {
 
     public User editarUsuario(User user, EditUserDto editUserDto, MultipartFile file) {
 
-        FileMetadata fileMetadata = storageService.store(file);
+        if (editUserDto.username() != null && !editUserDto.username().isBlank()
+                && !editUserDto.username().equals(user.getUsername())) {
+            user.setUsername(editUserDto.username());
+        }
 
-        user.setUsername(editUserDto.username());
-        user.setCorreo(editUserDto.correo());
-        user.setFotoPerfil(fileMetadata.getFilename());
-        user.setPassword(passwordEncoder.encode(editUserDto.password()));
+        if (editUserDto.correo() != null && !editUserDto.correo().isBlank()
+                && !editUserDto.correo().equals(user.getCorreo())) {
+            user.setCorreo(editUserDto.correo());
+        }
+
+        if (file != null && !file.isEmpty()) {
+            FileMetadata fileMetadata = storageService.store(file);
+            user.setFotoPerfil(fileMetadata.getFilename());
+        }
+
+        if (editUserDto.password() != null && !editUserDto.password().isBlank()) {
+            if (!passwordEncoder.matches(editUserDto.password(), user.getPassword())) {
+                user.setPassword(passwordEncoder.encode(editUserDto.password()));
+            }
+        }
+
         return userRepository.save(user);
     }
     public Page<Producto> buscarProductoPorPrecioEntreMedio(Double min, Double max, Pageable pageable, boolean borrado) {
@@ -169,10 +183,15 @@ public class UserService {
         return productos;
 
     }
-
-
     public void eliminarUsuarioPorId(UUID id) {
         userRepository.deleteById(id);
     }
 
+    public User changePassword(User user, String currentPassword, String newPassword) {
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new IllegalArgumentException("La contraseña actual no es correcta");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        return userRepository.save(user);
+    }
 }

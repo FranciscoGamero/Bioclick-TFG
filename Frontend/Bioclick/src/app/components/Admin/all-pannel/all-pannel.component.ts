@@ -5,6 +5,7 @@ import { DeleteManagerDialogComponent, EditManagerDialogComponent } from '../../
 import { DeleteUserDialogComponent } from '../../Dialog/UserDialog/user-dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-pannel',
@@ -16,12 +17,18 @@ export class AllPannelComponent implements OnInit {
   isExpanded: boolean = true;
   name: string = '';
   allFound: AllFoundResponse | undefined = undefined;
-  page: number = 1;
+  page: number = 0;
+  errorEditManager: boolean = false;
+
+  showBuscados: boolean = false;
+  nombreUsuario: string = '';
+  pageBuscada: number = 0;
+  errorEditUser: boolean = false;
   ngOnInit(): void {
     this.foundAll();
   }
 
-  constructor(private adminService: AdminService, private userService: UserService) { }
+  constructor(private adminService: AdminService, private userService: UserService, private router: Router) { }
 
   limpiarUrlFoto(url: string | undefined | null): string {
     if (!url) return '';
@@ -38,6 +45,7 @@ export class AllPannelComponent implements OnInit {
     this.adminService.getAll(this.page - 1).subscribe({
       next: (response) => {
         this.allFound = response;
+        console.log(this.allFound)
       },
       error: (error) => {
         console.error('Error fetching users:', error);
@@ -59,7 +67,7 @@ export class AllPannelComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
   onCardClick(userId: string) {
-    console.log('Card clicked for user ID:', userId);
+    this.router.navigate(['/user-detail', userId]);
   }
   openUserEditDialog(manager: { id: string; username: string; correo: string; password: string; fotoPerfilUrl: string }): void {
     const dialogRef = this.dialog.open(EditManagerDialogComponent, {
@@ -69,21 +77,20 @@ export class AllPannelComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Dialog closed with result:', result);
         this.userService.updateUser(
           result.id,
           result.username,
           result.correo,
           result.password,
           result.selectedFile,
-          result.fotoPerfilUrl
         ).then((observable: any) => {
           observable.subscribe({
             next: () => {
               this.foundAll();
+              this.errorEditUser = false;
             },
-            error: (error: Error) => {
-              console.error(error);
+            error: () => {
+              this.errorEditUser = true;
             }
           });
         })
@@ -104,61 +111,75 @@ export class AllPannelComponent implements OnInit {
           next: () => {
             this.foundAll();
           },
-          error: (error: Error) => {
-            console.error(error);
-          }
         });
       }
     });
   }
-    openManagerEditDialog(manager: { id: string; username: string; correo: string; password: string; fotoPerfilUrl: string }): void {
-      const dialogRef = this.dialog.open(EditManagerDialogComponent, {
-        width: '800px',
-        data: { id: manager.id, username: manager.username, correo: manager.correo, password: manager.password, fotoPerfilUrl: manager.fotoPerfilUrl }
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          console.log('Dialog closed with result:', result);
-          this.adminService.updateManager(
-            result.id,
-            result.username,
-            result.correo,
-            result.password,
-            result.selectedFile,
-            result.fotoPerfilUrl
-          ).then((observable: any) => {
-            observable.subscribe({
-              next: () => {
-                this.foundAll();
-              },
-              error: (error: Error) => {
-                console.error(error.name);
-              }
-            });
-          })
-        }
-      });
-    }
-    openManagerDeleteDialog(manager: { id: string; }): void {
-      const dialogRef = this.dialog.open(DeleteManagerDialogComponent, {
-        width: '800px',
-        data: { id: manager.id }
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.adminService.deleteManager(
-            result.id
-          ).subscribe({
+  openManagerEditDialog(manager: { id: string; username: string; correo: string; password: string; fotoPerfilUrl: string }): void {
+    const dialogRef = this.dialog.open(EditManagerDialogComponent, {
+      width: '800px',
+      data: { id: manager.id, username: manager.username, correo: manager.correo, password: manager.password, fotoPerfilUrl: manager.fotoPerfilUrl }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.adminService.updateManager(
+          result.id,
+          result.username,
+          result.correo,
+          result.password,
+          result.selectedFile,
+          result.fotoPerfilUrl
+        ).then((observable: any) => {
+          observable.subscribe({
             next: () => {
               this.foundAll();
+              this.errorEditManager = false;
             },
-            error: (error: Error) => {
-              console.error(error);
+            error: () => {
+              this.errorEditManager = true;
             }
           });
-        }
-      });
-    }
+        })
+      }
+    });
+  }
+
+  openManagerDeleteDialog(manager: { id: string; }): void {
+    const dialogRef = this.dialog.open(DeleteManagerDialogComponent, {
+      width: '800px',
+      data: { id: manager.id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.adminService.deleteManager(
+          result.id
+        ).subscribe({
+          next: () => {
+            this.foundAll();
+          },
+        });
+      }
+    });
+  }
+  buscarPorNombre(): void {
+    this.pageBuscada = 0;
+    this.showBuscados = true;
+    this.adminService.getUsersByName(this.nombreUsuario, this.pageBuscada, 12).subscribe({
+      next: (response) => {
+        this.allFound = response;
+
+        this.pageBuscada++;
+      },
+      error: (error) => {
+        console.error('Error fetching products by name:', error);
+      }
+    });
+  }
+  loadPannel(): void {
+    this.showBuscados = false;
+    this.nombreUsuario = '';
+    this.ngOnInit();
+  }
 }

@@ -3,11 +3,11 @@ export interface AllUsersResponse {
   tamanioPagina: number
   elementosEncontrados: number
   paginasTotales: number
-  contenido: Contenido[]
+  contenido: Usuario[]
   role: String
 }
 
-export interface Contenido {
+export interface Usuario {
   id: string
   username: string
   correo: string

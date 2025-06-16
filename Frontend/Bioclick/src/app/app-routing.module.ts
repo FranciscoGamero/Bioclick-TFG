@@ -8,16 +8,30 @@ import { ManagerPannelComponent } from './components/Admin/manager-pannel/manage
 import { AllPannelComponent } from './components/Admin/all-pannel/all-pannel.component';
 import { ProductPannelComponent } from './components/Common/product-pannel/product-pannel.component';
 import { CategoryPannelComponent } from './components/Common/category-pannel/category-pannel.component';
+import { GraphicsPannelComponent } from './components/Common/graphics-pannel/graphics-pannel.component';
+import { VerifyAccountComponent } from './components/Common/verify-account/verify-account.component';
+import { MyProfileComponent } from './components/Common/my-profile/my-profile.component';
+import { UserDetailComponent } from './components/Admin/user-detail/user-detail.component';
+import { HomeComponent } from './components/User/home/home.component';
+import { ProductDetailComponent } from './components/User/product-detail/product-detail.component';
+import { AllProductsComponent } from './components/User/all-products/all-products.component';
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginformComponent},
   {path: 'register', component: RegisterFormComponent},
+  {path: 'verify', component: VerifyAccountComponent},
   {path: 'user-list', component: UserPannelComponent},
   {path: 'admin-list', component: AdminPannelComponent},
   {path: 'manager-list', component: ManagerPannelComponent},
   {path: 'all-list', component: AllPannelComponent},
   {path: 'product-list', component: ProductPannelComponent},
-  {path: 'category-list', component: CategoryPannelComponent}, 
+  {path: 'category-list', component: CategoryPannelComponent},
+  {path: 'graphics', component: GraphicsPannelComponent},
+  {path: 'my-profile', component: MyProfileComponent},
+  {path: 'user-detail/:id', component: UserDetailComponent},
+  {path: 'home', component: HomeComponent},
+  {path: 'product-detail/:id', component: ProductDetailComponent},
+  {path: 'all-products', component: AllProductsComponent},
 ];
 
 @NgModule({

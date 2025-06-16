@@ -1,6 +1,6 @@
 <my-sidebar [isExpanded]="isExpanded" (toggleSidebar)="handleSidebarToggle()" />
 <div class="content mt-5" [ngClass]="{ 'sidebarExpanded': isExpanded }" style="min-height: 60vh;">
-    <h2>Usuarios</h2>
+    <h2>Productos</h2>
     <div class="mb-5">
         <form method="post" class="h-auto">
             <div class="h-50 w-auto d-flex flex-column mt-5 mb-5">
@@ -12,6 +12,7 @@
                 </div>
             </div>
         </form>
+        <button class="btn btnForm mt-5" (click)="openCreateDialog()">Agregar Producto</button>
     </div>
     <div class="row bg-white pannel mt-5 pt-5">
         <ng-container *ngIf="productsFound?.contenido?.length; else noUsers">
@@ -33,9 +34,11 @@
                                         Ver opciones
                                     </button>
                                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                        <button ngbDropdownItem>
+                                        <button ngbDropdownItem
+                                            (click)="openEditDialog({ id: product.id, nombreProducto: product.nombreProducto, descripcion: product.descripcion, precioProducto: product.precioProducto, estado: product.estado, fotoPerfilUrl: limpiarUrlFoto(product.imagenProducto) })">
                                             Editar</button>
-                                        <button ngbDropdownItem>
+                                        <button ngbDropdownItem
+                                            (click)="openDeleteDialog({ id: product.id }); $event.stopPropagation()">
                                             Eliminar
                                         </button>
                                     </div>

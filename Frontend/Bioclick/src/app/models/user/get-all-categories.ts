@@ -3,14 +3,16 @@ export interface AllCategoryResponse {
   tamanioPagina: number
   elementosEncontrados: number
   paginasTotales: number
-  contenido: Contenido[]
+  contenido: Categoria[]
 }
 
-export interface Contenido {
+export interface Categoria {
   id: string
   nombreCategoria: string
   nombreCategoriaPadre: string
+  idCategoriaPadre: string | null
   nombresSubcategorias: string[]
+  listaIdSubcategorias: string[]
   listaProductos: Producto[]
 }
 

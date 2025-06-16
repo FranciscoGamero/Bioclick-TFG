@@ -75,7 +75,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authz -> authz
                 .requestMatchers("/register","/auth/verify", "/login", "/auth/refresh/token", "/error", "/download/**",
                         "/h2-console/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                .requestMatchers("/product/get/**", "/valoration/get-one/**", "/comment/**").authenticated()
+                .requestMatchers("/product/get/**", "/valoration/**", "/comment/**", "/favorite/**", "product/get-by-filter**", "user/change-password").authenticated()
 
 
                 .requestMatchers(HttpMethod.POST,"/admin/create", "/admin/auth/verify", "/impact/create",
@@ -83,26 +83,28 @@ public class SecurityConfig {
 
                 .requestMatchers(HttpMethod.PUT, "/admin/edit/**", "/admin/cambiar-rol/", "/product/edit/**",
                         "/impact/edit/**", "/category/edit/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/admin/edit/user/**").hasAnyRole("ADMIN", "MANAGER")
 
+                .requestMatchers("impact/product/*", "comment/product/*").authenticated()
                 .requestMatchers(HttpMethod.GET, "/manager/get/**").hasAnyRole("ADMIN", "MANAGER")
                 .requestMatchers(HttpMethod.POST, "/product/create").hasAnyRole("ADMIN", "MANAGER")
                 .requestMatchers(HttpMethod.PUT, "/product/edit/**").hasAnyRole("ADMIN", "MANAGER")
                 .requestMatchers(HttpMethod.DELETE, "/product/delete/**").hasAnyRole("ADMIN", "MANAGER")
 
-                .requestMatchers(HttpMethod.PUT, "/valoration/edit/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/manager/edit/me").hasRole("MANAGER")
+
+                .requestMatchers(HttpMethod.GET, "/admin/graphics/**").hasAnyRole("ADMIN", "MANAGER")
 
                 .requestMatchers(HttpMethod.GET, "/admin/get/**", "/impact/get/**", "/category/get/**").hasRole("ADMIN")
 
                 .requestMatchers("/edit/me", "/get/me", "/productos/get/**").hasAnyRole("ADMIN","USUARIO", "MANAGER")
 
-                .requestMatchers(HttpMethod.POST, "/favorite/add/**").hasAnyRole("ADMIN","USUARIO")
+                .requestMatchers(HttpMethod.POST, "/favorite/add/**").authenticated()
 
                 .requestMatchers(HttpMethod.DELETE, "/user/delete/**", "/product/delete/**", "/category/delete/**",
                         "/admin/delete/admin/**", "/admin/delete/manager/**").hasRole("ADMIN")
 
-                .requestMatchers(HttpMethod.DELETE, "/valoration/delete/**", "/favorite/delete/**").hasRole("USUARIO")
-                .anyRequest().authenticated());
+                .requestMatchers(HttpMethod.DELETE, "/favorite/delete/**").authenticated());
 
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

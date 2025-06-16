@@ -20,9 +20,22 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { ProductPannelComponent } from './components/Common/product-pannel/product-pannel.component';
 import { CategoryPannelComponent } from './components/Common/category-pannel/category-pannel.component';
 import { ManagerPannelComponent } from './components/Admin/manager-pannel/manager-pannel.component';
-import { DeleteManagerDialogComponent, EditManagerDialogComponent } from './components/Dialog/ManagerDialog/manager-dialog';
+import { CreateManagerDialogComponent, DeleteManagerDialogComponent, EditManagerDialogComponent } from './components/Dialog/ManagerDialog/manager-dialog';
 import { UserPannelComponent } from './components/Admin/user-pannel/user-pannel.component';
-import { EditUserDialogComponent, DeleteUserDialogComponent } from './components/Dialog/UserDialog/user-dialog';
+import { EditUserDialogComponent, DeleteUserDialogComponent, ChangePasswordDialogComponent } from './components/Dialog/UserDialog/user-dialog';
+import { GraphicsPannelComponent } from './components/Common/graphics-pannel/graphics-pannel.component';
+import { VerifyAccountComponent } from './components/Common/verify-account/verify-account.component';
+import { MyProfileComponent } from './components/Common/my-profile/my-profile.component';
+import { UserDetailComponent } from './components/Admin/user-detail/user-detail.component';
+import { HomeComponent } from './components/User/home/home.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { ProductDetailComponent } from './components/User/product-detail/product-detail.component';
+import { AllProductsComponent } from './components/User/all-products/all-products.component';
+import { EditProductoDialogComponent, DeleteProductoDialogComponent, CreateProductoDialogComponent } from './components/Dialog/CommonDialog/product-dialog';
+import { CreateCategoriaDialogComponent, DeleteCategoriaDialogComponent, EditCategoriaDialogComponent } from './components/Dialog/CommonDialog/category-dialog';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,11 +47,28 @@ import { EditUserDialogComponent, DeleteUserDialogComponent } from './components
     ManagerPannelComponent,
     AllPannelComponent,
     EditUserDialogComponent,
+    ChangePasswordDialogComponent,
+    CreateManagerDialogComponent,
     EditManagerDialogComponent,
     DeleteManagerDialogComponent,
     DeleteUserDialogComponent,
     ProductPannelComponent,
     CategoryPannelComponent,
+    GraphicsPannelComponent,
+    VerifyAccountComponent,
+    MyProfileComponent,
+    UserDetailComponent,
+    HomeComponent,
+    FooterComponent,
+    HeaderComponent,
+    ProductDetailComponent,
+    AllProductsComponent,
+    CreateProductoDialogComponent,
+    EditProductoDialogComponent,
+    DeleteProductoDialogComponent,
+    CreateCategoriaDialogComponent,
+    EditCategoriaDialogComponent,
+    DeleteCategoriaDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +79,7 @@ import { EditUserDialogComponent, DeleteUserDialogComponent } from './components
     MatInputModule,
     MatCardModule,
     NgbDropdownModule,
-    MatDialogModule,
+    MatDialogModule
   ],
   providers: [provideHttpClient(), provideAnimationsAsync()],
   bootstrap: [AppComponent]

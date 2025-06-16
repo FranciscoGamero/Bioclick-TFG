@@ -3,10 +3,10 @@ export interface AllManagersResponse {
   tamanioPagina: number
   elementosEncontrados: number
   paginasTotales: number
-  contenido: Contenido[]
+  contenido: Manager[]
 }
 
-export interface Contenido {
+export interface Manager {
   id: string;
   username: string;
   correo: string;

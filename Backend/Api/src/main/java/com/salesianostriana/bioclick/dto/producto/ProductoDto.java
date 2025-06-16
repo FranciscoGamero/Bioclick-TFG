@@ -9,6 +9,7 @@ public record ProductoDto(
         UUID id,
         String nombreProducto,
         String descripcion,
+        String fabricante,
         String imagenProducto,
         double precioProducto,
         Estado estado) {
@@ -18,6 +19,7 @@ public record ProductoDto(
                 producto.getId(),
                 producto.getNombreProducto(),
                 producto.getDescripcion(),
+                producto.getFabricante(),
                 imageUrl,
                 producto.getPrecioProducto(),
                 producto.getEstado());
@@ -28,6 +30,7 @@ public record ProductoDto(
                 producto.getId(),
                 producto.getNombreProducto(),
                 producto.getDescripcion(),
+                producto.getFabricante(),
                 producto.getImagenProducto(),
                 producto.getPrecioProducto(),
                 producto.getEstado());

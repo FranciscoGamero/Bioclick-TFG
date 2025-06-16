@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.UUID;
+
 
 public record CreateProductoDto(
         @NotBlank(message = "{createProductoDto.nombreProducto.notblank}")
@@ -21,5 +23,6 @@ public record CreateProductoDto(
         @NotEmpty(message = "{createProductoDto.fabricante.notempty}")
         String fabricante,
         @NotNull
-        Estado estado) {
+        Estado estado,
+        String idCategoria) {
 }

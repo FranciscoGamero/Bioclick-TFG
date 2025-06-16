@@ -3,10 +3,10 @@ export interface AllAdminsResponse {
   tamanioPagina: number
   elementosEncontrados: number
   paginasTotales: number
-  contenido: Contenido[]
+  contenido: Admin[]
 }
 
-export interface Contenido {
+export interface Admin {
   id: string
   username: string
   correo: string

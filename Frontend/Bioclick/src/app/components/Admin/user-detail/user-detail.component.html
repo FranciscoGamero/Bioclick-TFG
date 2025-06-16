@@ -1,0 +1,49 @@
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <section class="col-md-8 col-lg-7">
+            <div class="mt-4 text-start mb-3 ms-2">
+                <button class="btn btn-outline-success" (click)="volverAlPanel()">
+                    <i class="bi bi-arrow-left me-1"></i> Volver al panel de usuarios
+                </button>
+            </div>
+            <div class="card shadow rounded-4 border-0">
+                <div class="w-100 d-flex justify-content-center mt-2">
+                    <div *ngIf="errorEditUser"
+                        class=" text-center align-items-center alert alert-danger alert-dismissible fade show w-50"
+                        role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        Ha habido un problema al editar el usuario.
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <div class="d-flex flex-column flex-md-row align-items-center mb-4">
+                        <img [src]="limpiarUrlFoto(user!.fotoPerfilUrl)" alt="Avatar del usuario"
+                            class="rounded-circle border border-4 border-success mb-3 mb-md-0 me-md-4 shadow"
+                            style="width: 120px; height: 120px; object-fit: cover;">
+                        <div class="text-center text-md-start">
+                            <h1 class="h3 mb-1 fw-bold">{{user?.username}}</h1>
+                            <p class="text-muted mb-2 fs-5">{{user?.correo}}</p>
+                            <button class="btn btn-outline-success mt-2" type="button"
+                                (click)="openEditDialog({ id: user!.id, username: user!.username, correo: user!.correo, fotoPerfilUrl: user!.fotoPerfilUrl, password: user!.password })">
+                                <i class="bi bi-pencil me-1"></i> Editar perfil
+                            </button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row g-4 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label mb-1 fw-semibold">Username</label>
+                            <div class="form-control-plaintext ps-0 fs-5">{{user?.username}}</div>
+                        </div>
+                    </div>
+                    <div class="row g-4 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label mb-1 fw-semibold">Correo Electrónico</label>
+                            <div class="form-control-plaintext ps-0 fs-5">{{user?.correo}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

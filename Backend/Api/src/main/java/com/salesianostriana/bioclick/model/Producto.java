@@ -73,10 +73,12 @@ public class Producto {
 
     public static Specification<Producto> nombreContiene(String nombre) {
         return (root, query, criteriaBuilder) -> {
-            return criteriaBuilder.like(root.get("nombreProducto"), "%" + nombre + "%");
+            return criteriaBuilder.like(
+                    criteriaBuilder.lower(root.get("nombreProducto")),
+                    "%" + nombre.toLowerCase() + "%"
+            );
         };
     }
-
     public void addCreador(Admin creador){
         this.creadoPor = creador;
         creador.getProductosCreados().add(this);
@@ -103,5 +105,13 @@ public class Producto {
     public void removeCategoria(Categoria categoria) {
         this.categorias.remove(categoria);
         categoria.getListaProductos().remove(this);
+    }
+    public void addImpactoAmbiental(ImpactoAmbiental impactoAmbiental) {
+        this.impactoAmbiental = impactoAmbiental;
+        impactoAmbiental.setProducto(this);
+    }
+    public void removeImpactoAmbiental(ImpactoAmbiental impactoAmbiental) {
+        this.impactoAmbiental = null;
+        impactoAmbiental.setProducto(null);
     }
 }
