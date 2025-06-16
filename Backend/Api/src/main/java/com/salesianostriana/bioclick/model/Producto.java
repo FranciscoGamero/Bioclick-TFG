@@ -73,10 +73,12 @@ public class Producto {
 
     public static Specification<Producto> nombreContiene(String nombre) {
         return (root, query, criteriaBuilder) -> {
-            return criteriaBuilder.like(root.get("nombreProducto"), "%" + nombre + "%");
+            return criteriaBuilder.like(
+                    criteriaBuilder.lower(root.get("nombreProducto")),
+                    "%" + nombre.toLowerCase() + "%"
+            );
         };
     }
-
     public void addCreador(Admin creador){
         this.creadoPor = creador;
         creador.getProductosCreados().add(this);

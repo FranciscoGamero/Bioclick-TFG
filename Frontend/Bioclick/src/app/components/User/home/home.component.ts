@@ -118,6 +118,7 @@ export class HomeComponent implements OnInit {
     }
   }
   buscarPorNombre(): void {
+    this.pageBuscada = 0;
     this.homeService.getProductsByName(this.nombreProducto, this.pageBuscada, 12).subscribe({
       next: (response) => {
         this.showLiked = false;

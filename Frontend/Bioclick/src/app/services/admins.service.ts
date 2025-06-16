@@ -6,6 +6,7 @@ import { AllAdminsResponse } from '../models/user/get-all-admins-interface';
 import { AllFoundResponse } from '../models/user/get-all-found';
 import { ProductsMoreValoratedResponse } from '../models/user/graphics/products-more-valorated.interface';
 import { UsersMoreValorationsResponse } from '../models/user/graphics/users-with-more-valorations.interface';
+import { AllUsersResponse } from '../models/user/get-all-users-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -142,4 +143,18 @@ export class AdminService {
     }
     return this.http.get<UsersMoreValorationsResponse>(url, { headers: header });
   }
+    getUsersByName(name: string, page: number, size: number): Observable<AllUsersResponse> {
+      const url = `${environment.apiBaseUrl}/admin/get/users-by-name`;
+      const headers = {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      };
+  
+      const params = new HttpParams()
+        .set('nombre', name)
+        .set('page', page)
+        .set('size', size);
+
+        console.log(url, params.toString());
+      return this.http.get<AllUsersResponse>(url, { headers, params });
+    } 
 }
