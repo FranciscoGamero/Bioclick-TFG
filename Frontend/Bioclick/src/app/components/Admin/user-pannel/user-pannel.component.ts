@@ -15,16 +15,20 @@ import { Router } from '@angular/router';
 export class UserPannelComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   isExpanded: boolean = true;
-  name: string = '';
+
   usersFound: AllUsersResponse | undefined = undefined;
   page: number = 1;
 
   errorEditUser: boolean = false;
+
+  showBuscados: boolean = false;
+  nombreUser: string = '';
+  pageBuscada: number = 1;
   ngOnInit(): void {
     this.getUsers();
   }
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router, private adminService: AdminService) { }
 
   limpiarUrlFoto(url: string | undefined | null): string {
     if (!url) return '';
@@ -34,6 +38,7 @@ export class UserPannelComponent implements OnInit {
     return url;
   }
   getUsers() {
+    this.showBuscados = false;
     this.userService.getAllUsers(this.page - 1).subscribe({
       next: (response) => {
         this.usersFound = response;
@@ -99,5 +104,24 @@ export class UserPannelComponent implements OnInit {
         });
       }
     });
+  }
+  buscarPorNombre(): void {
+    this.showBuscados = true;
+    this.pageBuscada = 0;
+    this.adminService.getUsersByName(this.nombreUser, this.pageBuscada, 12).subscribe({
+      next: (response) => {
+        this.usersFound = response;
+        console.log(this.usersFound)
+        this.pageBuscada++;
+      },
+      error: (error) => {
+        console.error('Error fetching products by name:', error);
+      }
+    });
+  }
+    loadPannel(): void {
+    this.showBuscados = false;
+    this.nombreUser = '';
+    this.ngOnInit();
   }
 }

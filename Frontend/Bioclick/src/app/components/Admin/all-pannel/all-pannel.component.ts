@@ -17,8 +17,12 @@ export class AllPannelComponent implements OnInit {
   isExpanded: boolean = true;
   name: string = '';
   allFound: AllFoundResponse | undefined = undefined;
-  page: number = 1;
+  page: number = 0;
   errorEditManager: boolean = false;
+
+  showBuscados: boolean = false;
+  nombreUsuario: string = '';
+  pageBuscada: number = 0;
   errorEditUser: boolean = false;
   ngOnInit(): void {
     this.foundAll();
@@ -41,6 +45,7 @@ export class AllPannelComponent implements OnInit {
     this.adminService.getAll(this.page - 1).subscribe({
       next: (response) => {
         this.allFound = response;
+        console.log(this.allFound)
       },
       error: (error) => {
         console.error('Error fetching users:', error);
@@ -139,22 +144,42 @@ export class AllPannelComponent implements OnInit {
         }
       });
     }
-    openManagerDeleteDialog(manager: { id: string; }): void {
-      const dialogRef = this.dialog.open(DeleteManagerDialogComponent, {
-        width: '800px',
-        data: { id: manager.id }
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.adminService.deleteManager(
-            result.id
-          ).subscribe({
-            next: () => {
-              this.foundAll();
-            },
-          });
+  }
+  openManagerDeleteDialog(manager: { id: string; }): void {
+    const dialogRef = this.dialog.open(DeleteManagerDialogComponent, {
+      width: '800px',
+      data: { id: manager.id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.adminService.deleteManager(
+          result.id
+        ).subscribe({
+          next: () => {
+            this.foundAll();
+          },
+        });
+      }
+    });
+  }
+    buscarPorNombre(): void {
+      this.pageBuscada = 0;
+      this.showBuscados = true;
+      this.adminService.getUsersByName(this.nombreUsuario, this.pageBuscada, 12).subscribe({
+        next: (response) => {
+          this.allFound = response;
+
+          this.pageBuscada++;
+        },
+        error: (error) => {
+          console.error('Error fetching products by name:', error);
         }
       });
+    }
+        loadPannel(): void {
+      this.showBuscados = false;
+      this.nombreUsuario = '';
+      this.ngOnInit();
     }
 }

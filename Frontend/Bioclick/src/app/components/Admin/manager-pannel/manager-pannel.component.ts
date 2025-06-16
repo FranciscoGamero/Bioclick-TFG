@@ -1,10 +1,11 @@
 import { Component, Inject, inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AllManagersResponse } from '../../../models/user/get-all-managers-interface';
+import { AllManagersResponse, Manager } from '../../../models/user/get-all-managers-interface';
 import { ManagerService } from '../../../services/manager.service';
 import { AdminService } from '../../../services/admins.service';
 import { EditManagerDialogComponent, DeleteManagerDialogComponent, CreateManagerDialogComponent } from '../../Dialog/ManagerDialog/manager-dialog';
 import { Router } from '@angular/router';
+import { Usuario } from '../../../models/user/get-all-users-interface';
 
 
 @Component({
@@ -17,9 +18,12 @@ export class ManagerPannelComponent {
 
   isExpanded: boolean = true;
   name: string = '';
-  managersFound: AllManagersResponse | undefined = undefined;
-  page: number = 1;
+  managersFound: Usuario[] = [];
+  page: number = 0;
 
+  showBuscados: boolean = false;
+  nombreManager: string = '';
+  pageBuscada: number = 0;
   errorEditManager: boolean = false;
   errorCreateManager: boolean = false;
   ngOnInit(): void {
@@ -35,10 +39,14 @@ export class ManagerPannelComponent {
     return url;
   }
   getManagers() {
+    this.showBuscados = false;
     this.managerService.getAllManagers(this.page - 1).subscribe({
       next: (response) => {
-        this.managersFound = response;
-        
+        this.managersFound = (response.contenido as Manager[]).map(manager => ({
+          ...manager,
+          fechaRegistro: (manager as any).fechaRegistro ?? '',
+          role: (manager as any).role ?? 'ROLE_MANAGER'
+        })) as Usuario[];
       },
       error: (error) => {
         console.error('Error fetching managers:', error);
@@ -53,7 +61,7 @@ export class ManagerPannelComponent {
     this.router.navigate(['/user-detail', userId]);
 
   }
-openCreateDialog(): void {
+  openCreateDialog(): void {
 
     const dialogRef = this.dialog.open(CreateManagerDialogComponent, {
       width: '800px',
@@ -133,5 +141,25 @@ openCreateDialog(): void {
         });
       }
     });
+  }
+  buscarPorNombre(): void {
+    this.pageBuscada = 0;
+    this.showBuscados = true;
+    this.adminService.getUsersByName(this.nombreManager, this.pageBuscada, 12).subscribe({
+      next: (response) => {
+        const managers = response.contenido.filter((manager: Usuario) => manager.role === 'ROLE_MANAGER');
+        this.managersFound = managers;
+        console.log(this.managersFound);
+        this.pageBuscada++;
+      },
+      error: (error) => {
+        console.error('Error fetching products by name:', error);
+      }
+    });
+  }
+      loadPannel(): void {
+    this.showBuscados = false;
+    this.nombreManager = '';
+    this.ngOnInit();
   }
 }
