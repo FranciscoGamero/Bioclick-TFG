@@ -1,5 +1,20 @@
 <app-header></app-header>
 <div class="container my-5">
+  <form (ngSubmit)="buscarPorNombre()" class="h-auto w-25">
+    <div class="h-50 w-auto d-flex flex-column mt-5 mb-5">
+      <div class="d-flex align-items-center search-form-wrapper">
+        <div class="position-relative flex-grow-1 me-2">
+          <i class="bi bi-search search-icon"></i>
+          <input type="text" class="form-control inputRadius ps-5" placeholder="Nombre del Producto"
+            [(ngModel)]="nombreProducto" id="nombreProducto" name="nombreProducto" />
+        </div>
+        <button class="btn btn-success me-2" type="submit">Buscar</button>
+        <button *ngIf="showBuscados" class="btn btn-secondary" type="button" (click)="loadHome()">Volver</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="container my-5" *ngIf="showValorated">
   <h2 class="text-center mb-4 fw-bold">MEJOR VALORADOS</h2>
   <div class="row g-4 justify-content-center">
     <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let producto of moreValoratedProducts">
@@ -23,7 +38,7 @@
     <button class="btn btn-success px-5" (click)="loadMoreValoratedProducts()">VER MÁS</button>
   </div>
 </div>
-<div class="container my-5">
+<div class="container my-5" *ngIf="showLiked">
   <h2 class="text-center mb-4 fw-bold">MAS GUSTADOS</h2>
   <div class="row g-4 justify-content-center">
     <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngFor="let producto of moreLikedProducts">
@@ -44,6 +59,30 @@
     </div>
   </div>
   <div class="text-center mt-4" *ngIf="pageLiked < totalPagesLiked">
+    <button class="btn btn-success px-5" (click)="loadMoreLikedProducts()">VER MÁS</button>
+  </div>
+</div>
+<div class="container my-5 showBuscados" *ngIf="showBuscados">
+  <h2 class="text-center mb-4 fw-bold">Productos Encontrados con: {{nombreProducto}} </h2>
+  <div class="row g-4 justify-content-center">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngFor="let producto of totalBuscados">
+      <div class="card product-card shadow-sm">
+        <div class="img-thumbnail mb-3" (click)="goToProductDetail(producto.id)">
+          <img [src]="limpiarUrlFoto(producto.imagenProducto)" class="card-img-top" alt="{{ producto.nombreProducto }}"
+            style="height: 200px; object-fit: cover;">
+        </div>
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ producto.nombreProducto }}</h5>
+          <p class="card-text">{{ producto.descripcion }}</p>
+          <button class="btn btn-outline-success btn-sm" [ngClass]="{'active': isFavorite(producto)}"
+            (click)="toggleFavorite(producto)">
+            <i class="bi" [ngClass]="isFavorite(producto) ? 'bi-heart-fill' : 'bi-heart'"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center mt-4" *ngIf="pageBuscada < totalPagesBuscada">
     <button class="btn btn-success px-5" (click)="loadMoreLikedProducts()">VER MÁS</button>
   </div>
 </div>

@@ -4,6 +4,7 @@ import { AllProductsResponse, Producto } from '../../../models/user/get-all-prod
 import { FavoriteService } from '../../../services/favorite.service';
 import { ProductService } from '../../../services/product.service';
 import { Router } from '@angular/router';
+import { HomeService } from '../../../services/home.service';
 
 @Component({
   selector: 'app-all-products',
@@ -16,7 +17,12 @@ export class AllProductsComponent implements OnInit {
   allProducts: Producto[] = [];
   favorites: Favorito[] = [];
 
-  constructor(private productService: ProductService, private favoriteService: FavoriteService, private router: Router) { }
+  nombreProducto: string = '';
+  showBuscados: boolean = false;
+  pageBuscada: number = 0;
+  totalPagesBuscada: number = 1;
+  constructor(private productService: ProductService, private favoriteService: FavoriteService,
+    private router: Router, private homeService: HomeService) { }
   ngOnInit(): void {
     this.loadAllProducts();
     this.loadFavorites();
@@ -78,5 +84,20 @@ export class AllProductsComponent implements OnInit {
   }
   goToProductDetail(productId: string): void {
     this.router.navigate(['/product-detail', productId]);
+  }
+    buscarPorNombre(): void {
+    this.homeService.getProductsByName(this.nombreProducto, this.pageBuscada, 12).subscribe({
+      next: (response) => {
+        this.allProducts = response.contenido;
+      },
+      error: (error) => {
+        console.error('Error fetching products by name:', error);
+      }
+    });
+  }
+  loadHome(): void {
+    this.showBuscados = false;
+    this.nombreProducto = '';
+    this.ngOnInit();
   }
 }

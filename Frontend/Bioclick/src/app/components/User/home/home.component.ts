@@ -11,19 +11,30 @@ import { FavoriteService } from '../../../services/favorite.service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
+  showLiked: boolean = true;
   pageLiked: number = 0;
   totalPagesLiked: number = 1;
   moreLikedProducts: Producto[] = [];
 
+  showValorated: boolean = true;
   pageValorated: number = 0;
   totalPagesValorated: number = 1;
   moreValoratedProducts: Producto[] = [];
 
   favorites: Favorito[] = [];
 
+  nombreProducto: string = '';
+  showBuscados: boolean = false;
+  pageBuscada: number = 0;
+  totalPagesBuscada: number = 1;
+  totalBuscados: Producto[] = [];
+
   constructor(private homeService: HomeService, private router: Router, private favoriteService: FavoriteService) { }
 
   ngOnInit(): void {
+    this.pageLiked = 0;
+    this.pageValorated = 0;
+    this.pageBuscada = 0;
     this.loadMoreLikedProducts();
     this.loadMoreValoratedProducts();
     this.loadFavorites();
@@ -44,6 +55,9 @@ export class HomeComponent implements OnInit {
       next: (response) => {
         this.moreLikedProducts = [...this.moreLikedProducts, ...response.contenido];
         this.totalPagesLiked = response.paginasTotales;
+        this.showLiked = true;
+        this.showValorated = true;
+        this.showBuscados = false;
         this.pageLiked++;
       },
       error: (error) => {
@@ -57,6 +71,9 @@ export class HomeComponent implements OnInit {
       next: (response) => {
         this.moreValoratedProducts = [...this.moreValoratedProducts, ...response.contenido];
         this.totalPagesValorated = response.paginasTotales;
+        this.showLiked = true;
+        this.showValorated = true;
+        this.showBuscados = false;
         this.pageValorated++;
       },
       error: (error) => {
@@ -78,24 +95,49 @@ export class HomeComponent implements OnInit {
     return this.favorites.some(fav => fav.nombreProducto === producto.nombreProducto);
   }
 
-toggleFavorite(producto: Producto): void {
-  if (this.isFavorite(producto)) {
-    this.favoriteService.removeFromFavorites(producto.id).subscribe({
-      next: () => {
-        this.favorites = this.favorites.filter(fav => fav.nombreProducto !== producto.nombreProducto);
-      }
-    });
-  } else {
-    this.favoriteService.addToFavorite(producto.id).subscribe({
-      next: () => {
-        this.favorites = [
-          ...this.favorites,
-          { nombreProducto: producto.nombreProducto, idProducto: producto.id, 
-            nombreUsuario: this.favorites.at(0)!.nombreUsuario, idUsuario: this.favorites.at(0)!.idUsuario,
-            fechaFavorito: new Date().toISOString() }
-        ];
+  toggleFavorite(producto: Producto): void {
+    if (this.isFavorite(producto)) {
+      this.favoriteService.removeFromFavorites(producto.id).subscribe({
+        next: () => {
+          this.favorites = this.favorites.filter(fav => fav.nombreProducto !== producto.nombreProducto);
+        }
+      });
+    } else {
+      this.favoriteService.addToFavorite(producto.id).subscribe({
+        next: () => {
+          this.favorites = [
+            ...this.favorites,
+            {
+              nombreProducto: producto.nombreProducto, idProducto: producto.id,
+              nombreUsuario: this.favorites.at(0)!.nombreUsuario, idUsuario: this.favorites.at(0)!.idUsuario,
+              fechaFavorito: new Date().toISOString()
+            }
+          ];
+        }
+      });
+    }
+  }
+  buscarPorNombre(): void {
+    this.homeService.getProductsByName(this.nombreProducto, this.pageBuscada, 12).subscribe({
+      next: (response) => {
+        this.showLiked = false;
+        this.showValorated = false;
+        this.totalBuscados = response.contenido;
+        this.showBuscados = true;
+        this.pageBuscada++;
+        this.moreLikedProducts = [];
+        this.moreValoratedProducts = [];
+      },
+      error: (error) => {
+        console.error('Error fetching products by name:', error);
       }
     });
   }
-}
+  loadHome(): void {
+    this.showLiked = true;
+    this.showValorated = true;
+    this.showBuscados = false;
+    this.nombreProducto = '';
+    this.ngOnInit();
+  }
 }
