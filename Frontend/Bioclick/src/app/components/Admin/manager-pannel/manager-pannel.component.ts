@@ -38,7 +38,7 @@ export class ManagerPannelComponent {
     this.managerService.getAllManagers(this.page - 1).subscribe({
       next: (response) => {
         this.managersFound = response;
-        console.log(this.managersFound.contenido[0].fotoPerfilUrl);
+        
       },
       error: (error) => {
         console.error('Error fetching managers:', error);
@@ -65,11 +65,9 @@ openCreateDialog(): void {
         fotoPerfilUrl: ''
       }
     });
-    console.log(dialogRef.componentInstance.data);
 
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog closed with result:', result);
       if (result && result.selectedFile) {
         this.adminService.createManager(
           result.username,
@@ -83,7 +81,6 @@ openCreateDialog(): void {
             this.getManagers();
           },
           error: (error: Error) => {
-            console.log(error)
             this.errorCreateManager = true;
           }
         });
@@ -98,7 +95,6 @@ openCreateDialog(): void {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Dialog closed with result:', result);
         this.adminService.updateManager(
           result.id,
           result.username,

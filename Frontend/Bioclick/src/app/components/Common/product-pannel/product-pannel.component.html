@@ -17,11 +17,11 @@
     <div class="row bg-white pannel mt-5 pt-5">
         <ng-container *ngIf="productsFound?.contenido?.length; else noUsers">
             <div *ngFor="let product of productsFound?.contenido" class="col-4 heightCol mb-4">
-                <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card"
-                    (click)="onCardClick(product.id)">
+                <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card">
                     <div class="d-flex h-100">
                         <div class="w-75 bg-white rounded rounded-3 mt-4 ms-2 me-2 d-flex align-items-center justify-content-center"
-                            style="height: 180px;">
+                            style="height: 180px;"
+                            (click)="onCardClick(product.id)">
                             <img mat-card-image class="img-fluid" [src]="limpiarUrlFoto(product.imagenProducto)">
                         </div>
                         <div class="d-flex flex-column justify-content-between w-100">

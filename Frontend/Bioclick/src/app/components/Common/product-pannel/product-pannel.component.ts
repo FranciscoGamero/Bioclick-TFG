@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProductService } from '../../../services/product.service';
 import { AllProductsResponse } from '../../../models/user/get-all-products.interface';
 import { CreateProductoDialogComponent, DeleteProductoDialogComponent, EditProductoDialogComponent } from '../../Dialog/CommonDialog/product-dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-pannel',
@@ -23,7 +24,7 @@ export class ProductPannelComponent {
     this.getProducts();
   }
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private router: Router) { }
 
   limpiarUrlFoto(url: string | undefined | null): string {
     if (!url) return '';
@@ -50,8 +51,8 @@ export class ProductPannelComponent {
   handleSidebarToggle() {
     this.isExpanded = !this.isExpanded;
   }
-  onCardClick(userId: string) {
-    console.log('Card clicked for user ID:', userId);
+  onCardClick(productId: string) {
+    this.router.navigate(['/product-detail', productId ]);
   }
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(CreateProductoDialogComponent, {
@@ -67,7 +68,6 @@ export class ProductPannelComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog closed with result:', result);
       if (result && result.selectedFile) {
         this.productService.createProduct(
           result.nombreProducto,
@@ -83,7 +83,6 @@ export class ProductPannelComponent {
             this.getProducts();
           },
           error: (error: Error) => {
-            console.log(error)
             this.errorCreateProducto = true;
           }
         });
@@ -98,7 +97,6 @@ export class ProductPannelComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Dialog closed with result:', result);
         this.productService.editProduct(
           result.id,
           result.nombreProducto,

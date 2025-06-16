@@ -5,6 +5,8 @@ import { FavoriteService } from '../../../services/favorite.service';
 import { ProductService } from '../../../services/product.service';
 import { Router } from '@angular/router';
 import { HomeService } from '../../../services/home.service';
+import { Categoria } from '../../../models/user/get-all-categories';
+import { CategoryService } from '../../../services/category.service';
 
 @Component({
   selector: 'app-all-products',
@@ -21,9 +23,15 @@ export class AllProductsComponent implements OnInit {
   showBuscados: boolean = false;
   pageBuscada: number = 0;
   totalPagesBuscada: number = 1;
+
+  categorias: Categoria[] = [];
+  filtroCategoria: string = '';
+  precioMin: number | null = null;
+  precioMax: number | null = null;
   constructor(private productService: ProductService, private favoriteService: FavoriteService,
-    private router: Router, private homeService: HomeService) { }
+    private router: Router, private homeService: HomeService, private categoryService: CategoryService) { }
   ngOnInit(): void {
+    this.loadCategorias();
     this.loadAllProducts();
     this.loadFavorites();
   }
@@ -44,9 +52,6 @@ export class AllProductsComponent implements OnInit {
         this.allProducts = [...this.allProducts, ...response.contenido];
         this.totalPages = response.paginasTotales;
         this.page++;
-      },
-      error: (error: Error) => {
-        console.error('Error fetching all products:', error);
       }
     });
   }
@@ -85,7 +90,7 @@ export class AllProductsComponent implements OnInit {
   goToProductDetail(productId: string): void {
     this.router.navigate(['/product-detail', productId]);
   }
-    buscarPorNombre(): void {
+  buscarPorNombre(): void {
     this.homeService.getProductsByName(this.nombreProducto, this.pageBuscada, 12).subscribe({
       next: (response) => {
         this.allProducts = response.contenido;
@@ -99,5 +104,26 @@ export class AllProductsComponent implements OnInit {
     this.showBuscados = false;
     this.nombreProducto = '';
     this.ngOnInit();
+  }
+  loadCategorias(): void {
+    this.categoryService.getAllCategories(0).subscribe({
+      next: resp => { this.categorias = resp.contenido; },
+      error: () => this.categorias = []
+    });
+  }
+  aplicarFiltros() {
+    this.page = 0;
+    this.homeService.getProductosFiltrados(
+      this.filtroCategoria,
+      this.precioMin,
+      this.precioMax,
+      this.page
+    ).subscribe(response => {
+      this.allProducts = response.contenido;
+    });
+  }
+  formatCategoriaName(nombreCategoria: string): string {
+    let conEspacios = nombreCategoria.replace("_", " ")
+    return conEspacios.charAt(0).toUpperCase() + conEspacios.slice(1);
   }
 }

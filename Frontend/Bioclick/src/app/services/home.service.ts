@@ -39,7 +39,7 @@ export class HomeService {
     return this.http.get<AllProductsResponse>(url, { headers, params });
   }
   getProductsByName(name: string, page: number, size: number): Observable<AllProductsResponse> {
-    const url = `${environment.apiBaseUrl}/productos/get/product-by-name`;
+    const url = `${environment.apiBaseUrl}/product/get/product-by-name`;
     const headers = {
       'Authorization': `Bearer ${localStorage.getItem('token')}`
     };
@@ -50,5 +50,26 @@ export class HomeService {
       .set('size', size);
 
     return this.http.get<AllProductsResponse>(url, { headers, params });
-  } 
+  }
+  getProductosFiltrados(
+    categoria: string,
+    precioMin: number | null,
+    precioMax: number | null,
+    page: number,
+
+  ): Observable<AllProductsResponse> {
+    const url = `${environment.apiBaseUrl}/product/get-by-filter`;
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    };
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', 12);
+
+    if (categoria) params = params.set('nombreCategoria', categoria);
+    if (precioMin !== null && precioMin !== undefined) params = params.set('precioMin', precioMin);
+    if (precioMax !== null && precioMax !== undefined) params = params.set('precioMax', precioMax);
+    return this.http.get<AllProductsResponse>(url, { headers, params });
+
+  }
 }

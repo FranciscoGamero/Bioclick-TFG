@@ -37,8 +37,6 @@ export class AdminPannelComponent {
     this.adminService.getAllAdmins(this.page - 1).subscribe({
       next: (response) => {
         this.adminsFound = response;
-        console.log(JSON.stringify(this.adminsFound?.contenido[0]));
-
       },
       error: (error) => {
         console.error('Error fetching users:', error);
@@ -57,11 +55,7 @@ export class AdminPannelComponent {
         fotoPerfilUrl: ''
       }
     });
-    console.log(dialogRef.componentInstance.data);
-
-
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog closed with result:', result);
       if (result && result.selectedFile) {
         this.adminService.createAdmin(
           result.username,
@@ -75,7 +69,6 @@ export class AdminPannelComponent {
             this.getAdmins();
           },
           error: (error: Error) => {
-            console.log(error)
             this.errorCreateAdmin = true;
           }
         });
