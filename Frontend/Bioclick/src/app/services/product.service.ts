@@ -76,7 +76,6 @@ export class ProductService {
       estado,
       fotoPerfilUrl: file ? file.name : null
     };
-    console.log('Editing product with data:', editData);
     if (file) {
       formData.append('file', file);
     }

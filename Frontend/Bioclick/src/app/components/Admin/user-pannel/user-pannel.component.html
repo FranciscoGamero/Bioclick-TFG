@@ -7,14 +7,17 @@
     </div>
     <h2>Usuarios</h2>
     <div class="mb-5">
-        <form method="post" class="h-auto">
-            <div class="h-50 w-auto d-flex flex-column mt-5 mb-5">
-                <div class="position-relative mb-3" style="width: 230px;">
+        <form (ngSubmit)="buscarPorNombre()" class="h-auto">
+            <div class="d-flex align-items-center" style="max-width: 350px;">
+                <div class="position-relative flex-grow-1 me-2">
                     <i class="bi bi-search position-absolute"
                         style="left: 18px; top: 50%; transform: translateY(-50%); color: #bfc9d8; font-size: 1.2rem;"></i>
-                    <input type="text" class="form-control inputRadius" placeholder="Nombre" [(ngModel)]="name"
-                        id="name" name="name" />
+                    <input type="text" class="form-control ps-5" placeholder="Username" [(ngModel)]="nombreUser"
+                        id="nombreUser" name="nombreUser" />
                 </div>
+                <button class="btn btn-success" type="submit">Buscar</button>
+                <button *ngIf="showBuscados" class="btn btn-secondary" type="button"
+                    (click)="loadPannel()">Volver</button>
             </div>
         </form>
     </div>
@@ -61,6 +64,6 @@
             </div>
         </ng-template>
     </div>
-    <ngb-pagination class="justify-content-center" [collectionSize]="usersFound?.elementosEncontrados || 0"
-        [(page)]="page" [boundaryLinks]="true" (pageChange)="getUsers()" />
+    <ngb-pagination class="justify-content-center" [collectionSize]="usersFound!.elementosEncontrados" [(page)]="page"
+        [pageSize]="12" [boundaryLinks]="true" (pageChange)="getUsers()" />
 </div>
