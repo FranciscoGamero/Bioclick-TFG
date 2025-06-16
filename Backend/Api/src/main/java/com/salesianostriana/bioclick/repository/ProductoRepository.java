@@ -1,7 +1,6 @@
 package com.salesianostriana.bioclick.repository;
 
 import com.salesianostriana.bioclick.model.Producto;
-import com.salesianostriana.bioclick.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -53,4 +52,8 @@ public interface ProductoRepository extends JpaRepository<Producto, UUID>, JpaSp
             order by avg(v.puntuacion) desc
 """)
     Page<Producto> productosMejorValorados(Pageable pageable);
+
+    @Query("SELECT p FROM Producto p JOIN p.categorias c WHERE c.nombreCategoria = :nombreCategoria")
+    Page<Producto> findByNombreCategoria(String nombreCategoria, Pageable pageable);
 }
+

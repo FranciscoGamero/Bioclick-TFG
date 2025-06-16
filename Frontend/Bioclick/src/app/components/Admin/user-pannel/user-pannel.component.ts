@@ -64,7 +64,6 @@ export class UserPannelComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Dialog closed with result:', result);
         this.userService.updateUser(
           result.id,
           result.username,

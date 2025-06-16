@@ -253,4 +253,35 @@ public class ProductoController {
 
         return PaginacionDto.of(productoService.buscarMejorValorados(pageable).map(ProductoDto::of));
     }
+    @Operation(summary = "Obtiene todos los productos filtrados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se han encontrado productos",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProductoDto.class),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            {
+                                                "nombreProducto": "Cámara de Seguridad Reciclada",
+                                                "descripcion": "Cámara de seguridad inteligente hecha con materiales reciclados.",
+                                                "imagenProducto": "https://example.com/images/camara-seguridad.jpg",
+                                                "precioProducto": 149.99,
+                                                "estado": "Reacondicionado"
+                                            }
+                                """
+                            )}
+                    )}),
+    })
+    @GetMapping("/get-by-filter")
+    public PaginacionDto<ProductoDto> filtrarProductos(
+            @PageableDefault(page=0, size=6) Pageable pageable,
+            @RequestParam(required = false) String nombreCategoria,
+            @RequestParam(required = false) Double precioMin,
+            @RequestParam(required = false) Double precioMax
+    ) {
+        return PaginacionDto.of(
+                productoService.filtrarProductos(nombreCategoria, precioMin, precioMax, pageable)
+                        .map(ProductoDto::of)
+        );
+    }
 }

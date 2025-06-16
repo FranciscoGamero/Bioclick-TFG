@@ -73,11 +73,9 @@ export class ManagerPannelComponent {
         fotoPerfilUrl: ''
       }
     });
-    console.log(dialogRef.componentInstance.data);
 
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog closed with result:', result);
       if (result && result.selectedFile) {
         this.adminService.createManager(
           result.username,
@@ -91,7 +89,6 @@ export class ManagerPannelComponent {
             this.getManagers();
           },
           error: (error: Error) => {
-            console.log(error)
             this.errorCreateManager = true;
           }
         });
@@ -106,7 +103,6 @@ export class ManagerPannelComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Dialog closed with result:', result);
         this.adminService.updateManager(
           result.id,
           result.username,

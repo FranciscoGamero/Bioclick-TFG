@@ -66,11 +66,7 @@ export class AdminPannelComponent {
         fotoPerfilUrl: ''
       }
     });
-    console.log(dialogRef.componentInstance.data);
-
-
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog closed with result:', result);
       if (result && result.selectedFile) {
         this.adminService.createAdmin(
           result.username,
@@ -84,7 +80,6 @@ export class AdminPannelComponent {
             this.getAdmins();
           },
           error: (error: Error) => {
-            console.log(error)
             this.errorCreateAdmin = true;
           }
         });
