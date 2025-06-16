@@ -18,9 +18,7 @@
         <ng-container *ngIf="categoriesFound?.contenido?.length; else noCategories">
             <div *ngFor="let category of categoriesFound?.contenido" class="col-3 heightCol mb-4">
                 <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card"
-                  [ngClass]="{ 'categoria-sin-padre': category.nombreCategoriaPadre === 'None' }"
-
-                    (click)="onCardClick(category.id)">
+                  [ngClass]="{ 'categoria-sin-padre': category.nombreCategoriaPadre === 'None' }">
                     <p class="m-0 text-center text-white fw-semibold">{{ category.nombreCategoria }}</p>
                     <div class="d-flex">
                     <p class="m-0 text-center text-white fw-semibold w-50 mt-2">Productos totales: {{ category.listaProductos.length }}</p>

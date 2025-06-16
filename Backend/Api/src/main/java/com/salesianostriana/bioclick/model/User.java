@@ -93,7 +93,10 @@ public class User implements UserDetails {
 
     public static Specification<User> nombreContiene(String nombreUsuario) {
         return (root, query, criteriaBuilder) -> {
-            return criteriaBuilder.like(root.get("username"), "%" + nombreUsuario + "%");
+            return criteriaBuilder.like(
+                    criteriaBuilder.lower(root.get("username")),
+                    "%" + nombreUsuario.toLowerCase() + "%"
+            );
         };
     }
 

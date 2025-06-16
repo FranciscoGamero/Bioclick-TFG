@@ -122,14 +122,13 @@ INSERT INTO impacto_ambiental_ahorro_materiales (impacto_ambiental_id, ahorro_ma
 
 INSERT INTO impacto_ambiental (id, reduccion_co2, producto_id, borrado) VALUES ('8b3c3d20-c132-4ecc-977b-6baeea7978ec', 15.0, 'def45678-9012-3456-ab78-901234567890',false);
 
-INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('1a2b3c4d-e89b-12d3-a456-426614174000', 'Dispositivos Electrónicos', null,false);
-INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('2a3b4c5d-e89b-12d3-a456-426614174001', 'Accesorios Tecnológicos', null,false);
-INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('3a4b5c6d-e89b-12d3-a456-426614174002', 'Equipos de Oficina', null,false);
-
-INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('4a5b6c7d-e89b-12d3-a456-426614174003', 'Teléfonos Inteligentes', '1a2b3c4d-e89b-12d3-a456-426614174000',false);
-INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('5a6b7c8d-e89b-12d3-a456-426614174004', 'Tablets', '1a2b3c4d-e89b-12d3-a456-426614174000',false);
-INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('6a7b8c9d-e89b-12d3-a456-426614174005', 'Portátiles', '1a2b3c4d-e89b-12d3-a456-426614174000',false);
-INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('7a8b9c0d-e89b-12d3-a456-426614174006', 'Smartwatches', '1a2b3c4d-e89b-12d3-a456-426614174000',false);
+INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('1a2b3c4d-e89b-12d3-a456-426614174000', 'dispositivos_electronicos', null, false);
+INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('2a3b4c5d-e89b-12d3-a456-426614174001', 'accesorios_tecnologicos', null, false);
+INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('3a4b5c6d-e89b-12d3-a456-426614174002', 'equipos_oficina', null, false);
+INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('4a5b6c7d-e89b-12d3-a456-426614174003', 'telefonos_inteligentes', '1a2b3c4d-e89b-12d3-a456-426614174000', false);
+INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('5a6b7c8d-e89b-12d3-a456-426614174004', 'tablets', '1a2b3c4d-e89b-12d3-a456-426614174000', false);
+INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('6a7b8c9d-e89b-12d3-a456-426614174005', 'portatiles', '1a2b3c4d-e89b-12d3-a456-426614174000', false);
+INSERT INTO categoria (id, nombre_categoria, categoria_padre, borrado) VALUES ('7a8b9c0d-e89b-12d3-a456-426614174006', 'smartwatches', '1a2b3c4d-e89b-12d3-a456-426614174000', false);
 
 INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('4a5b6c7d-8e9f-1234-abcd-567890123456', '3a4b5c6d-e89b-12d3-a456-426614174002');
 

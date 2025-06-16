@@ -36,9 +36,6 @@ export class CategoryPannelComponent {
   handleSidebarToggle() {
     this.isExpanded = !this.isExpanded;
   }
-  onCardClick(userId: string) {
-    console.log('Card clicked for user ID:', userId);
-  }
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(CreateCategoriaDialogComponent, {
       width: '800px',
@@ -60,8 +57,7 @@ export class CategoryPannelComponent {
             this.errorCreateCategoria = false;
             this.getCategories();
           },
-          error: (error: Error) => {
-            console.log(error);
+          error: () => {
             this.errorCreateCategoria = true;
           }
         });
@@ -69,7 +65,6 @@ export class CategoryPannelComponent {
     });
   }
   openEditDialog(categoria: Categoria): void {
-    console.log(categoria);
     const dialogRef = this.dialog.open(EditCategoriaDialogComponent, {
       width: '800px',
       data: {
@@ -92,8 +87,7 @@ export class CategoryPannelComponent {
             this.errorCreateCategoria = false;
             this.getCategories();
           },
-          error: (error: Error) => {
-            console.log(error)
+          error: () => {
             this.errorCreateCategoria = true;
           }
         });

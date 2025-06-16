@@ -22,7 +22,7 @@ import { CategoryPannelComponent } from './components/Common/category-pannel/cat
 import { ManagerPannelComponent } from './components/Admin/manager-pannel/manager-pannel.component';
 import { CreateManagerDialogComponent, DeleteManagerDialogComponent, EditManagerDialogComponent } from './components/Dialog/ManagerDialog/manager-dialog';
 import { UserPannelComponent } from './components/Admin/user-pannel/user-pannel.component';
-import { EditUserDialogComponent, DeleteUserDialogComponent } from './components/Dialog/UserDialog/user-dialog';
+import { EditUserDialogComponent, DeleteUserDialogComponent, ChangePasswordDialogComponent } from './components/Dialog/UserDialog/user-dialog';
 import { GraphicsPannelComponent } from './components/Common/graphics-pannel/graphics-pannel.component';
 import { VerifyAccountComponent } from './components/Common/verify-account/verify-account.component';
 import { MyProfileComponent } from './components/Common/my-profile/my-profile.component';
@@ -47,6 +47,7 @@ import { CreateCategoriaDialogComponent, DeleteCategoriaDialogComponent, EditCat
     ManagerPannelComponent,
     AllPannelComponent,
     EditUserDialogComponent,
+    ChangePasswordDialogComponent,
     CreateManagerDialogComponent,
     EditManagerDialogComponent,
     DeleteManagerDialogComponent,

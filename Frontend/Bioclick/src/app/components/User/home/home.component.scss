@@ -17,3 +17,29 @@
     border-color: #59cea0;
   }
 }
+.search-input-wrapper {
+  width: 230px;
+  height: 40px;
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #bfc9d8;
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+// Si tienes una clase personalizada para el radio del input:
+.inputRadius {
+  border-radius: 0.5rem;
+}
+.buscador{
+  width: 350px;
+}
+.showBuscados{
+  min-height: 800px;
+}

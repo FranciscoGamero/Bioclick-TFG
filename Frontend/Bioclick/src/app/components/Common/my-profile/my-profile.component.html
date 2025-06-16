@@ -9,6 +9,12 @@
             <button class="btn btn-outline-secondary mb-3" (click)="goBack()">
                 <i class="bi bi-arrow-left"></i> Volver
             </button>
+            <div *ngIf="successChange" class="alert alert-success" role="alert">
+                ¡Contraseña cambiada correctamente!
+            </div>
+            <div *ngIf="changePasswordError" class="alert alert-danger" role="alert">
+                Ha ocurrido un error al cambiar la contraseña.
+            </div>
             <div class="card shadow rounded-4 border-0">
                 <div class="card-body p-4">
                     <div class="d-flex flex-column flex-md-row align-items-center mb-4">
@@ -21,6 +27,10 @@
                             <button class="btn btn-outline-success mt-2" type="button"
                                 (click)="openEditDialog({ id: user!.id, username: user!.username, correo: user!.correo, fotoPerfilUrl: user!.fotoPerfilUrl, password: user!.password })">
                                 <i class="bi bi-pencil me-1"></i> Editar perfil
+                            </button>
+                            <button class="btn btn-outline-success mt-2 ms-4" type="button"
+                                (click)="openChangePasswordDialog()">
+                                <i class="bi bi-lock me-1"></i> Editar Contraseña
                             </button>
                         </div>
                     </div>

@@ -523,9 +523,9 @@ public UserDto editarUsuario(@io.swagger.v3.oas.annotations.parameters.RequestBo
                     description = "Datos inválidos para la búsqueda",
                     content = @Content)
     })
-    @GetMapping("/productos/get/nombre")
+    @GetMapping("/productos/get/product-by-name")
     public PaginacionDto<ProductoDto> buscarProductoPorNombre(
-            @RequestParam(value = "nombre", required = false) String nombre,
+            @RequestParam(value = "nombre", required = true) String nombre,
             @PageableDefault(size = 10) Pageable pageable) {
 
         return PaginacionDto.of(userService.buscarProductoPorNombre(nombre, pageable, false)
@@ -576,5 +576,13 @@ public UserDto editarUsuario(@io.swagger.v3.oas.annotations.parameters.RequestBo
                 .path("/download/")
                 .path(filename)
                 .toUriString();
+    }
+    @PutMapping("user/change-password")
+    public ResponseEntity<UserDto> changePassword(
+            @AuthenticationPrincipal User user,
+            @RequestBody ChangePasswordRequest request) {
+
+        User updated = userService.changePassword(user, request.currentPassword(), request.newPassword());
+        return ResponseEntity.ok(UserDto.of(updated, getImageUrl(updated.getFotoPerfil())));
     }
 }

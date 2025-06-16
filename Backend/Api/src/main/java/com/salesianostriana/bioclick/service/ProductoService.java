@@ -8,16 +8,15 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import org.hibernate.Filter;
 import org.hibernate.Session;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -136,5 +135,32 @@ public class ProductoService {
     }
     public Page<Producto> buscarMejorValorados(Pageable pageable) {
         return productoRepository.productosMejorValorados(pageable);
+    }
+    public Page<Producto> filtrarProductos(
+            String nombreCategoria,
+            Double precioMin,
+            Double precioMax,
+            Pageable pageable
+    ) {
+        Session session = entityManager.unwrap(Session.class);
+        Filter filter = session.enableFilter("productoBorradoFiltro");
+        filter.setParameter("isBorrado", false);
+
+        Specification<Producto> spec = Specification.where(null);
+
+        if (nombreCategoria != null && !nombreCategoria.isEmpty()) {
+            spec = spec.and((root, query, cb) ->
+                    cb.equal(root.join("categorias").get("nombreCategoria"), nombreCategoria));
+        }
+        if (precioMin != null) {
+            spec = spec.and(Producto.precioMayorQue(precioMin));
+        }
+        if (precioMax != null) {
+            spec = spec.and(Producto.precioMenorQue(precioMax));
+        }
+
+        Page<Producto> resultado = productoRepository.findAll(spec, pageable);
+        session.disableFilter("productoBorradoFiltro");
+        return resultado;
     }
 }
