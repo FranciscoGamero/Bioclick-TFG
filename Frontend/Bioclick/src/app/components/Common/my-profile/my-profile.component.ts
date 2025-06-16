@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
 import { DetailUser } from '../../../models/user/detail-user.interface';
-import { EditUserDialogComponent } from '../../Dialog/UserDialog/user-dialog';
+import { ChangePasswordDialogComponent, EditUserDialogComponent } from '../../Dialog/UserDialog/user-dialog';
 import { FavoriteService } from '../../../services/favorite.service';
 import { Favorito } from '../../../models/user/favorites.interface';
 import { Valoration } from '../../../models/user/get-all-valorations';
@@ -22,6 +22,8 @@ export class MyProfileComponent implements OnInit {
   favorites: Favorito[] = [];
   valorations: Valoration[] = [];
   errorEditUser: boolean = false;
+  changePasswordError: boolean = false;
+  successChange: boolean = false;
   constructor(private userService: UserService, private route: Router,
     private favoriteService: FavoriteService, private valorationService: ValorationsService,
     private location: Location) { }
@@ -98,6 +100,26 @@ export class MyProfileComponent implements OnInit {
     this.route.navigate(['/product-detail', productId]);
   }
   goBack(): void {
-  this.location.back();
-}
+    this.location.back();
+  }
+  openChangePasswordDialog(): void {
+    const dialogRef = this.dialog.open(ChangePasswordDialogComponent, {
+      width: '500px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.userService.changePassword(result.currentPassword, result.newPassword).subscribe({
+          next: () => {
+            this.changePasswordError = false;
+            this.successChange = true;
+          },
+          error: (err) => {
+            this.changePasswordError = true;
+            console.error('Error al cambiar la contraseña', err);
+          }
+        });
+      }
+    });
+  }
 }

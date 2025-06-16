@@ -183,10 +183,15 @@ public class UserService {
         return productos;
 
     }
-
-
     public void eliminarUsuarioPorId(UUID id) {
         userRepository.deleteById(id);
     }
 
+    public User changePassword(User user, String currentPassword, String newPassword) {
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new IllegalArgumentException("La contraseña actual no es correcta");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        return userRepository.save(user);
+    }
 }

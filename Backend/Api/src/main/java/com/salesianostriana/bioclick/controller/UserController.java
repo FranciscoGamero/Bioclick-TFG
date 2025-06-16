@@ -577,4 +577,12 @@ public UserDto editarUsuario(@io.swagger.v3.oas.annotations.parameters.RequestBo
                 .path(filename)
                 .toUriString();
     }
+    @PutMapping("user/change-password")
+    public ResponseEntity<UserDto> changePassword(
+            @AuthenticationPrincipal User user,
+            @RequestBody ChangePasswordRequest request) {
+
+        User updated = userService.changePassword(user, request.currentPassword(), request.newPassword());
+        return ResponseEntity.ok(UserDto.of(updated, getImageUrl(updated.getFotoPerfil())));
+    }
 }
