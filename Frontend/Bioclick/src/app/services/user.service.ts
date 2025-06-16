@@ -126,4 +126,15 @@ export class UserService {
     }
     return this.http.delete(url, { headers: header });
   }
+  changePassword(currentPassword: string, newPassword: string): Observable<any> {
+    const url = `${environment.apiBaseUrl}/user/change-password`;
+    const header = {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    };
+    const body = {
+      currentPassword,
+      newPassword
+    };
+    return this.http.put(url, body, { headers: header });
+  }
 }
