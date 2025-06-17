@@ -18,12 +18,11 @@ export class AllPannelComponent implements OnInit {
   isExpanded: boolean = true;
   name: string = '';
   allFound: AllFoundResponse | undefined = undefined;
-  page: number = 0;
-  errorEditManager: boolean = false;
+  page: number = 1;
+  pageBuscada: number = 1;
 
   showBuscados: boolean = false;
   nombreUsuario: string = '';
-  pageBuscada: number = 0;
 
   showAlert: boolean = false;
   alertMessage: string = '';
@@ -45,6 +44,7 @@ export class AllPannelComponent implements OnInit {
     return `${environment.apiBaseUrl}/download/${url}`;
   }
   foundAll() {
+    this.showBuscados = false;
     this.adminService.getAll(this.page - 1).subscribe({
       next: (response) => {
         this.showAlert = false;
@@ -77,128 +77,9 @@ export class AllPannelComponent implements OnInit {
   onCardClick(userId: string) {
     this.router.navigate(['/user-detail', userId]);
   }
-  openUserEditDialog(manager: { id: string; username: string; correo: string; password: string; fotoPerfilUrl: string }): void {
-    const dialogRef = this.dialog.open(EditManagerDialogComponent, {
-      width: '800px',
-      data: { id: manager.id, username: manager.username, correo: manager.correo, password: manager.password, fotoPerfilUrl: manager.fotoPerfilUrl }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.userService.updateUser(
-          result.id,
-          result.username,
-          result.correo,
-          result.password,
-          result.selectedFile,
-        ).then((observable: any) => {
-          observable.subscribe({
-            next: () => {
-              this.foundAll();
-              this.showAlert = false;
-            },
-            error: (error: {
-              error?: {
-                'invalid-params'?: { message: string }[];
-                detail?: string;
-              };
-            }): void => {
-              this.showAlert = true;
-              if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
-                this.alertMessage = error.error['invalid-params'][0].message;
-              } else if (error.error && error.error.detail) {
-                this.alertMessage = error.error.detail;
-              } else {
-                this.alertMessage = 'Error al editar el usuario.';
-              }
-            }
-          });
-        })
-      }
-    });
-  }
-  openUserDeleteDialog(user: { id: string; }): void {
-    const dialogRef = this.dialog.open(DeleteUserDialogComponent, {
-      width: '800px',
-      data: { id: user.id }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.userService.deleteUser(
-          result.id
-        ).subscribe({
-          next: () => {
-            this.foundAll();
-          },
-        });
-      }
-    });
-  }
-  openManagerEditDialog(manager: { id: string; username: string; correo: string; password: string; fotoPerfilUrl: string }): void {
-    const dialogRef = this.dialog.open(EditManagerDialogComponent, {
-      width: '800px',
-      data: { id: manager.id, username: manager.username, correo: manager.correo, password: manager.password, fotoPerfilUrl: manager.fotoPerfilUrl }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.adminService.updateManager(
-          result.id,
-          result.username,
-          result.correo,
-          result.password,
-          result.selectedFile,
-          result.fotoPerfilUrl
-        ).then((observable: any) => {
-          observable.subscribe({
-            next: () => {
-              this.showAlert = false;
-              this.foundAll();
-            },
-            error: (error: {
-              error?: {
-                'invalid-params'?: { message: string }[];
-                detail?: string;
-              };
-            }): void => {
-              this.showAlert = true;
-              if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
-                this.alertMessage = error.error['invalid-params'][0].message;
-              } else if (error.error && error.error.detail) {
-                this.alertMessage = error.error.detail;
-              } else {
-                this.alertMessage = 'Error al editar el manager.';
-              }
-            }
-          });
-        })
-      }
-    });
-  }
-
-  openManagerDeleteDialog(manager: { id: string; }): void {
-    const dialogRef = this.dialog.open(DeleteManagerDialogComponent, {
-      width: '800px',
-      data: { id: manager.id }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.adminService.deleteManager(
-          result.id
-        ).subscribe({
-          next: () => {
-            this.foundAll();
-          },
-        });
-      }
-    });
-  }
   buscarPorNombre(): void {
-    this.pageBuscada = 0;
     this.showBuscados = true;
-    this.adminService.getUsersByName(this.nombreUsuario, this.pageBuscada, 12).subscribe({
+    this.adminService.getUsersByName(this.nombreUsuario, this.pageBuscada - 1, 12).subscribe({
       next: (response) => {
         this.showAlert = false;
         this.allFound = response;
@@ -213,12 +94,21 @@ export class AllPannelComponent implements OnInit {
           this.alertMessage = 'Error al crear la categoría.';
         }
       }
-
     });
   }
   loadPannel(): void {
     this.showBuscados = false;
     this.nombreUsuario = '';
+    this.page = 1;
     this.ngOnInit();
+  }
+  cambiarPagina(pagina: number): void {
+    if (this.showBuscados) {
+      this.pageBuscada = pagina;
+      this.buscarPorNombre();
+    } else {
+      this.page = pagina;
+      this.foundAll();
+    }
   }
 }

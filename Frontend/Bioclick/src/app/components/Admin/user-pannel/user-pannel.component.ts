@@ -126,8 +126,7 @@ export class UserPannelComponent implements OnInit {
   }
   buscarPorNombre(): void {
     this.showBuscados = true;
-    this.pageBuscada = 0;
-    this.adminService.getUsersByName(this.nombreUser, this.pageBuscada, 12).subscribe({
+    this.adminService.getUsersByName(this.nombreUser, this.pageBuscada - 1, 12).subscribe({
       next: (response) => {
         this.showAlert = false;
         this.usersFound = response;
@@ -145,6 +144,16 @@ export class UserPannelComponent implements OnInit {
   loadPannel(): void {
     this.showBuscados = false;
     this.nombreUser = '';
+    this.page = 1;
     this.ngOnInit();
+  }
+  cambiarPagina(pagina: number): void {
+    if (this.showBuscados) {
+      this.pageBuscada = pagina;
+      this.buscarPorNombre();
+    } else {
+      this.page = pagina;
+      this.getUsers();
+    }
   }
 }

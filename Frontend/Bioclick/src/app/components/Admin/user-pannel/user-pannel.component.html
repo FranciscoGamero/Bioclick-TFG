@@ -62,6 +62,8 @@
             </div>
         </ng-template>
     </div>
-    <ngb-pagination class="justify-content-center" [collectionSize]="usersFound!.elementosEncontrados" [page]="page"
-        [pageSize]="12" [boundaryLinks]="true" (pageChange)="getUsers()" />
+    <ngb-pagination [collectionSize]="usersFound?.elementosEncontrados || 0"
+        [page]="showBuscados ? pageBuscada : page" [pageSize]="12" [boundaryLinks]="true"
+        (pageChange)="cambiarPagina($event)">
+    </ngb-pagination>
 </div>
