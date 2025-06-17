@@ -5,29 +5,7 @@
 Este programa es una red social donde los Admins y Managers de la tienda Bioclick publican los productos disponibles, y los Usuarios pueden valorarlos y agregarlos a favoritos.</br> A futuro se añadirá la posibilidad de comprar los productos y recibir notificaciones.
 
 >[!TIP]
->A la hora de hacer el docker-compose, las variables de entorno deberían ser:
->
->**Para Windows:**
->
->```powershell
->$env:SECRET="dlklkjflksjdflksjdlfkfjdlksjflksdjfdlksjfljfldskjflksdj"; `
->$env:SG_API_KEY="tu-apikey-de-Sendgrid"; `
->$env:DATASOURCE_URL="jdbc:postgresql://bioclick-sql/bioclick"; `
->$env:DATASOURCE_NAME="Bioclick"; `
->$env:DATASOURCE_PASSWORD="12345678"; `
->docker-compose up --build
->```
->
->**Para Linux:**
->
->```bash
->SECRET="dlklkjflksjdflksjdlfkfjdlksjflksdjfdlksjfljfldskjflksdj" \
->SG_API_KEY="tu-apikey-de-Sendgrid" \
->DATASOURCE_URL="jdbc:postgresql://bioclick-sql/bioclick" \
->DATASOURCE_NAME="Bioclick" \
->DATASOURCE_PASSWORD="12345678" \
->docker-compose up --build
->```
+> A la hora de clonar el repositorio, para poder usar la aplicación hay que usar el comando docker-compose up -d en la terminal para levantar tanto el frontend como el backend.
 
 
 
