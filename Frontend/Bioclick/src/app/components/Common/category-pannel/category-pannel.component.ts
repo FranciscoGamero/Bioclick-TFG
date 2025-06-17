@@ -15,7 +15,9 @@ export class CategoryPannelComponent {
   name: string = '';
   categoriesFound: AllCategoryResponse | undefined = undefined;
   page: number = 1;
-  errorCreateCategoria: boolean = false;
+
+  showError: boolean = false;
+  alertMessage: string = '';
   ngOnInit(): void {
     this.getCategories();
   }
@@ -25,14 +27,25 @@ export class CategoryPannelComponent {
   getCategories() {
     this.categoryService.getAllCategories(this.page - 1).subscribe({
       next: (response) => {
+        this.showError = false;
         this.categoriesFound = response;
       },
       error: (error) => {
-        console.error('Error fetching categories:', error);
+        this.showError = true;
+        if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+          this.alertMessage = error.error['invalid-params'][0].message;
+        } else if (error.error && error.error.detail) {
+          this.alertMessage = error.error.detail;
+        } else {
+          this.alertMessage = 'Error al obtener las categorías.';
+        }
       }
     });
   }
-
+  formatCategoriaName(nombreCategoria: string): string {
+    let conEspacios = nombreCategoria.replace("_", " ")
+    return conEspacios.charAt(0).toUpperCase() + conEspacios.slice(1);
+  }
   handleSidebarToggle() {
     this.isExpanded = !this.isExpanded;
   }
@@ -54,11 +67,18 @@ export class CategoryPannelComponent {
           result.categoriaPadreId
         ).subscribe({
           next: () => {
-            this.errorCreateCategoria = false;
+            this.showError = false;
             this.getCategories();
           },
-          error: () => {
-            this.errorCreateCategoria = true;
+          error: (error) => {
+            this.showError = true;
+            if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+              this.alertMessage = error.error['invalid-params'][0].message;
+            } else if (error.error && error.error.detail) {
+              this.alertMessage = error.error.detail;
+            } else {
+              this.alertMessage = 'Error al crear la categoría.';
+            }
           }
         });
       }
@@ -71,7 +91,7 @@ export class CategoryPannelComponent {
         id: categoria.id,
         nombreCategoria: categoria.nombreCategoria,
         categoriaPadreId: categoria.idCategoriaPadre ?? '',
-        subcategoriaIds: categoria.listaIdSubcategorias ?? [] // <-- aquí el mapeo correcto
+        subcategoriaIds: categoria.listaIdSubcategorias ?? []
       }
     });
 
@@ -84,11 +104,17 @@ export class CategoryPannelComponent {
           result.categoriaPadreId
         ).subscribe({
           next: () => {
-            this.errorCreateCategoria = false;
+            this.showError = false;
             this.getCategories();
           },
-          error: () => {
-            this.errorCreateCategoria = true;
+          error: (error) => {
+            if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+              this.alertMessage = error.error['invalid-params'][0].message;
+            } else if (error.error && error.error.detail) {
+              this.alertMessage = error.error.detail;
+            } else {
+              this.alertMessage = 'Error al editar la categoria.';
+            }
           }
         });
       }

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DetailUser } from '../../../models/user/detail-user.interface';
 import { UserService } from '../../../services/user.service';
 import { EditUserDialogComponent } from '../../Dialog/UserDialog/user-dialog';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-detail',
@@ -33,12 +34,12 @@ export class UserDetailComponent {
     if (!url) return '';
 
     if (url.includes('randomuser.me')) {
-      return url.replace('http://localhost:8080/download/', '');
+      return url.replace(`${environment.apiBaseUrl}/download/`, '');
     }
 
     if (url.startsWith('http')) return url;
 
-    return `http://localhost:8080/download/${url}`;
+    return `${environment.apiBaseUrl}/download/${url}`;
   }
   openEditDialog(user: { id: string; username: string; correo: string; password: string; fotoPerfilUrl: string }): void {
     const dialogRef = this.dialog.open(EditUserDialogComponent, {

@@ -14,12 +14,15 @@
                         </div>
                         <div class="w-75 mb-5">
                             <p class="text-start">Contraseña</p>
-                            <input type="text" placeholder="Ingresa tu contraseña" [(ngModel)]="password"
+                            <input type="password" placeholder="Ingresa tu contraseña" [(ngModel)]="password"
                                 class="w-100 p-4 inputRadius bg-secondary-subtle form-check-input mb-5" id="password"
-                                name="password"
-                                autocomplete="off">
+                                name="password" autocomplete="off">
                         </div>
-                        <button class="btn btnForm mt-5" type="submit">Iniciar Sesión</button>
+                        <button class="btn btnForm mt-4" type="submit">Iniciar Sesión</button>
+                        <div class="d-flex mt-3">
+                            <p class="text-start">¿No tienes cuenta?</p><a class="text-start ms-2 pe-auto"
+                                href="/register"> Regístrate</a>
+                        </div>
                     </div>
                 </form>
             </div>

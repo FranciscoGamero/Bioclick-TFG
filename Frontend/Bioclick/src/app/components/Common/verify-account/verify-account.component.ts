@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-verify-account',
@@ -17,13 +18,14 @@ export class VerifyAccountComponent {
 
   showError: boolean = false;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   verifyUser() {
     const codigo = this.code1 + this.code2 + this.code3 + this.code4 + this.code5 + this.code6;
     this.userService.verifyUser(codigo).subscribe({
       next: () => {
         this.showError = false;
+        this.router.navigate(['/login']);
       },
       error: () => {
         this.showError = true;

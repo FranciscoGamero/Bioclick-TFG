@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ValorationsService } from '../../../services/valoration.service';
 import { Valoration } from '../../../models/user/get-all-valorations';
 import { Location } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-product-detail',
@@ -53,12 +54,12 @@ export class ProductDetailComponent implements OnInit {
     if (!url) return '';
 
     if (url.includes('assets/')) {
-      return url.replace('http://localhost:8080/download/', '');
+      return url.replace(`${environment.apiBaseUrl}/download/`, '');
     }
 
     if (url.startsWith('http')) return url;
 
-    return `http://localhost:8080/download/${url}`;
+    return `${environment.apiBaseUrl}/download/${url}`;
   }
   getProductDetail(productId: string): void {
     this.productService.getProductDetail(productId).subscribe({

@@ -6,6 +6,7 @@ import { AdminService } from '../../../services/admins.service';
 import { EditManagerDialogComponent, DeleteManagerDialogComponent, CreateManagerDialogComponent } from '../../Dialog/ManagerDialog/manager-dialog';
 import { Router } from '@angular/router';
 import { Usuario } from '../../../models/user/get-all-users-interface';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -24,8 +25,9 @@ export class ManagerPannelComponent {
   showBuscados: boolean = false;
   nombreManager: string = '';
   pageBuscada: number = 0;
-  errorEditManager: boolean = false;
-  errorCreateManager: boolean = false;
+
+  showAlert: boolean = false;
+  alertMessage: string = '';
   ngOnInit(): void {
     this.getManagers();
   }
@@ -34,7 +36,7 @@ export class ManagerPannelComponent {
   limpiarUrlFoto(url: string | undefined | null): string {
     if (!url) return '';
     if (url.includes('randomuser.me')) {
-      return url.replace('http://localhost:8080/download/', '');
+      return url.replace(`${environment.apiBaseUrl}/download/`, '');
     }
     return url;
   }
@@ -49,7 +51,14 @@ export class ManagerPannelComponent {
         })) as Usuario[];
       },
       error: (error) => {
-        console.error('Error fetching managers:', error);
+        this.showAlert = true;
+        if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+          this.alertMessage = error.error['invalid-params'][0].message;
+        } else if (error.error && error.error.detail) {
+          this.alertMessage = error.error.detail;
+        } else {
+          this.alertMessage = 'Error al crear la categoría.';
+        }
       }
     });
   }
@@ -85,11 +94,18 @@ export class ManagerPannelComponent {
           result.selectedFile
         ).subscribe({
           next: () => {
-            this.errorCreateManager = false;
+            this.showAlert = false;
             this.getManagers();
           },
-          error: (error: Error) => {
-            this.errorCreateManager = true;
+          error: (error) => {
+            this.showAlert = true;
+            if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+              this.alertMessage = error.error['invalid-params'][0].message;
+            } else if (error.error && error.error.detail) {
+              this.alertMessage = error.error.detail;
+            } else {
+              this.alertMessage = 'Error al crear el manager.';
+            }
           }
         });
       }
@@ -112,12 +128,24 @@ export class ManagerPannelComponent {
           result.fotoPerfilUrl
         ).then((observable: any) => {
           observable.subscribe({
-            next: () => {
-              this.errorEditManager = false;
+            next: (): void => {
+              this.showAlert = false;
               this.getManagers();
             },
-            error: (error: Error) => {
-              this.errorEditManager = true;
+            error: (error: {
+              error?: {
+                'invalid-params'?: { message: string }[];
+                detail?: string;
+              };
+            }): void => {
+              this.showAlert = true;
+              if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+                this.alertMessage = error.error['invalid-params'][0].message;
+              } else if (error.error && error.error.detail) {
+                this.alertMessage = error.error.detail;
+              } else {
+                this.alertMessage = 'Error al editar el manager.';
+              }
             }
           });
         })
@@ -147,17 +175,22 @@ export class ManagerPannelComponent {
     this.showBuscados = true;
     this.adminService.getUsersByName(this.nombreManager, this.pageBuscada, 12).subscribe({
       next: (response) => {
+        this.showAlert = false;
         const managers = response.contenido.filter((manager: Usuario) => manager.role === 'ROLE_MANAGER');
         this.managersFound = managers;
-        console.log(this.managersFound);
         this.pageBuscada++;
       },
       error: (error) => {
-        console.error('Error fetching products by name:', error);
+        this.showAlert = true;
+        if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+          this.alertMessage = error.error['invalid-params'][0].message;
+        } else if (error.error && error.error.detail) {
+          this.alertMessage = error.error.detail;
+        }
       }
     });
   }
-      loadPannel(): void {
+  loadPannel(): void {
     this.showBuscados = false;
     this.nombreManager = '';
     this.ngOnInit();

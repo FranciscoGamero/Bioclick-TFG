@@ -9,6 +9,7 @@ import { Favorito } from '../../../models/user/favorites.interface';
 import { Valoration } from '../../../models/user/get-all-valorations';
 import { ValorationsService } from '../../../services/valoration.service';
 import { Location } from '@angular/common';
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
@@ -37,12 +38,12 @@ export class MyProfileComponent implements OnInit {
     if (!url) return '';
 
     if (url.includes('randomuser.me')) {
-      return url.replace('http://localhost:8080/download/', '');
+      return url.replace(`${environment.apiBaseUrl}/download/`, '');
     }
 
     if (url.startsWith('http')) return url;
 
-    return `http://localhost:8080/download/${url}`;
+    return `${environment.apiBaseUrl}/download/${url}`;
   }
   openEditDialog(user: { id: string; username: string; correo: string; password: string; fotoPerfilUrl: string }): void {
     const dialogRef = this.dialog.open(EditUserDialogComponent, {
@@ -113,6 +114,8 @@ export class MyProfileComponent implements OnInit {
           next: () => {
             this.changePasswordError = false;
             this.successChange = true;
+            localStorage.removeItem('token');
+            this.route.navigate(['/login']);
           },
           error: (err) => {
             this.changePasswordError = true;

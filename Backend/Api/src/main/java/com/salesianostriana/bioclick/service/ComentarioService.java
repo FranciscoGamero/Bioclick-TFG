@@ -53,29 +53,34 @@ public class ComentarioService {
 
         Optional<Comentario> comentarioAEditar = comentarioRepository.findById(comentarioId);
 
-        if (usuario.getId() == comentarioAEditar.get().getIdComentario() || Objects.equals(usuario.getRole(), "ROLE_ADMIN")
-                || Objects.equals(usuario.getRole(), "ROLE_MANAGER")) {
-            return comentarioRepository.findById(comentarioId).map(old -> {
-                old.setComentario(comentarioCambiado);
-                return comentarioRepository.save(old);
-            }).orElseThrow(() -> new EntityNotFoundException("No se pudo editar dicho comentario" + comentarioId));
+        if(comentarioAEditar.isPresent()) {
+            if (usuario.getId().equals(comentarioAEditar.get().getUsuario().getId()) || Objects.equals(usuario.getRole(), "ROLE_ADMIN")
+                    || Objects.equals(usuario.getRole(), "ROLE_MANAGER")) {
+                return comentarioRepository.findById(comentarioId).map(old -> {
+                    old.setComentario(comentarioCambiado);
+                    return comentarioRepository.save(old);
+                }).orElseThrow(() -> new EntityNotFoundException("No se pudo editar dicho comentario" + comentarioId));
 
+            }
+            else{
+                throw new CommentException("No puedes permisos para editar este comentario");
+            }
         }
-        else{
-            throw new CommentException("No puedes permisos para editar este comentario");
-        }
+        throw new EntityNotFoundException("No se encontró el comentario");
     }
 
     public void eliminarComentarioPorId(UUID id, User usuario) {
 
         Optional<Comentario> comentarioABorrar = comentarioRepository.findById(id);
 
-        if (usuario.getId() == comentarioABorrar.get().getUsuario().getId() || Objects.equals(usuario.getRole(), "ROLE_ADMIN")
-                || Objects.equals(usuario.getRole(), "ROLE_MANAGER")) {
-            comentarioRepository.deleteById(id);
-        }
-        else{
-            throw new CommentException("No puedes permisos para eliminar este comentario");
+        if (comentarioABorrar.isPresent()) {
+            if (usuario.getId().equals(comentarioABorrar.get().getUsuario().getId()) || Objects.equals(usuario.getRole(), "ROLE_ADMIN")
+                    || Objects.equals(usuario.getRole(), "ROLE_MANAGER")) {
+                comentarioRepository.deleteById(id);
+            }
+            else{
+                throw new CommentException("No puedes permisos para eliminar este comentario");
+            }
         }
     }
       public Page<Comentario> listarComentariosPorProductoId(UUID productoId, Pageable pageable) {

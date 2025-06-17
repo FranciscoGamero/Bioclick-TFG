@@ -2,13 +2,18 @@
 <div class="content mt-5" [ngClass]="{ 'sidebarExpanded': isExpanded }" style="min-height: 60vh;">
     <h2>Productos</h2>
     <div class="mb-5">
-        <form method="post" class="h-auto">
+        <form (ngSubmit)="buscarPorNombre()" class="h-auto">
             <div class="h-50 w-auto d-flex flex-column mt-5 mb-5">
-                <div class="position-relative mb-3" style="width: 230px;">
-                    <i class="bi bi-search position-absolute"
-                        style="left: 18px; top: 50%; transform: translateY(-50%); color: #bfc9d8; font-size: 1.2rem;"></i>
-                    <input type="text" class="form-control inputRadius" placeholder="Nombre" [(ngModel)]="name"
-                        id="name" name="name" />
+                <div class="d-flex align-items-center mb-3" style="width: 100%;">
+                    <div class="position-relative" style="width: 230px;">
+                        <i class="bi bi-search position-absolute"
+                            style="left: 18px; top: 50%; transform: translateY(-50%); color: #bfc9d8; font-size: 1.2rem;"></i>
+                        <input type="text" class="form-control inputRadius" placeholder="Nombre del Producto"
+                            [(ngModel)]="nombreProducto" id="nombreProducto" name="nombreProducto" />
+                    </div>
+                    <button class="btn btn-success me-2 ms-2" type="submit">Buscar</button>
+                    <button *ngIf="showBuscados" class="btn btn-secondary" type="button"
+                        (click)="loadPannel()">Volver</button>
                 </div>
             </div>
         </form>
@@ -17,11 +22,10 @@
     <div class="row bg-white pannel mt-5 pt-5">
         <ng-container *ngIf="productsFound?.contenido?.length; else noUsers">
             <div *ngFor="let product of productsFound?.contenido" class="col-4 heightCol mb-4">
-                <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card"
-                    (click)="onCardClick(product.id)">
+                <mat-card appearance="outlined" class="h-100 justify-content-center clickable-card">
                     <div class="d-flex h-100">
                         <div class="w-75 bg-white rounded rounded-3 mt-4 ms-2 me-2 d-flex align-items-center justify-content-center"
-                            style="height: 180px;">
+                            style="height: 180px;" (click)="onCardClick(product.id)">
                             <img mat-card-image class="img-fluid" [src]="limpiarUrlFoto(product.imagenProducto)">
                         </div>
                         <div class="d-flex flex-column justify-content-between w-100">
@@ -59,5 +63,5 @@
     </div>
     <ngb-pagination class="justify-content-center" [collectionSize]="productsFound?.elementosEncontrados || 0"
         [(page)]="page" [pageSize]="productsFound?.tamanioPagina || 6" [boundaryLinks]="true"
-        (pageChange)="getProducts()" />
+        (pageChange)=" showBuscados ? buscarPorNombre() : getProducts()" />
 </div>

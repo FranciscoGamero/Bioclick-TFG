@@ -5,6 +5,8 @@ import { ProductService } from '../../../services/product.service';
 import { AllProductsResponse } from '../../../models/user/get-all-products.interface';
 import { CreateProductoDialogComponent, DeleteProductoDialogComponent, EditProductoDialogComponent } from '../../Dialog/CommonDialog/product-dialog';
 import { Router } from '@angular/router';
+import { HomeService } from '../../../services/home.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-product-pannel',
@@ -14,28 +16,31 @@ import { Router } from '@angular/router';
 export class ProductPannelComponent {
   readonly dialog = inject(MatDialog);
   isExpanded: boolean = true;
-  name: string = '';
   productsFound: AllProductsResponse | undefined = undefined;
   page: number = 1;
 
-  errorCreateProducto: boolean = false;
-  errorEditProduct: boolean = false;
+  pageBuscada: number = 0;
+  nombreProducto: string = '';
+  showBuscados: boolean = false;
+
+  showAlert: boolean = false;
+  alertMessage: string = '';
   ngOnInit(): void {
     this.getProducts();
   }
 
-  constructor(private productService: ProductService, private router: Router) { }
+  constructor(private productService: ProductService, private router: Router, private homeService: HomeService) { }
 
   limpiarUrlFoto(url: string | undefined | null): string {
     if (!url) return '';
 
     if (url.includes('assets/')) {
-      return url.replace('http://localhost:8080/download/', '');
+      return url.replace(`${environment.apiBaseUrl}/download/`, '');
     }
 
     if (url.startsWith('http')) return url;
 
-    return `http://localhost:8080/download/${url}`;
+    return `${environment.apiBaseUrl}/download/${url}`;
   }
   getProducts() {
     this.productService.getAllProducts(this.page - 1).subscribe({
@@ -52,7 +57,7 @@ export class ProductPannelComponent {
     this.isExpanded = !this.isExpanded;
   }
   onCardClick(productId: string) {
-    this.router.navigate(['/product-detail', productId ]);
+    this.router.navigate(['/product-detail', productId]);
   }
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(CreateProductoDialogComponent, {
@@ -79,12 +84,24 @@ export class ProductPannelComponent {
           result.selectedFile
         ).subscribe({
           next: () => {
-            this.errorCreateProducto = false;
+            this.showAlert = false;
             this.getProducts();
           },
-          error: (error: Error) => {
-            this.errorCreateProducto = true;
-          }
+            error: (error: {
+              error?: {
+                'invalid-params'?: { message: string }[];
+                detail?: string;
+              };
+            }): void => {
+              this.showAlert = true;
+              if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+                this.alertMessage = error.error['invalid-params'][0].message;
+              } else if (error.error && error.error.detail) {
+                this.alertMessage = error.error.detail;
+              } else {
+                this.alertMessage = 'Error al crear el manager.';
+              }
+            }
         });
       }
     });
@@ -106,12 +123,19 @@ export class ProductPannelComponent {
           result.selectedFile,
         ).subscribe({
           next: () => {
-            this.errorEditProduct = false;
+            this.showAlert = false;
             this.getProducts();
           },
           error: (error) => {
-            console.error('Error editing product:', error);
-            this.errorEditProduct = true;
+            this.showAlert = true;
+            if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+              this.alertMessage = error.error['invalid-params'][0].message;
+            } else if (error.error && error.error.detail) {
+              this.alertMessage = error.error.detail;
+            } else {
+              this.alertMessage = 'Error al crear la categoría.';
+            }
+
           }
         });
       }
@@ -134,5 +158,30 @@ export class ProductPannelComponent {
         });
       }
     });
+  }
+  buscarPorNombre(): void {
+    this.pageBuscada = 0;
+    this.homeService.getProductsByName(this.nombreProducto, this.pageBuscada, 12).subscribe({
+      next: (response) => {
+        this.showAlert = false;
+        this.productsFound = response;
+        this.showBuscados = true;
+        this.pageBuscada++;
+      },
+      error: (error) => {
+        this.showAlert = true;
+        if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+          this.alertMessage = error.error['invalid-params'][0].message;
+        } else if (error.error && error.error.detail) {
+          this.alertMessage = error.error.detail;
+        }
+      }
+    });
+  }
+  loadPannel(): void {
+    this.showBuscados = false;
+
+    this.nombreProducto = '';
+    this.ngOnInit();
   }
 }

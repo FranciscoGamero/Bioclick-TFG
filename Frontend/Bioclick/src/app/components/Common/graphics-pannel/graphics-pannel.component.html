@@ -1,18 +1,6 @@
 <my-sidebar [isExpanded]="isExpanded" (toggleSidebar)="handleSidebarToggle()" />
 <div class="content mt-5" [ngClass]="{ 'sidebarExpanded': isExpanded }" style="min-height: 60vh;">
-    <h2>Usuarios</h2>
-    <div class="mb-5">
-        <form method="post" class="h-auto">
-            <div class="h-50 w-auto d-flex flex-column mt-5 mb-5">
-                <div class="position-relative mb-3" style="width: 230px;">
-                    <i class="bi bi-search position-absolute"
-                        style="left: 18px; top: 50%; transform: translateY(-50%); color: #bfc9d8; font-size: 1.2rem;"></i>
-                    <input type="text" class="form-control inputRadius" placeholder="Nombre" [(ngModel)]="name"
-                        id="name" name="name" />
-                </div>
-            </div>
-        </form>
-    </div>
+    <h2>Estadísticas</h2>
     <div class="row pannel bg-white justify-content-between align-items-start g-4 mt-5 pt-5">
         <div class="col-3 d-flex flex-column align-items-center h-100">
             <div class="bg-white rounded shadow-sm p-3 d-flex flex-column align-items-center">

@@ -1,8 +1,7 @@
 <my-sidebar [isExpanded]="isExpanded" (toggleSidebar)="handleSidebarToggle()" />
 <div class="content mt-5" [ngClass]="{ 'sidebarExpanded': isExpanded }" style="min-height: 60vh;">
-    <div *ngIf="errorEditManager" class="alert alert-danger alert-dismissible fade show w-50" role="alert">
-        <i class="bi bi-exclamation-triangle-fill me-2"></i>
-        Ha habido un problema al editar el manager.
+    <div *ngIf="showAlert" class="alert alert-danger mt-3">
+       <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ alertMessage }}
     </div>
     <h2>Managers</h2>
     <div class="mb-5">
@@ -64,6 +63,6 @@
             </div>
         </ng-template>
     </div>
-    <ngb-pagination class="justify-content-center" [collectionSize]="managersFound.length" [(page)]="page"
+    <ngb-pagination class="justify-content-center" [collectionSize]="managersFound.length" [page]="page"
         [pageSize]="12" [boundaryLinks]="true" (pageChange)="getManagers()" />
 </div>

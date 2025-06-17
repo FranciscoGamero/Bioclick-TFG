@@ -6,6 +6,7 @@ import { DeleteUserDialogComponent } from '../../Dialog/UserDialog/user-dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-all-pannel',
@@ -23,7 +24,9 @@ export class AllPannelComponent implements OnInit {
   showBuscados: boolean = false;
   nombreUsuario: string = '';
   pageBuscada: number = 0;
-  errorEditUser: boolean = false;
+
+  showAlert: boolean = false;
+  alertMessage: string = '';
   ngOnInit(): void {
     this.foundAll();
   }
@@ -34,21 +37,26 @@ export class AllPannelComponent implements OnInit {
     if (!url) return '';
 
     if (url.includes('randomuser.me')) {
-      return url.replace('http://localhost:8080/download/', '');
+      return url.replace(`${environment.apiBaseUrl}/download/`, '');
     }
 
     if (url.startsWith('http')) return url;
 
-    return `http://localhost:8080/download/${url}`;
+    return `${environment.apiBaseUrl}/download/${url}`;
   }
   foundAll() {
     this.adminService.getAll(this.page - 1).subscribe({
       next: (response) => {
+        this.showAlert = false;
         this.allFound = response;
-        console.log(this.allFound)
       },
       error: (error) => {
-        console.error('Error fetching users:', error);
+        this.showAlert = true;
+        if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+          this.alertMessage = error.error['invalid-params'][0].message;
+        } else if (error.error && error.error.detail) {
+          this.alertMessage = error.error.detail;
+        }
       }
     });
   }
@@ -87,10 +95,22 @@ export class AllPannelComponent implements OnInit {
           observable.subscribe({
             next: () => {
               this.foundAll();
-              this.errorEditUser = false;
+              this.showAlert = false;
             },
-            error: () => {
-              this.errorEditUser = true;
+            error: (error: {
+              error?: {
+                'invalid-params'?: { message: string }[];
+                detail?: string;
+              };
+            }): void => {
+              this.showAlert = true;
+              if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+                this.alertMessage = error.error['invalid-params'][0].message;
+              } else if (error.error && error.error.detail) {
+                this.alertMessage = error.error.detail;
+              } else {
+                this.alertMessage = 'Error al editar el usuario.';
+              }
             }
           });
         })
@@ -133,11 +153,23 @@ export class AllPannelComponent implements OnInit {
         ).then((observable: any) => {
           observable.subscribe({
             next: () => {
+              this.showAlert = false;
               this.foundAll();
-              this.errorEditManager = false;
             },
-            error: () => {
-              this.errorEditManager = true;
+            error: (error: {
+              error?: {
+                'invalid-params'?: { message: string }[];
+                detail?: string;
+              };
+            }): void => {
+              this.showAlert = true;
+              if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+                this.alertMessage = error.error['invalid-params'][0].message;
+              } else if (error.error && error.error.detail) {
+                this.alertMessage = error.error.detail;
+              } else {
+                this.alertMessage = 'Error al editar el manager.';
+              }
             }
           });
         })
@@ -168,13 +200,20 @@ export class AllPannelComponent implements OnInit {
     this.showBuscados = true;
     this.adminService.getUsersByName(this.nombreUsuario, this.pageBuscada, 12).subscribe({
       next: (response) => {
+        this.showAlert = false;
         this.allFound = response;
-
-        this.pageBuscada++;
       },
       error: (error) => {
-        console.error('Error fetching products by name:', error);
+        this.showAlert = true;
+        if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+          this.alertMessage = error.error['invalid-params'][0].message;
+        } else if (error.error && error.error.detail) {
+          this.alertMessage = error.error.detail;
+        } else {
+          this.alertMessage = 'Error al crear la categoría.';
+        }
       }
+
     });
   }
   loadPannel(): void {

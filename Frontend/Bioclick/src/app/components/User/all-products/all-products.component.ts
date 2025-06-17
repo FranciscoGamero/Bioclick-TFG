@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { HomeService } from '../../../services/home.service';
 import { Categoria } from '../../../models/user/get-all-categories';
 import { CategoryService } from '../../../services/category.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-all-products',
@@ -39,12 +40,12 @@ export class AllProductsComponent implements OnInit {
     if (!url) return '';
 
     if (url.includes('assets/')) {
-      return url.replace('http://localhost:8080/download/', '');
+      return url.replace(`${environment.apiBaseUrl}/download/`, '');
     }
 
     if (url.startsWith('http')) return url;
 
-    return `http://localhost:8080/download/${url}`;
+    return `${environment.apiBaseUrl}/download/${url}`;
   }
   loadAllProducts(): void {
     this.productService.getAllProducts(this.page).subscribe({

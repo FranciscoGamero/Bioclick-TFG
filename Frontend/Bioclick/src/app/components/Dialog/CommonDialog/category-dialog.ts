@@ -43,7 +43,7 @@ export interface CategoriaDialogData {
                 (change)="onSubcategoriaChange($event, cat.id)"
               />
               <label class="form-check-label" [for]="'subcat-' + cat.id">
-                {{ cat.nombreCategoria }}
+                {{ formatCategoriaName(cat.nombreCategoria) }}
               </label>
             </div>
           </div>
@@ -142,7 +142,7 @@ export class CreateCategoriaDialogComponent implements OnInit {
               (change)="onSubcategoriaChange($event, cat.id)"
             />
               <label class="form-check-label" [for]="'subcat-' + cat.id">
-                {{ cat.nombreCategoria }}
+                {{ formatCategoriaName(cat.nombreCategoria) }}
               </label>
             </div>
           </div>
