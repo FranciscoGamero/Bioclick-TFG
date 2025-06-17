@@ -15,23 +15,25 @@ import { UserDetailComponent } from './components/Admin/user-detail/user-detail.
 import { HomeComponent } from './components/User/home/home.component';
 import { ProductDetailComponent } from './components/User/product-detail/product-detail.component';
 import { AllProductsComponent } from './components/User/all-products/all-products.component';
+import { authGuard } from './guards/auth.guard';
+
 const routes: Routes = [
-  {path: '', redirectTo: '/login', pathMatch: 'full'},
-  {path: 'login', component: LoginformComponent},
-  {path: 'register', component: RegisterFormComponent},
-  {path: 'verify', component: VerifyAccountComponent},
-  {path: 'user-list', component: UserPannelComponent},
-  {path: 'admin-list', component: AdminPannelComponent},
-  {path: 'manager-list', component: ManagerPannelComponent},
-  {path: 'all-list', component: AllPannelComponent},
-  {path: 'product-list', component: ProductPannelComponent},
-  {path: 'category-list', component: CategoryPannelComponent},
-  {path: 'graphics', component: GraphicsPannelComponent},
-  {path: 'my-profile', component: MyProfileComponent},
-  {path: 'user-detail/:id', component: UserDetailComponent},
-  {path: 'home', component: HomeComponent},
-  {path: 'product-detail/:id', component: ProductDetailComponent},
-  {path: 'all-products', component: AllProductsComponent},
+  { path: '', redirectTo: '/register', pathMatch: 'full' },
+  { path: 'login', component: LoginformComponent },
+  { path: 'register', component: RegisterFormComponent },
+  { path: 'verify', component: VerifyAccountComponent },
+  { path: 'user-list', component: UserPannelComponent, canActivate: [authGuard], data: { roles: ['ROLE_ADMIN', 'ROLE_MANAGER'] } },
+  { path: 'admin-list', component: AdminPannelComponent, canActivate: [authGuard], data: { roles: ['ROLE_ADMIN'] } },
+  { path: 'manager-list', component: ManagerPannelComponent, canActivate: [authGuard], data: { roles: ['ROLE_ADMIN', 'ROLE_MANAGER'] } },
+  { path: 'all-list', component: AllPannelComponent, canActivate: [authGuard] },
+  { path: 'product-list', component: ProductPannelComponent, canActivate: [authGuard] },
+  { path: 'category-list', component: CategoryPannelComponent, canActivate: [authGuard] },
+  { path: 'graphics', component: GraphicsPannelComponent, canActivate: [authGuard] },
+  { path: 'my-profile', component: MyProfileComponent, canActivate: [authGuard] },
+  { path: 'user-detail/:id', component: UserDetailComponent, canActivate: [authGuard], data: { roles: ['ROLE_ADMIN', 'ROLE_MANAGER'] } },
+  { path: 'home', component: HomeComponent, canActivate: [authGuard] },
+  { path: 'product-detail/:id', component: ProductDetailComponent, canActivate: [authGuard] },
+  { path: 'all-products', component: AllProductsComponent, canActivate: [authGuard] },
 ];
 
 @NgModule({

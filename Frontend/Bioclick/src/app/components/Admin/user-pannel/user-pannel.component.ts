@@ -6,6 +6,7 @@ import { AdminService } from '../../../services/admins.service';
 
 import { DeleteUserDialogComponent, EditUserDialogComponent } from '../../Dialog/UserDialog/user-dialog';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-pannel',
@@ -24,6 +25,9 @@ export class UserPannelComponent implements OnInit {
   showBuscados: boolean = false;
   nombreUser: string = '';
   pageBuscada: number = 1;
+
+  showAlert: boolean = false;
+  alertMessage: string = '';
   ngOnInit(): void {
     this.getUsers();
   }
@@ -33,7 +37,7 @@ export class UserPannelComponent implements OnInit {
   limpiarUrlFoto(url: string | undefined | null): string {
     if (!url) return '';
     if (url.includes('randomuser.me')) {
-      return url.replace('http://localhost:8080/download/', '');
+      return url.replace(`${environment.apiBaseUrl}/download/`, '');
     }
     return url;
   }
@@ -41,10 +45,16 @@ export class UserPannelComponent implements OnInit {
     this.showBuscados = false;
     this.userService.getAllUsers(this.page - 1).subscribe({
       next: (response) => {
+        this.showAlert = false;
         this.usersFound = response;
       },
       error: (error) => {
-        console.error('Error fetching users:', error);
+        this.showAlert = true;
+        if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+          this.alertMessage = error.error['invalid-params'][0].message;
+        } else if (error.error && error.error.detail) {
+          this.alertMessage = error.error.detail;
+        }
       }
     });
   }
@@ -73,11 +83,23 @@ export class UserPannelComponent implements OnInit {
         ).then((observable: any) => {
           observable.subscribe({
             next: () => {
-              this.errorEditUser = false;
+              this.showAlert = false;
               this.getUsers();
             },
-            error: (error: Error) => {
-              this.errorEditUser = true;
+            error: (error: {
+              error?: {
+                'invalid-params'?: { message: string }[];
+                detail?: string;
+              };
+            }): void => {
+              this.showAlert = true;
+              if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+                this.alertMessage = error.error['invalid-params'][0].message;
+              } else if (error.error && error.error.detail) {
+                this.alertMessage = error.error.detail;
+              } else {
+                this.alertMessage = 'Error al editar el usuario.';
+              }
             }
           });
         })
@@ -98,9 +120,6 @@ export class UserPannelComponent implements OnInit {
           next: () => {
             this.getUsers();
           },
-          error: (error: Error) => {
-            console.error(error);
-          }
         });
       }
     });
@@ -110,16 +129,20 @@ export class UserPannelComponent implements OnInit {
     this.pageBuscada = 0;
     this.adminService.getUsersByName(this.nombreUser, this.pageBuscada, 12).subscribe({
       next: (response) => {
+        this.showAlert = false;
         this.usersFound = response;
-        console.log(this.usersFound)
-        this.pageBuscada++;
       },
       error: (error) => {
-        console.error('Error fetching products by name:', error);
+        this.showAlert = true;
+        if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+          this.alertMessage = error.error['invalid-params'][0].message;
+        } else if (error.error && error.error.detail) {
+          this.alertMessage = error.error.detail;
+        }
       }
     });
   }
-    loadPannel(): void {
+  loadPannel(): void {
     this.showBuscados = false;
     this.nombreUser = '';
     this.ngOnInit();

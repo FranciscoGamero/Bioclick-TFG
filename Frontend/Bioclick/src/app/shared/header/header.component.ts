@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { DetailUser } from '../../models/user/detail-user.interface';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -29,12 +30,12 @@ export class HeaderComponent implements OnInit {
     if (!url) return '';
 
     if (url.includes('randomuser.me')) {
-      return url.replace('http://localhost:8080/download/', '');
+      return url.replace(`${environment.apiBaseUrl}/download/`, '');
     }
 
     if (url.startsWith('http')) return url;
 
-    return `http://localhost:8080/download/${url}`;
+    return `${environment.apiBaseUrl}/download/${url}`;
   }
   toPanels() {
     this.router.navigate(['/user-list']);

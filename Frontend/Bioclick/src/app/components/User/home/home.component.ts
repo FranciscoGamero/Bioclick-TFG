@@ -4,6 +4,7 @@ import { HomeService } from '../../../services/home.service';
 import { Producto } from '../../../models/user/get-all-products.interface';
 import { Favorito } from '../../../models/user/favorites.interface';
 import { FavoriteService } from '../../../services/favorite.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit {
   favorites: Favorito[] = [];
 
   nombreProducto: string = '';
+  ultimoBuscado: string = '';
   showBuscados: boolean = false;
   pageBuscada: number = 0;
   totalPagesBuscada: number = 1;
@@ -43,12 +45,12 @@ export class HomeComponent implements OnInit {
     if (!url) return '';
 
     if (url.includes('assets/')) {
-      return url.replace('http://localhost:8080/download/', '');
+      return url.replace(`${environment.apiBaseUrl}/download/`, '');
     }
 
     if (url.startsWith('http')) return url;
 
-    return `http://localhost:8080/download/${url}`;
+    return `${environment.apiBaseUrl}/download/${url}`;
   }
   loadMoreLikedProducts(): void {
     this.homeService.getMoreLiked(this.pageLiked, 6).subscribe({
@@ -121,6 +123,7 @@ export class HomeComponent implements OnInit {
     this.pageBuscada = 0;
     this.homeService.getProductsByName(this.nombreProducto, this.pageBuscada, 12).subscribe({
       next: (response) => {
+        this.ultimoBuscado = this.nombreProducto;
         this.showLiked = false;
         this.showValorated = false;
         this.totalBuscados = response.contenido;

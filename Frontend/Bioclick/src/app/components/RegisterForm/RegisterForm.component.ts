@@ -16,7 +16,7 @@ export class RegisterFormComponent implements OnInit {
   confirmPassword = 'aA12345678'
 
   selectedFile: File | null = null;
-  isMobile: boolean = false;
+  alertMessage: string | null = null;
 
 
   constructor(private registerService: RegisterService, private router: Router) { }
@@ -40,16 +40,43 @@ export class RegisterFormComponent implements OnInit {
     }
   }
   registerUser() {
-    if (this.selectedFile) {
-      this.registerService.registerUser(this.username, this.email, this.password, this.confirmPassword, this.selectedFile)
-        .subscribe({
-          next: (response) => {
-            this.router.navigate(['/verify']);
-          },
-          error: (error) => {
-            console.error('Registration failed', error);
-          }
-        });
+    this.alertMessage = null;
+
+    if (!this.username || !this.email || !this.password || !this.confirmPassword) {
+      this.alertMessage = 'Todos los campos son obligatorios.';
+      return;
     }
+    if (!this.isEmailValid(this.email)) {
+      this.alertMessage = 'El email no es válido.';
+      return;
+    }
+    if (this.password.length < 8) {
+      this.alertMessage = 'La contraseña debe tener al menos 8 caracteres.';
+      return;
+    }
+    if (this.password !== this.confirmPassword) {
+      this.alertMessage = 'Las contraseñas no coinciden.';
+      return;
+    }
+    if (!this.selectedFile) {
+      this.alertMessage = 'Debes seleccionar una foto de perfil.';
+      return;
+    }
+
+    this.registerService.registerUser(this.username, this.email, this.password, this.confirmPassword, this.selectedFile)
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/verify']);
+        },
+        error: () => {
+          this.alertMessage = 'Error en el registro. Inténtalo de nuevo.';
+        }
+      });
   }
+  isEmailValid(email: string): boolean {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+  goToLogin() {
+  this.router.navigate(['/login']);
+}
 }

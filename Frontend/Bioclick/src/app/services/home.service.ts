@@ -39,7 +39,7 @@ export class HomeService {
     return this.http.get<AllProductsResponse>(url, { headers, params });
   }
   getProductsByName(name: string, page: number, size: number): Observable<AllProductsResponse> {
-    const url = `${environment.apiBaseUrl}/product/get/product-by-name`;
+    const url = `${environment.apiBaseUrl}/productos/get/product-by-name`;
     const headers = {
       'Authorization': `Bearer ${localStorage.getItem('token')}`
     };

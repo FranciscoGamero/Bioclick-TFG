@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateManagerDialogComponent } from '../../Dialog/ManagerDialog/manager-dialog';
 import { Usuario } from '../../../models/user/get-all-users-interface';
+import { delay } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-admin-pannel',
@@ -16,13 +18,16 @@ export class AdminPannelComponent {
 
   isExpanded: boolean = true;
   name: string = '';
-  adminsFound: Usuario[] = [];
+  adminsFound: AllAdminsResponse | undefined = undefined;
+  adminsPorNombre: Usuario[] = [];
   page: number = 0;
-  errorCreateAdmin: boolean = false;
 
   showBuscados: boolean = false;
   nombreAdmin: string = '';
   pageBuscada: number = 0;
+
+  showAlert: boolean = false;
+  alertMessage: string = '';
   ngOnInit(): void {
     this.page = 0;
     this.pageBuscada = 0;
@@ -31,26 +36,24 @@ export class AdminPannelComponent {
   constructor(private adminService: AdminService, private router: Router) { }
 
   limpiarUrlFoto(url: string | undefined | null): string {
-    const prefix = "http://localhost:8080/download/";
-    if (!url) {
-      return '';
+    if (!url) return '';
+
+    if (url.includes('randomuser.me')) {
+      return url.replace(`${environment.apiBaseUrl}/download/`, '');
     }
-    if (url.startsWith(prefix)) {
-      return url.substring(prefix.length);
-    }
-    return url;
+
+    if (url.startsWith('http')) return url;
+
+    return `${environment.apiBaseUrl}/download/${url}`;
   }
-  getAdmins() {
-    this.adminService.getAllAdmins(this.page).subscribe({
+  getAdmins(page: number = 0) {
+    this.adminService.getAllAdmins(page).subscribe({
       next: (response) => {
-              this.adminsFound = (response.contenido as Admin[]).map(manager => ({
-                ...manager,
-                fechaRegistro: (manager as any).fechaRegistro ?? '',
-                role: (manager as any).role ?? 'ROLE_MANAGER'
-              })) as Usuario[];
-            },
+        this.adminsFound = response;
+        this.page = page;
+      },
       error: (error) => {
-        console.error('Error fetching users:', error);
+        console.error('Error fetching admins:', error);
       }
     });
   }
@@ -76,11 +79,18 @@ export class AdminPannelComponent {
           result.selectedFile
         ).subscribe({
           next: () => {
-            this.errorCreateAdmin = false;
+            this.showAlert = false;
             this.getAdmins();
           },
-          error: (error: Error) => {
-            this.errorCreateAdmin = true;
+          error: (error) => {
+            this.showAlert = true;
+            if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+              this.alertMessage = error.error['invalid-params'][0].message;
+            } else if (error.error && error.error.detail) {
+              this.alertMessage = error.error.detail;
+            } else {
+              this.alertMessage = 'Error al crear el administrador.';
+            }
           }
         });
       }
@@ -98,11 +108,19 @@ export class AdminPannelComponent {
     this.showBuscados = true;
     this.adminService.getUsersByName(this.nombreAdmin, this.pageBuscada, 12).subscribe({
       next: (response) => {
-        this.adminsFound = response.contenido.filter((manager: Usuario) => manager.role === 'ROLE_ADMIN');;
+        this.showAlert = false;
+        this.adminsPorNombre = response.contenido.filter((manager: Usuario) => manager.role === 'ROLE_ADMIN');
         this.pageBuscada++;
       },
       error: (error) => {
-        console.error('Error fetching products by name:', error);
+        this.showAlert = true;
+        if (error.error && error.error['invalid-params'] && error.error['invalid-params'].length > 0) {
+          this.alertMessage = error.error['invalid-params'][0].message;
+        } else if (error.error && error.error.detail) {
+          this.alertMessage = error.error.detail;
+        } else {
+          this.alertMessage = 'Error al crear el administrador.';
+        }
       }
     });
   }

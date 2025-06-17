@@ -185,3 +185,54 @@ INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('dd4e888f
 INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('af03ec23-fc5a-4b99-90de-d2349e80c456', 'ef901234-5678-9012-ab34-567890123456', '2025-06-12T11:27:00');
 INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('a02fd104-5d2d-4ff4-9f73-5bf0e2a6c874', 'bcd12345-6789-0123-ef45-678901234567', '2025-06-12T11:29:00');
 INSERT INTO favorito (usuario_id, producto_id, fecha_favorito) VALUES ('d290f1ee-6c54-4b01-90e6-d701748f0851', 'bcd12345-6789-0123-ef45-678901234567', '2025-06-12T11:31:00');
+
+
+INSERT INTO producto (id, nombre_producto, descripcion, imagen_producto, precio_producto, fabricante, id_creador, estado, borrado) VALUES ('1e2f3a4b-5c6d-7e8f-9012-345678901234', 'Portátil EcoBook', 'Portátil ultraligero fabricado con aluminio reciclado y batería de larga duración.', 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8', 799.99, 'GreenTech', '16f857b1-bf58-442f-ae41-9cd96f786345', 'Reciclado', false);
+INSERT INTO impacto_ambiental (id, reduccion_co2, producto_id, borrado) VALUES ('a1b2c3d4-e5f6-7890-1234-567890abcdef', 22.5, '1e2f3a4b-5c6d-7e8f-9012-345678901234', false);
+INSERT INTO impacto_ambiental_ahorro_materiales (impacto_ambiental_id, ahorro_materiales) VALUES ('a1b2c3d4-e5f6-7890-1234-567890abcdef', 'Aluminio reciclado');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('1e2f3a4b-5c6d-7e8f-9012-345678901234', '6a7b8c9d-e89b-12d3-a456-426614174005');
+
+INSERT INTO producto (id, nombre_producto, descripcion, imagen_producto, precio_producto, fabricante, id_creador, estado, borrado) VALUES ('2f3a4b5c-6d7e-8f90-1234-567890123456', 'Smartwatch Solar', 'Reloj inteligente con carga solar y correa de materiales reciclados.', 'https://m.media-amazon.com/images/I/71Nd69-7YiL.jpg', 129.99, 'SolarWear', 'dd4e888f-374d-4a1d-9b11-df68f68c9876', 'Reciclado', false);
+INSERT INTO impacto_ambiental (id, reduccion_co2, producto_id, borrado) VALUES ('b2c3d4e5-f678-9012-3456-7890abcdef12', 12.0, '2f3a4b5c-6d7e-8f90-1234-567890123456', false);
+INSERT INTO impacto_ambiental_ahorro_materiales (impacto_ambiental_id, ahorro_materiales) VALUES ('b2c3d4e5-f678-9012-3456-7890abcdef12', 'Panel solar reciclado');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('2f3a4b5c-6d7e-8f90-1234-567890123456', '7a8b9c0d-e89b-12d3-a456-426614174006');
+
+INSERT INTO producto (id, nombre_producto, descripcion, imagen_producto, precio_producto, fabricante, id_creador, estado, borrado) VALUES ('3a4b5c6d-7e8f-9012-3456-789012345678', 'Impresora EcoPrint', 'Impresora multifunción con piezas recicladas y bajo consumo energético.', 'https://www.ahorraentinta.es/13322-large_default/epson-ecotank-l8050-impresora-ecotank-a4.jpg', 149.99, 'EcoPrint', '16f857b1-bf58-442f-ae41-9cd96f786345', 'Reacondicionado', false);
+INSERT INTO impacto_ambiental (id, reduccion_co2, producto_id, borrado) VALUES ('c3d4e5f6-7890-1234-5678-90abcdef1234', 15.3, '3a4b5c6d-7e8f-9012-3456-789012345678', false);
+INSERT INTO impacto_ambiental_ahorro_materiales (impacto_ambiental_id, ahorro_materiales) VALUES ('c3d4e5f6-7890-1234-5678-90abcdef1234', 'Plástico reciclado');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('3a4b5c6d-7e8f-9012-3456-789012345678', '3a4b5c6d-e89b-12d3-a456-426614174002');
+
+INSERT INTO producto (id, nombre_producto, descripcion, imagen_producto, precio_producto, fabricante, id_creador, estado, borrado) VALUES ('4b5c6d7e-8f90-1234-5678-901234567890', 'Router Reciclado', 'Router WiFi de alta velocidad hecho con plásticos reciclados.', 'https://media.rs-online.com/Y2558431-01.jpg', 59.99, 'NetGreen', 'dd4e888f-374d-4a1d-9b11-df68f68c9876', 'Reciclado', false);
+INSERT INTO impacto_ambiental (id, reduccion_co2, producto_id, borrado) VALUES ('d4e5f678-9012-3456-7890-abcdef123456', 8.7, '4b5c6d7e-8f90-1234-5678-901234567890', false);
+INSERT INTO impacto_ambiental_ahorro_materiales (impacto_ambiental_id, ahorro_materiales) VALUES ('d4e5f678-9012-3456-7890-abcdef123456', 'Plástico reciclado');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('4b5c6d7e-8f90-1234-5678-901234567890', '2a3b4c5d-e89b-12d3-a456-426614174001');
+
+INSERT INTO producto (id, nombre_producto, descripcion, imagen_producto, precio_producto, fabricante, id_creador, estado, borrado) VALUES ('5c6d7e8f-9012-3456-7890-123456789012', 'Disco Duro EcoDrive', 'Disco duro externo con carcasa de bambú y componentes reutilizados.', 'https://storage.googleapis.com/catalog-pictures-carrefour-es/catalog/pictures/hd_510x_/5491587777112_1.jpg', 89.99, 'EcoDrive', '16f857b1-bf58-442f-ae41-9cd96f786345', 'Reacondicionado', false);
+INSERT INTO impacto_ambiental (id, reduccion_co2, producto_id, borrado) VALUES ('e5f67890-1234-5678-9012-bcdef1234567', 11.2, '5c6d7e8f-9012-3456-7890-123456789012', false);
+INSERT INTO impacto_ambiental_ahorro_materiales (impacto_ambiental_id, ahorro_materiales) VALUES ('e5f67890-1234-5678-9012-bcdef1234567', 'Bambú reciclado');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('5c6d7e8f-9012-3456-7890-123456789012', '2a3b4c5d-e89b-12d3-a456-426614174001');
+
+INSERT INTO producto (id, nombre_producto, descripcion, imagen_producto, precio_producto, fabricante, id_creador, estado, borrado) VALUES ('6d7e8f90-1234-5678-9012-345678901234', 'Cámara Web Verde', 'Cámara web HD con carcasa de plástico reciclado.', 'https://i.blogs.es/9f75b6/logitech-c920/450_1000.jpg', 39.99, 'GreenVision', 'dd4e888f-374d-4a1d-9b11-df68f68c9876', 'Reciclado', false);
+INSERT INTO impacto_ambiental (id, reduccion_co2, producto_id, borrado) VALUES ('f6789012-3456-7890-1234-cdef12345678', 6.8, '6d7e8f90-1234-5678-9012-345678901234', false);
+INSERT INTO impacto_ambiental_ahorro_materiales (impacto_ambiental_id, ahorro_materiales) VALUES ('f6789012-3456-7890-1234-cdef12345678', 'Plástico reciclado');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('6d7e8f90-1234-5678-9012-345678901234', '2a3b4c5d-e89b-12d3-a456-426614174001');
+
+INSERT INTO producto (id, nombre_producto, descripcion, imagen_producto, precio_producto, fabricante, id_creador, estado, borrado) VALUES ('7e8f9012-3456-7890-1234-567890123456', 'Powerbank Solar', 'Batería portátil recargable con energía solar y materiales sostenibles.', 'https://m.media-amazon.com/images/I/715UthVi-fL.jpg', 34.99, 'SolarCharge', '16f857b1-bf58-442f-ae41-9cd96f786345', 'Reciclado', false);
+INSERT INTO impacto_ambiental (id, reduccion_co2, producto_id, borrado) VALUES ('01234567-89ab-cdef-0123-456789abcdef', 9.5, '7e8f9012-3456-7890-1234-567890123456', false);
+INSERT INTO impacto_ambiental_ahorro_materiales (impacto_ambiental_id, ahorro_materiales) VALUES ('01234567-89ab-cdef-0123-456789abcdef', 'Panel solar reciclado');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('7e8f9012-3456-7890-1234-567890123456', '2a3b4c5d-e89b-12d3-a456-426614174001');
+
+INSERT INTO producto (id, nombre_producto, descripcion, imagen_producto, precio_producto, fabricante, id_creador, estado, borrado) VALUES ('8f901234-5678-9012-3456-789012345678', 'Teclado Bamboo', 'Teclado inalámbrico hecho de bambú natural y plástico reciclado.', 'https://m.media-amazon.com/images/I/61R-TgZBBOL._AC_UF1000,1000_QL80_.jpg', 54.99, 'BambooTech', 'dd4e888f-374d-4a1d-9b11-df68f68c9876', 'Reciclado', false);
+INSERT INTO impacto_ambiental (id, reduccion_co2, producto_id, borrado) VALUES ('12345678-9abc-def0-1234-56789abcdef0', 7.7, '8f901234-5678-9012-3456-789012345678', false);
+INSERT INTO impacto_ambiental_ahorro_materiales (impacto_ambiental_id, ahorro_materiales) VALUES ('12345678-9abc-def0-1234-56789abcdef0', 'Bambú natural');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('8f901234-5678-9012-3456-789012345678', '2a3b4c5d-e89b-12d3-a456-426614174001');
+
+INSERT INTO producto (id, nombre_producto, descripcion, imagen_producto, precio_producto, fabricante, id_creador, estado, borrado) VALUES ('9f012345-6789-0123-4567-890123456789', 'Altavoz Solar', 'Altavoz portátil con panel solar y carcasa de materiales reciclados.', 'https://m.media-amazon.com/images/I/71sWq6MarZL._UF1000,1000_QL80_.jpg', 64.99, 'EcoSound', '16f857b1-bf58-442f-ae41-9cd96f786345', 'Reacondicionado', false);
+INSERT INTO impacto_ambiental (id, reduccion_co2, producto_id, borrado) VALUES ('23456789-abcd-ef01-2345-6789abcdef01', 10.1, '9f012345-6789-0123-4567-890123456789', false);
+INSERT INTO impacto_ambiental_ahorro_materiales (impacto_ambiental_id, ahorro_materiales) VALUES ('23456789-abcd-ef01-2345-6789abcdef01', 'Panel solar reciclado');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('9f012345-6789-0123-4567-890123456789', '2a3b4c5d-e89b-12d3-a456-426614174001');
+
+INSERT INTO producto (id, nombre_producto, descripcion, imagen_producto, precio_producto, fabricante, id_creador, estado, borrado) VALUES ('0a1b2c3d-4e5f-6789-0123-456789012345', 'Mousepad Reciclado', 'Alfombrilla de ratón fabricada con neumáticos reciclados.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnswP6hlDcbDuSs7yphjLd2zqP9RdUEnxNDg&s', 14.99, 'GreenPad', 'dd4e888f-374d-4a1d-9b11-df68f68c9876', 'Reciclado', false);
+INSERT INTO impacto_ambiental (id, reduccion_co2, producto_id, borrado) VALUES ('3456789a-bcde-f012-3456-789abcdef012', 4.2, '0a1b2c3d-4e5f-6789-0123-456789012345', false);
+INSERT INTO impacto_ambiental_ahorro_materiales (impacto_ambiental_id, ahorro_materiales) VALUES ('3456789a-bcde-f012-3456-789abcdef012', 'Neumáticos reciclados');
+INSERT INTO producto_categoria (producto_id, categoria_id) VALUES ('0a1b2c3d-4e5f-6789-0123-456789012345', '2a3b4c5d-e89b-12d3-a456-426614174001');

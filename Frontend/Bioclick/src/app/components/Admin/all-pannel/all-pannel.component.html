@@ -1,15 +1,7 @@
 <my-sidebar [isExpanded]="isExpanded" (toggleSidebar)="handleSidebarToggle()" />
 <div class="content mt-5" [ngClass]="{ 'sidebarExpanded': isExpanded }">
-    <div class="">
-        <div *ngIf="errorEditUser"
-            class=" text-center align-items-center alert alert-danger alert-dismissible fade show w-50" role="alert">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            Ha habido un problema al editar el usuario.
-        </div>
-        <div *ngIf="errorEditManager" class="alert alert-danger alert-dismissible fade show w-50" role="alert">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            Ha habido un problema al editar el manager.
-        </div>
+    <div *ngIf="showAlert" class="alert alert-danger mt-3">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ alertMessage }}
     </div>
     <h2>Todos</h2>
     <div class="mb-5">
@@ -79,6 +71,6 @@
             </mat-card>
         </div>
     </div>
-    <ngb-pagination class="justify-content-center" [collectionSize]="allFound!.elementosEncontrados" [(page)]="page"
-        [pageSize]="12" [boundaryLinks]="true" (pageChange)="foundAll()" />
+    <ngb-pagination class="justify-content-center" [collectionSize]="allFound!.elementosEncontrados" [page]="page"
+        [pageSize]="12" [boundaryLinks]="true" (pageChange)="(showBuscados ? buscarPorNombre() : foundAll() )" />
 </div>
