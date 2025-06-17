@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "my-sidebar",
@@ -10,6 +11,7 @@ export class SidebarComponent {
   @Output() toggleSidebar = new EventEmitter<void>();
   isUserOpen: boolean = false;
   isProductsOpen: boolean = false;
+  constructor(private router: Router) {}
   handleSidebarToggle = () => {
     this.toggleSidebar.emit();
     this.isUserOpen = false;
@@ -28,5 +30,9 @@ export class SidebarComponent {
   isAdmin(): boolean {
     const role = localStorage.getItem("role");
     return role === "ROLE_ADMIN";
+  }
+    logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 }

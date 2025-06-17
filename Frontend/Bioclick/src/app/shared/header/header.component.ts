@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
     return `${environment.apiBaseUrl}/download/${url}`;
   }
   toPanels() {
-    this.router.navigate(['/user-list']);
+    this.router.navigate(['/all-list']);
   }
   logout() {
     localStorage.removeItem('token');

@@ -32,38 +32,8 @@
                         <p class="m-0 text-center text-white fw-semibold">{{ found.username }}</p>
                         <div class="d-flex w-100 justify-content-between">
                             <i class="bi bi-toggle2-on ps-3 mt-3 text-white"></i>
-                            <div *ngIf="isUser(found.role)" ngbDropdown class="d-inline-block text-end me-3">
-                                <button type="button" class="btn btn-outline-light" id="dropdownBasic1"
-                                    ngbDropdownToggle>
-                                    Ver opciones
-                                </button>
-                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                    <button ngbDropdownItem
-                                        (click)="openUserEditDialog({ id: found.id, username: found.username, correo: found.correo, fotoPerfilUrl: limpiarUrlFoto(found.fotoPerfilUrl), password: found.password })">
-                                        Editar</button>
-                                    <button ngbDropdownItem
-                                        (click)="openUserDeleteDialog({ id: found.id }); $event.stopPropagation()">
-                                        Eliminar
-                                    </button>
-                                </div>
-                            </div>
-                            <div *ngIf="isManager(found.role)" ngbDropdown class="d-inline-block text-end me-3">
-                                <button type="button" class="btn btn-outline-light" id="dropdownBasic1"
-                                    ngbDropdownToggle>
-                                    Ver opciones
-                                </button>
-                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                    <button ngbDropdownItem
-                                        (click)="openUserEditDialog({ id: found.id, username: found.username, correo: found.correo, fotoPerfilUrl: limpiarUrlFoto(found.fotoPerfilUrl), password: found.password })">
-                                        Editar</button>
-                                    <button ngbDropdownItem
-                                        (click)="openUserDeleteDialog({ id: found.id }); $event.stopPropagation()">
-                                        Eliminar
-                                    </button>
-                                </div>
-                            </div>
-                            <p *ngIf="isAdmin(found.role)" class="text-end me-5 pe-1 mt-4 text-white">
-                                Administrador
+                            <p class="text-end me-5 pe-1 mt-4 text-white">
+                                {{ found.role === 'ROLE_ADMIN' ? 'Administrador' : found.role === 'ROLE_MANAGER' ? 'Manager' : found.role === 'ROLE_USUARIO' ? 'Usuario' : 'Desconocido' }}
                             </p>
                         </div>
                     </div>
@@ -71,6 +41,8 @@
             </mat-card>
         </div>
     </div>
-    <ngb-pagination class="justify-content-center" [collectionSize]="allFound!.elementosEncontrados" [page]="page"
-        [pageSize]="12" [boundaryLinks]="true" (pageChange)="(showBuscados ? buscarPorNombre() : foundAll() )" />
+    <ngb-pagination class="justify-content-center" [collectionSize]="allFound?.elementosEncontrados || 0"
+        [page]="showBuscados ? pageBuscada : page" [pageSize]="12" [boundaryLinks]="true"
+        (pageChange)="cambiarPagina($event)">
+    </ngb-pagination>
 </div>
